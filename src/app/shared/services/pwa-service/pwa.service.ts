@@ -3,22 +3,22 @@ import {SwUpdate} from '@angular/service-worker';
 
 @Injectable()
 export class PwaService {
+  promptEvent;
+
   constructor(private swUpdate: SwUpdate) {
-
-
     swUpdate.available.subscribe(event => {
-      if (this.askUserToUpdate()) {
+
+      if (PwaService.askUserToUpdate()) {
         window.location.reload();
       }
     });
+    window.addEventListener('beforeinstallprompt', event => {
+      this.promptEvent = event;
+    });
   }
 
-  askUserToUpdate() {
+  static askUserToUpdate() {
     return false;
   }
-
-//   window.addEventListener('beforeinstallprompt', event => {
-//   this.promptEvent = event;
-// });
 
 }

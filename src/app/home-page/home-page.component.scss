@@ -1,0 +1,21 @@
+$icon-background-color: #09bda9;
+.cart {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1;
+  background-color: $icon-background-color;
+  mat-icon {
+    color: white;
+  }
+}
+
+nav {
+  button {
+    border-radius: 14px;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: $icon-background-color;
+  }
+}
