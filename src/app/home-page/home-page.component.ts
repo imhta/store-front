@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngxs/store';
-import {GetAllProducts} from '../shared/actions/products.actions';
-import {Login} from '../shared/actions/auth.actions';
 
 @Component({
   selector: 'cx-home-page',
@@ -14,10 +12,8 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch([new GetAllProducts()]);
+
   }
 
-  login() {
-    return this.store.dispatch([new Login()]);
-  }
+
 }

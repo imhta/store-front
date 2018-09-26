@@ -24,13 +24,19 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {LogoComponent} from './general-components/logo/logo.component';
 import {ProductsState} from './shared/state/products.state';
+import {NavbarComponent} from './general-components/navbar/navbar.component';
+import {ProductListingComponent} from './home-page/product-listing/product-listing.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     LoadingComponent,
-    LogoComponent
+    LogoComponent,
+    NavbarComponent,
+    ProductListingComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,8 @@ import {ProductsState} from './shared/state/products.state';
     MatProgressBarModule,
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
+    MatChipsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [PwaService, FirestoreService],

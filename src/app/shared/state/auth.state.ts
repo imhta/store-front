@@ -77,12 +77,13 @@ export class AuthState {
 
   @Action([LoginSuccessful, Authenticated])
   navigateToHome() {
+    window.location.reload();
     return this.store.dispatch([new LoadingFalse()]);
   }
 
   @Action([LogoutSuccessful])
   refreshAndNavigateToLogin() {
-    window.location.replace('/');
+    window.location.reload();
   }
 
   @Action([NotAuthenticated])
