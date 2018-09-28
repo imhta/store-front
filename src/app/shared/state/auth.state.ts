@@ -1,5 +1,5 @@
 import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
-import {UserModel} from '../models/auth.model';
+import {LoginModel} from '../models/auth.model';
 import {
   Authenticated,
   CheckAuthState,
@@ -16,7 +16,7 @@ import {LoadingFalse} from './loading.state';
 import {delay} from 'rxjs/operators';
 import {AuthService} from '../services/auth/auth.service';
 
-@State<UserModel>({
+@State<LoginModel>({
   name: 'user',
   defaults: null
 })
@@ -25,17 +25,17 @@ export class AuthState {
   }
 
   @Selector()
-  static uid(state: UserModel) {
+  static uid(state: LoginModel) {
     return state.uid;
   }
 
   @Selector()
-  static token(state: UserModel) {
+  static token(state: LoginModel) {
     return state.token;
   }
 
   @Action(CheckAuthState)
-  async checkAuthState({setState}: StateContext<UserModel>) {
+  async checkAuthState({setState}: StateContext<LoginModel>) {
 
     await this.authService
       .checkAuth()
@@ -51,7 +51,7 @@ export class AuthState {
   }
 
   @Action(Login)
-  async login({setState}: StateContext<UserModel>) {
+  async login({setState}: StateContext<LoginModel>) {
     await this.authService.googleLogin()
       .then((data) => {
         setState(data);
@@ -66,7 +66,7 @@ export class AuthState {
   }
 
   @Action(Logout)
-  async logout({setState}: StateContext<UserModel>) {
+  async logout({setState}: StateContext<LoginModel>) {
     await this.authService.signOut()
       .then(() => {
         setState(null);
@@ -77,8 +77,7 @@ export class AuthState {
 
   @Action([LoginSuccessful, Authenticated])
   navigateToHome() {
-    window.location.reload();
-    return this.store.dispatch([new LoadingFalse()]);
+    return this.store.dispatch([new LoadingFalse(), new Navigate([''])]);
   }
 
   @Action([LogoutSuccessful])

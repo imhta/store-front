@@ -24,14 +24,3 @@ export class LoginModel {
     };
   }
 }
-
-export interface UserModel {
-  email?: string;
-  uid?: string;
-  displayName?: string;
-  photoUrl?: string;
-  token?: string;
-  createdOn?: Date;
-  createdBy?: string;
-}
-

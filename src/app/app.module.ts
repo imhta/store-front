@@ -28,6 +28,8 @@ import {NavbarComponent} from './general-components/navbar/navbar.component';
 import {ProductListingComponent} from './home-page/product-listing/product-listing.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
+import {AuthService} from './shared/services/auth/auth.service';
+import {CartPageComponent} from './cart-page/cart-page.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import {MatChipsModule} from '@angular/material/chips';
     LoadingComponent,
     LogoComponent,
     NavbarComponent,
-    ProductListingComponent
+    ProductListingComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,
@@ -56,8 +59,9 @@ import {MatChipsModule} from '@angular/material/chips';
     MatChipsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
-  providers: [PwaService, FirestoreService],
+  providers: [PwaService, AuthService, FirestoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as firebase from 'firebase/app';
-import {LoginModel, UserModel} from '../../models/auth.model';
+import {LoginModel} from '../../models/auth.model';
 import {switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
@@ -12,7 +12,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 
 export class AuthService {
 
-  user$: Observable<UserModel>;
+  user$: Observable<LoginModel>;
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
 

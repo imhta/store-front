@@ -1,0 +1,10 @@
+<cx-loading *ngIf="loading"></cx-loading>
+<nav class="navbar">
+  <cx-logo></cx-logo>
+  <mat-chip *ngIf="user">
+    <img matChipAvatar [src]="user['photoUrl']">
+    <strong>{{user['displayName']}}</strong>
+    <mat-icon matChipTrailingIcon (click)="logout()">exit_to_app</mat-icon>
+  </mat-chip>
+  <button mat-flat-button color="primary" (click)="login()" *ngIf="!user">Login / Sign up</button>
+</nav>

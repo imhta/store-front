@@ -1,0 +1,24 @@
+<div class="container">
+  <mat-card *ngFor="let product of products" class="product-card">
+    <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+    <mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button (click)="addToFavorite(product.productUid)">
+          <mat-icon [ngClass]="product.isFavorite ? 'favorite-icon-red': 'favorite-icon-grey'"
+          >favorite
+          </mat-icon>
+        </button>
+        <!--<button mat-icon-button (click)="addToCart(product.productUid)">-->
+        <!--<mat-icon class="add-shopping-icon" *ngIf="!product.isCart">add_shopping_cart</mat-icon>-->
+        <!--<mat-icon class="remove-shopping-icon" *ngIf="product.isCart">remove_shopping_cart</mat-icon>-->
+        <!--</button>-->
+      </mat-card-actions>
+      <mat-chip-list>
+        <mat-chip *ngFor="let differentSsp of product.ssp" (click)=" showSelectedPrice = differentSsp['price'] ">
+          {{differentSsp['size'].toUpperCase()}}
+          <span *ngIf="differentSsp['price']==showSelectedPrice"> &nbsp;: &#x20B9;{{differentSsp['price']}}</span>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-card-content>
+  </mat-card>
+</div>
