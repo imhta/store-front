@@ -15,10 +15,24 @@ export class FirestoreService {
   cartsCollectionRef: CollectionReference = this.db.collection(`carts`).ref;
   productsCollectionRef: CollectionReference = this.db.collection(`products`).ref;
 
-  constructor(public db: AngularFirestore, private store: Store) {
+  constructor(private db: AngularFirestore, private store: Store) {
 
   }
 
+  getStoreDetails(usn: string) {
+    return this.db.collection(`stores`).ref
+      .where('usn', '==', usn)
+      .limit(1)
+      .get();
+  }
+
+  getStoreProducts(storeUid: string) {
+    return this.db.collection(`products`).ref
+      .where('storeId', '==', storeUid)
+      .where('isListable', '==', true)
+      .where('isDeleted', '==', false)
+      .get();
+  }
 
   getAllProducts() {
     return this.db.collection(`products`).ref
@@ -138,12 +152,14 @@ export class FirestoreService {
           .get()
           .then(
             (doc) => doc.forEach((data) => {
-                cartProduct.fromJson(data.data());
-                cartedProductsWithDetail.push(cartProduct);
+              // cartProduct.fromJson(data.data());
+              // cartedProductsWithDetail.push(cartProduct);
               }
             ));
       }
     }
     return this.store.dispatch([new GotCartProductsSuccessfully(cartedProductsWithDetail)]);
   }
+
+
 }

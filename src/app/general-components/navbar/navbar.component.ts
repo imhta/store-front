@@ -18,11 +18,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
 
   constructor(private store: Store) {
+    this.loadingSubscription = this.$loadingState.subscribe((data) => this.loading = data.valueOf());
+    this.userSubscription = this.$userState.subscribe((data) => this.user = data);
   }
 
   ngOnInit() {
-    this.loadingSubscription = this.$loadingState.subscribe((data) => this.loading = data.valueOf());
-    this.userSubscription = this.$userState.subscribe((data) => this.user = data.valueOf());
+
   }
 
   ngOnDestroy() {

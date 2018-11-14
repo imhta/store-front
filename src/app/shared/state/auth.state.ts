@@ -11,7 +11,6 @@ import {
   LogoutSuccessful,
   NotAuthenticated
 } from '../actions/auth.actions';
-import {Navigate} from '@ngxs/router-plugin';
 import {LoadingFalse} from './loading.state';
 import {delay} from 'rxjs/operators';
 import {AuthService} from '../services/auth/auth.service';
@@ -77,7 +76,7 @@ export class AuthState {
 
   @Action([LoginSuccessful, Authenticated])
   navigateToHome() {
-    return this.store.dispatch([new LoadingFalse(), new Navigate([''])]);
+    return this.store.dispatch([new LoadingFalse()]);
   }
 
   @Action([LogoutSuccessful])
@@ -87,7 +86,7 @@ export class AuthState {
 
   @Action([NotAuthenticated])
   navigateToLogin() {
-    return this.store.dispatch([new LoadingFalse(), new Navigate([''])]);
+    return this.store.dispatch([new LoadingFalse()]);
   }
 
 }

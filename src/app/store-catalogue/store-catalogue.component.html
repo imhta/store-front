@@ -1,0 +1,71 @@
+<div *ngIf="isNotFound">
+  <ngb-carousel *ngIf="storeCatalog.storeDetails['storePictures']" class="carousel slide">
+    <ng-template *ngFor="let storePicture of storeCatalog.storeDetails['storePictures']['localDownloadUrls']" ngbSlide>
+      <img class="slide" [src]="storePicture" [alt]="storeCatalog.storeDetails['storeName'] + 'store pictures'">
+      <div class="carousel-caption">
+        <img class="logo-img" *ngIf="storeCatalog.storeDetails['storeLogo']"
+             [src]="storeCatalog.storeDetails['storeLogo']['localDownloadUrl']" width="100" height="100"
+             [alt]="storeCatalog.storeDetails['storeName'] + ' logo'">
+      </div>
+    </ng-template>
+  </ngb-carousel>
+
+
+  <div *ngIf="storeCatalog.storeDetails !== {}" class="jumbotron text-center">
+    <h1 class="display-4"><b>{{storeCatalog.storeDetails['storeName']}}</b></h1>
+    <p *ngIf="storeCatalog.storeDetails['address']" class="lead">{{storeCatalog.storeDetails['address']['city']}},
+      {{storeCatalog.storeDetails['address']['state']}}.</p>
+    <hr class="my-4">
+    <p>{{storeCatalog.storeDetails['description']}}</p>
+    <!--<a class="btn btn-primary btn-lg" href="#" role="button">Follow us</a>-->
+  </div>
+
+  <div *ngIf="!isProductFound">
+    <div style="text-align: center;">
+      <img src="../../assets/logo.png" class="grey-logo" width="80" alt="clothx logo">
+    </div>
+    <div class="content">There is no products add to {{param}} yet</div>
+    <div class="setup-link">Browse other stores</div>
+  </div>
+  <div *ngIf="isProductFound">
+
+    <div class="input-group m-4">
+      <input type="text" class="form-control" placeholder="Catalog search" [(ngModel)]="searchQuery.query"
+             (ngModelChange)="onChange()"
+             (keyup.enter)="search()">
+      <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
+    </div>
+    <div class="container">
+
+      <mat-card *ngFor="let product of searchQuery.query.length === 0 ? storeCatalog.products: resultProduct"
+                class="product-card">
+        <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+        <mat-card-content>
+          <mat-card-actions>
+          </mat-card-actions>
+          <mat-chip-list>
+            <mat-chip *ngFor="let variant of product.variants"
+                      (click)=" showSelectedPrice = variant.sellingPrice + product.prn ">
+              {{variant.size.toUpperCase()}}
+              <span *ngIf="(variant.sellingPrice + product.prn)==showSelectedPrice"> &nbsp;: &#x20B9;{{variant.sellingPrice}}</span>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isNotFound">
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="../../assets/logo.png" width="80" alt="clothx logo">
+    </a>
+  </nav>
+
+  <div style="text-align: center;">
+    <img src="../../assets/logo.png" class="grey-logo" width="60" alt="clothx logo">
+  </div>
+  <div class="content">There is no store named {{param}} yet</div>
+  <div class="setup-link" (click)="navigateHome() ">Browse other stores</div>
+
+</div>

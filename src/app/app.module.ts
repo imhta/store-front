@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule} from './shared/routing/app-routing.module';
 import {AppComponent} from './app.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
@@ -10,7 +10,6 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {NgxsModule} from '@ngxs/store';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
-import {NgxsStoragePluginModule} from '@ngxs/storage-plugin';
 import {NgxsRouterPluginModule} from '@ngxs/router-plugin';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
@@ -30,6 +29,13 @@ import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {AuthService} from './shared/services/auth/auth.service';
 import {CartPageComponent} from './cart-page/cart-page.component';
+import {NgAisModule} from 'angular-instantsearch';
+import {StoreCatalogueComponent} from './store-catalogue/store-catalogue.component';
+import {StoreCatalogState} from './shared/state/store-catalog.state';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {HttpService} from './shared/services/http/http.service';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,15 +45,18 @@ import {CartPageComponent} from './cart-page/cart-page.component';
     LogoComponent,
     NavbarComponent,
     ProductListingComponent,
-    CartPageComponent
+    CartPageComponent,
+    StoreCatalogueComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
-    NgxsModule.forRoot([AuthState, LoadingState, ProductsState]),
+    NgbModule,
+    FormsModule,
+    NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
@@ -57,10 +66,12 @@ import {CartPageComponent} from './cart-page/cart-page.component';
     MatIconModule,
     MatCardModule,
     MatChipsModule,
+    NgAisModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
-  providers: [PwaService, AuthService, FirestoreService],
-  bootstrap: [AppComponent]
+  providers: [PwaService, AuthService, HttpService, FirestoreService],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 

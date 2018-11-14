@@ -1,45 +1,83 @@
 import {OnInit} from '@angular/core';
+import Timestamp = firebase.firestore.Timestamp;
 
 export class SingleProductModel implements OnInit {
   productUid: string;
-  prn: string;
   productName: string;
-  category: string;
+  prn: string;
+  brandName: string;
+  categories: { category1: string, category2: string, colorCategory: string };
   description: string;
   gender: 'Male' | 'Female' | 'Boy' | 'Girl';
   picturesUrl: string[] = [];
   picturesPath: string[] = [];
   isDeleted: boolean;
-  ssp: { size: string, stock: number, price: number }[];
+  isVariantsWithSamePrice: boolean;
+  hasNoGstNumber: boolean;
+  variants: { size: string, stock: number, purchasedPrice: number, sellingPrice: number }[];
   addedBy: string;
   storeId: string;
-  createdOn: Date;
+  tags: string[];
+  taxType: 'footwear' | 'textile' | 'other';
+  otherTax: number;
+  hsnCode: string;
+  inclusiveAllTaxes: boolean;
+  createdOn: Timestamp;
   isListable: boolean;
   isFavorite: boolean;
   isCart: boolean;
-  lastModified: Date;
+  lastModified: Timestamp;
 
   constructor() {
+    this.isListable = false;
   }
-
   ngOnInit() {
     this.isFavorite = false;
     this.isCart = false;
   }
 
-  fromJson(data) {
-    this.gender = data['gender'];
-    this.productName = data['productName'];
-    this.category = data['category'];
-    this.description = data['description'];
-    this.ssp = data['ssp'];
-    this.addedBy = data['addedBy'];
-    this.storeId = data['storeId'];
-    this.productUid = data['productUid'];
-    this.prn = data['prn'];
-    this.picturesUrl = data['picturesUrl'];
-    this.picturesPath = data['picturesPath'];
-    this.createdOn = data['createdOn'];
+  fromFromData(data) {
+    this.gender = data.gender;
+    this.brandName = data.brandName;
+    this.productName = data.productName;
+    this.categories = data.categories;
+    this.description = data.description;
+    this.variants = data.variants;
+    this.addedBy = data.addedBy;
+    this.storeId = data.storeId;
+    this.tags = data.tags;
+    this.taxType = data.taxType;
+    this.hsnCode = data.hsnCode;
+    this.otherTax = +data.otherTax;
+    this.inclusiveAllTaxes = data.inclusiveAllTaxes;
+    this.isVariantsWithSamePrice = data.isVariantsWithSamePrice;
+    this.hasNoGstNumber = data.hasNoGstNumber;
+  }
+
+
+  toJson() {
+    return {
+      'brandName': this.brandName,
+      'productName': this.productName,
+      'description': this.description,
+      'categories': this.categories,
+      'gender': this.gender,
+      'isVariantsWithSamePrice': this.isVariantsWithSamePrice,
+      'variants': this.variants,
+      'picturesPath': this.picturesPath,
+      'picturesUrl': this.picturesUrl,
+      'tags': this.tags,
+      'hasNoGstNumber': this.hasNoGstNumber,
+      'taxType': this.taxType,
+      'otherTax': this.otherTax,
+      'hsnCode': this.hsnCode,
+      'inclusiveAllTaxes': this.inclusiveAllTaxes,
+      'addedBy': this.addedBy,
+      'storeId': this.storeId,
+      'createdOn': Timestamp.now(),
+      'isListable': this.isListable,
+      'isDeleted': false
+    };
   }
 }
 

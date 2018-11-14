@@ -1,5 +1,11 @@
+<div class="input-group m-4">
+  <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
+         (ngModelChange)="onChange()"
+         (keyup.enter)="search()">
+  <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
+</div>
 <div class="container">
-  <mat-card *ngFor="let product of products" class="product-card">
+  <mat-card *ngFor="let product of searchQuery.query.length === 0 ? products: resultProduct" class="product-card">
     <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
     <mat-card-content>
       <mat-card-actions>
@@ -14,9 +20,9 @@
         <!--</button>-->
       </mat-card-actions>
       <mat-chip-list>
-        <mat-chip *ngFor="let differentSsp of product.ssp" (click)=" showSelectedPrice = differentSsp['price'] ">
-          {{differentSsp['size'].toUpperCase()}}
-          <span *ngIf="differentSsp['price']==showSelectedPrice"> &nbsp;: &#x20B9;{{differentSsp['price']}}</span>
+        <mat-chip *ngFor="let variant of product.variants" (click)=" showSelectedPrice = variant.sellingPrice ">
+          {{variant.size.toUpperCase()}}
+          <span *ngIf="variant.sellingPrice==showSelectedPrice"> &nbsp;: &#x20B9;{{variant.sellingPrice}}</span>
         </mat-chip>
       </mat-chip-list>
     </mat-card-content>

@@ -1,5 +1,5 @@
 import {Action, State, StateContext, Store} from '@ngxs/store';
-import {ErrorInGettingAllProducts, GetAllProducts, GotAllProductsSuccessfully} from '../actions/products.actions';
+import {ErrorInGettingAllProducts, GetAllProducts, GotAllProductsSuccessfully, SearchForProduct} from '../actions/products.actions';
 import {FirestoreService} from '../services/firestore-service/firestore.service';
 import {LoadingFalse} from './loading.state';
 import {SingleProductModel, WholeProducts} from '../models/product.model';
@@ -24,6 +24,7 @@ import {
   RemoveFromFavorite,
 } from '../actions/user.actions';
 import {GetAllCartProducts, GotCartProductsSuccessfully} from '../actions/cart.actions';
+import {HttpService} from '../services/http/http.service';
 
 
 @State<WholeProducts>({
@@ -36,7 +37,7 @@ import {GetAllCartProducts, GotCartProductsSuccessfully} from '../actions/cart.a
   }
 })
 export class ProductsState {
-  constructor(private dbService: FirestoreService, private  store: Store) {
+  constructor(private dbService: FirestoreService, private  store: Store, private httpService: HttpService) {
   }
 
   @Action(GetAllProducts)
@@ -44,9 +45,8 @@ export class ProductsState {
     const allProducts: SingleProductModel[] = [];
     this.dbService.getAllProducts().then((data) => {
       data.forEach((product) => {
-        const tempProduct = new SingleProductModel();
-        tempProduct.fromJson(product.data());
-        allProducts.push(tempProduct);
+        // @ts-ignore
+        allProducts.push(product.data());
       });
 
       this.store.dispatch([new GotAllProductsSuccessfully(allProducts)]);
@@ -128,5 +128,10 @@ export class ProductsState {
     const state = ctx.getState();
     ctx.setState({...state, cartedProductsWithDetail: products});
     return this.store.dispatch([new LoadingFalse()]);
+  }
+
+  @Action(SearchForProduct)
+  searchForProduct(cxt: StateContext<any[]>, {searchQuery}: SearchForProduct) {
+    this.httpService.searchForProduct(searchQuery);
   }
 }

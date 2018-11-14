@@ -1,4 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {AuthState} from '../shared/state/auth.state';
+import {Store} from '@ngxs/store';
+import {Navigate} from '@ngxs/router-plugin';
+import {LoadingTrue} from '../shared/state/loading.state';
 
 
 @Component({
@@ -6,22 +11,33 @@ import {Component} from '@angular/core';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent {
-  // isLoggedIn: boolean;
-  //
-  // constructor(private store: Store) {
-  // }
-  //
-  // ngOnInit() {
-  //   this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
-  // }
-  //
-  // navigateTo(path: string) {
-  //   if (this.isLoggedIn) {
-  //     return this.store.dispatch([new LoadingTrue(), new Navigate([path])]);
-  //   } else {
-  //     console.log('not logged in');
-  //   }
-  // }
+export class HomePageComponent implements OnInit {
+
+  showResults = false;
+
+  isLoggedIn: boolean;
+  searchConfig = {
+    ...environment.algolia,
+    indexName: 'product_search'
+  };
+
+  constructor(private store: Store) {
+  }
+
+  ngOnInit() {
+    this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
+  }
+
+  navigateTo(path: string) {
+    if (this.isLoggedIn) {
+      return this.store.dispatch([new LoadingTrue(), new Navigate([path])]);
+    } else {
+      console.log('not logged in');
+    }
+  }
+
+  searchChanged(query) {
+    this.showResults = !!query.length;
+  }
 
 }

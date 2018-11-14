@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {GetAllProducts} from '../../shared/actions/products.actions';
-import {Actions, ofActionSuccessful, Select, Store} from '@ngxs/store';
-import {LoadingTrue} from '../../shared/state/loading.state';
+import {GetAllProducts, ProductFounded, SearchForProduct} from '../../shared/actions/products.actions';
+import {Actions, ofActionDispatched, ofActionSuccessful, Select, Store} from '@ngxs/store';
+import {LoadingFalse, LoadingTrue} from '../../shared/state/loading.state';
 import {Observable, Subscription} from 'rxjs';
 import {SingleProductModel, WholeProducts} from '../../shared/models/product.model';
 import {
@@ -15,6 +15,7 @@ import {
   RemoveFromFavorite
 } from '../../shared/actions/user.actions';
 import {AuthState} from '../../shared/state/auth.state';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'cx-product-listing',
@@ -30,12 +31,11 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   products: SingleProductModel[];
   showSelectedPrice;
   isLoggedIn: boolean;
+  resultProduct: SingleProductModel[] = [];
+  searchQuery: { query: string } = {query: ''};
   private temp: SingleProductModel;
 
   constructor(private store: Store, private actions$: Actions) {
-  }
-
-  ngOnInit() {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
     this.store.dispatch([new LoadingTrue(), new GetAllProducts(), new GetAllCarts(), new GetAllFavorites()]);
     this.productsSubscription = this.$productsState.subscribe((data) => {
@@ -53,6 +53,24 @@ export class ProductListingComponent implements OnInit, OnDestroy {
         this.updateCarts();
       });
 
+  }
+
+  ngOnInit() {
+
+  }
+
+  onChange() {
+    if (this.searchQuery.query.length === 0) {
+      this.resultProduct = [];
+    }
+  }
+
+  search() {
+    this.store.dispatch([new LoadingTrue(), new SearchForProduct(this.searchQuery)]);
+    this.actions$.pipe(ofActionDispatched(ProductFounded), take(5)).subscribe(({resultProducts}) => {
+      this.resultProduct = resultProducts;
+      this.store.dispatch([new LoadingFalse()]);
+    });
   }
 
   updateFav() {
