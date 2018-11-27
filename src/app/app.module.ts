@@ -8,8 +8,6 @@ import {environment} from '../environments/environment';
 import {PwaService} from './shared/services/pwa-service/pwa.service';
 import {HomePageComponent} from './home-page/home-page.component';
 import {NgxsModule} from '@ngxs/store';
-import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
-import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsRouterPluginModule} from '@ngxs/router-plugin';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
@@ -27,6 +25,17 @@ import {NavbarComponent} from './general-components/navbar/navbar.component';
 import {ProductListingComponent} from './home-page/product-listing/product-listing.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRippleModule} from '@angular/material/core';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatBottomSheetModule, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {MatListModule} from '@angular/material/list';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 import {AuthService} from './shared/services/auth/auth.service';
 import {CartPageComponent} from './cart-page/cart-page.component';
 import {NgAisModule} from 'angular-instantsearch';
@@ -36,6 +45,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpService} from './shared/services/http/http.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {FilterBoxComponent} from './filter-box/filter-box.component';
+import {SortBoxComponent} from './sort-box/sort-box.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +57,9 @@ import {FormsModule} from '@angular/forms';
     NavbarComponent,
     ProductListingComponent,
     CartPageComponent,
-    StoreCatalogueComponent
+    StoreCatalogueComponent,
+    FilterBoxComponent,
+    SortBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -55,8 +68,8 @@ import {FormsModule} from '@angular/forms';
     NgbModule,
     FormsModule,
     NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState]),
-    NgxsLoggerPluginModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
+    // NgxsLoggerPluginModule.forRoot(),
+    // NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
@@ -66,10 +79,33 @@ import {FormsModule} from '@angular/forms';
     MatIconModule,
     MatCardModule,
     MatChipsModule,
+    MatSliderModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRippleModule,
+    MatDialogModule,
+    MatBottomSheetModule,
+    MatListModule,
+    BrowserAnimationsModule,
     NgAisModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
-  providers: [PwaService, AuthService, HttpService, FirestoreService],
+  entryComponents: [FilterBoxComponent, SortBoxComponent],
+  providers: [
+    PwaService,
+    AuthService,
+    HttpService,
+    FirestoreService,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    {
+      provide: MatBottomSheetRef,
+      useValue: {}
+    }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -10,4 +10,12 @@ nav {
   mat-chip {
     cursor: pointer;
   }
+  .brand-title {
+    font-family: 'Audiowide', cursive;
+    color: #545454;
+    span {
+      color: #09bda9;
+    }
+  }
+
 }

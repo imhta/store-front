@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   loadingSubscription: Subscription;
   user: object;
   userSubscription: Subscription;
-
+  screenWidth = window.screen.width;
   constructor(private store: Store) {
     this.loadingSubscription = this.$loadingState.subscribe((data) => this.loading = data.valueOf());
     this.userSubscription = this.$userState.subscribe((data) => this.user = data);

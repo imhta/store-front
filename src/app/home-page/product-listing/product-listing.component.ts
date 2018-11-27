@@ -16,6 +16,11 @@ import {
 } from '../../shared/actions/user.actions';
 import {AuthState} from '../../shared/state/auth.state';
 import {take} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
+import {FilterBoxComponent} from '../../filter-box/filter-box.component';
+import {SortBoxComponent} from '../../sort-box/sort-box.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'cx-product-listing',
@@ -33,9 +38,17 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   resultProduct: SingleProductModel[] = [];
   searchQuery: { query: string } = {query: ''};
+  screenWidth = window.screen.width;
+  queryParam;
   private temp: SingleProductModel;
 
-  constructor(private store: Store, private actions$: Actions) {
+  constructor(
+    private store: Store,
+    private actions$: Actions,
+    public dialog: MatDialog,
+    private bottomSheet: MatBottomSheet,
+    private route: ActivatedRoute
+  ) {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
     this.store.dispatch([new LoadingTrue(), new GetAllProducts(), new GetAllCarts(), new GetAllFavorites()]);
     this.productsSubscription = this.$productsState.subscribe((data) => {
@@ -52,11 +65,50 @@ export class ProductListingComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.updateCarts();
       });
-
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params);
 
+        this.queryParam = JSON.parse(params.filter);
+        this.localSorting(params['sortBy']);
+      });
+  }
+
+  localSorting(sortBy) {
+    switch (sortBy) {
+      case 'low2high': {
+
+        break;
+      }
+      case 'high2low': {
+        break;
+      }
+      case 'newestFirst': {
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  openFilter(): void {
+    const dialogRef = this.dialog.open(FilterBoxComponent, {
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openSortBottomSheet(): void {
+    this.bottomSheet.open(SortBoxComponent);
   }
 
   onChange() {
@@ -66,9 +118,26 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    this.store.dispatch([new LoadingTrue(), new SearchForProduct(this.searchQuery)]);
+
+    // @ts-ignore
+    this.store
+      .dispatch([
+        new LoadingTrue(),
+        new SearchForProduct(
+          {
+            query:
+              this.searchQuery.query
+              + ' '
+              + this.queryParam.categories.gender
+              + ' '
+              + this.queryParam.occasion
+              + ' '
+              + this.queryParam.size
+          })
+      ]);
     this.actions$.pipe(ofActionDispatched(ProductFounded), take(5)).subscribe(({resultProducts}) => {
       this.resultProduct = resultProducts;
+      console.log(this.resultProduct);
       this.store.dispatch([new LoadingFalse()]);
     });
   }

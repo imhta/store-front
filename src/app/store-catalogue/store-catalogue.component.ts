@@ -13,6 +13,9 @@ import {Observable, Subscription} from 'rxjs';
 import {SingleProductModel} from '../shared/models/product.model';
 import {Navigate} from '@ngxs/router-plugin';
 import {LoadingFalse, LoadingTrue} from '../shared/state/loading.state';
+import {FilterBoxComponent} from '../filter-box/filter-box.component';
+import {SortBoxComponent} from '../sort-box/sort-box.component';
+import {MatBottomSheet, MatDialog} from '@angular/material';
 
 @Component({
   selector: 'cx-store-catalogue',
@@ -29,8 +32,14 @@ export class StoreCatalogueComponent implements OnInit {
   param;
   resultProduct: any[] = [];
   searchQuery: { storeId: string, query: string } = {storeId: '', query: ''};
+  screenWidth = window.screen.width;
+  queryParam;
 
-  constructor(private route: ActivatedRoute, private store: Store, private actions$: Actions) {
+  constructor(private route: ActivatedRoute,
+              private store: Store,
+              private actions$: Actions,
+              public dialog: MatDialog,
+              private bottomSheet: MatBottomSheet) {
     this.route.params.pipe(take(1)).subscribe(params => {
       this.param = params['usn'];
       this.store.dispatch([new GetStoreDetails(params['usn'])]);
@@ -48,6 +57,28 @@ export class StoreCatalogueComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params);
+
+        this.queryParam = JSON.parse(params.filter);
+      });
+  }
+
+  openFilter(): void {
+    const dialogRef = this.dialog.open(FilterBoxComponent, {
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openSortBottomSheet(): void {
+    this.bottomSheet.open(SortBoxComponent);
   }
 
   onChange() {
@@ -55,7 +86,21 @@ export class StoreCatalogueComponent implements OnInit {
   }
 
   search() {
-    this.store.dispatch([new LoadingTrue(), new SearchForProductInCatalog(this.searchQuery)]);
+    this.store
+      .dispatch([
+        new LoadingTrue(),
+        new SearchForProductInCatalog(
+          {
+            query:
+              this.searchQuery.query
+              + ' '
+              + this.queryParam.categories.gender
+              + ' '
+              + this.queryParam.occasion
+              + ' '
+              + this.queryParam.size,
+            storeId: this.searchQuery.storeId
+          })]);
     this.actions$.pipe(ofActionDispatched(ProductFoundedInCatalog), take(5)).subscribe(({resultProducts}) => {
       this.resultProduct = resultProducts;
       this.store.dispatch([new LoadingFalse()]);

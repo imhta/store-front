@@ -6,10 +6,15 @@ import {StoreCatalogueComponent} from '../../store-catalogue/store-catalogue.com
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
     component: HomePageComponent
   },
   {
-    path: ':usn',
+    path: 'store/:usn',
     component: StoreCatalogueComponent
   }
 

@@ -1,30 +1,61 @@
-<div class="input-group m-4">
-  <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
-         (ngModelChange)="onChange()"
-         (keyup.enter)="search()">
-  <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
+<div class="m-4">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
+           (ngModelChange)="onChange()"
+           (keyup.enter)="search()">
+    <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
+  </div>
 </div>
-<div class="container">
-  <mat-card *ngFor="let product of searchQuery.query.length === 0 ? products: resultProduct" class="product-card">
-    <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
-    <mat-card-content>
-      <mat-card-actions>
-        <button mat-icon-button (click)="addToFavorite(product.productUid)">
-          <mat-icon [ngClass]="product.isFavorite ? 'favorite-icon-red': 'favorite-icon-grey'"
-          >favorite
-          </mat-icon>
-        </button>
-        <!--<button mat-icon-button (click)="addToCart(product.productUid)">-->
-        <!--<mat-icon class="add-shopping-icon" *ngIf="!product.isCart">add_shopping_cart</mat-icon>-->
-        <!--<mat-icon class="remove-shopping-icon" *ngIf="product.isCart">remove_shopping_cart</mat-icon>-->
-        <!--</button>-->
-      </mat-card-actions>
-      <mat-chip-list>
-        <mat-chip *ngFor="let variant of product.variants" (click)=" showSelectedPrice = variant.sellingPrice ">
-          {{variant.size.toUpperCase()}}
-          <span *ngIf="variant.sellingPrice==showSelectedPrice"> &nbsp;: &#x20B9;{{variant.sellingPrice}}</span>
-        </mat-chip>
-      </mat-chip-list>
-    </mat-card-content>
-  </mat-card>
+<div class="mobile-tab" *ngIf="screenWidth < 600">
+  <div class="row">
+    <div class="col" (click)="openSortBottomSheet()">
+      <strong>Sort By
+        <mat-icon>sort</mat-icon>
+      </strong>
+    </div>
+    <div class="col" (click)="openFilter()">
+      <strong>Filters
+        <mat-icon>filter_list</mat-icon>
+      </strong>
+    </div>
+  </div>
 </div>
+<hr *ngIf="screenWidth < 600">
+<div class="row">
+  <div class="col-md-3" *ngIf="!(screenWidth < 600)">
+    <cx-filter-box></cx-filter-box>
+  </div>
+  <div class="col-md-8">
+    <div class="m-3" *ngIf="!(screenWidth < 600)">
+      <cx-sort-box></cx-sort-box>
+    </div>
+    <hr *ngIf="!(screenWidth < 600)">
+    <div class="container">
+      <mat-card *ngFor="let product of searchQuery.query.length === 0 ? products: resultProduct" class="product-card">
+        <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+        <mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button (click)="addToFavorite(product.productUid)">
+              <mat-icon [ngClass]="product.isFavorite ? 'favorite-icon-red': 'favorite-icon-grey'"
+              >favorite
+              </mat-icon>
+            </button>
+            <!--<button mat-icon-button (click)="addToCart(product.productUid)">-->
+            <!--<mat-icon class="add-shopping-icon" *ngIf="!product.isCart">add_shopping_cart</mat-icon>-->
+            <!--<mat-icon class="remove-shopping-icon" *ngIf="product.isCart">remove_shopping_cart</mat-icon>-->
+            <!--</button>-->
+          </mat-card-actions>
+          <mat-chip-list>
+            <mat-chip *ngFor="let variant of product.variants" (click)=" showSelectedPrice = variant.sellingPrice ">
+              {{variant.size.toUpperCase()}}
+              <span *ngIf="variant.sellingPrice==showSelectedPrice"> &nbsp;: &#x20B9;{{variant.sellingPrice}}</span>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+
+</div>
+
