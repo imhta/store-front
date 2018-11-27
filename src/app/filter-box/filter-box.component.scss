@@ -1,0 +1,62 @@
+.filter-wrap {
+  width: 100%;
+  margin: 10px;
+  padding-left: 0;
+  padding-right: 0;
+
+  .title {
+    margin-left: 20px;
+    font-size: 20px;
+  }
+  .sub-title {
+    margin-left: 20px;
+    font-size: 15px;
+  }
+  mat-slider {
+    width: 100%;
+  }
+  .location-filter {
+    margin-left: 10px;
+    width: 100%;
+
+    mat-form-field {
+      width: 200px;
+    }
+  }
+  .category-filter {
+    margin-left: 10px;
+    width: 100%;
+
+    mat-form-field {
+      width: 200px;
+    }
+  }
+  .row {
+    margin-left: 10px;
+    width: 100%;
+    .col {
+      mat-form-field {
+        width: 80px;
+        margin: 0 auto;
+      }
+    }
+  }
+  .size-filter{
+    margin-left: 10px;
+    width: 100%;
+    mat-checkbox{
+      margin: 5px;
+    }
+  }
+  .occasion-filter{
+    margin-left: 10px;
+    width: 100%;
+    mat-checkbox{
+      margin: 5px;
+    }
+  }
+  .availability-filter{
+    margin-left: 10px;
+    width: 100%;
+  }
+}

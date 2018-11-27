@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "clothxnet"
+  },
+  "targets": {
+    "clothxnet": {
+      "hosting": {
+        "spoteasy": [
+          "spoteasy"
+        ]
+      }
+    }
+  }
+}

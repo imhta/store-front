@@ -1,0 +1,85 @@
+<div class="sticky-top bg-light" *ngIf="screenWidth < 600">
+  <mat-icon class="float-right" (click)="closeDialog()">close</mat-icon>
+</div>
+<div class="filter-wrap">
+  <div class="title"><h6 class="font-weight-bold ">Filters</h6></div>
+
+  <hr>
+
+  <div class="font-weight-bold sub-title"><p>LOCATION</p></div>
+  <div class="location-filter">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Current location" [(ngModel)]="filters.location" (ngModelChange)="updateFilter()">
+      <mat-icon matSuffix>my_location</mat-icon>
+    </mat-form-field>
+  </div>
+  <hr>
+
+
+  <div class="font-weight-bold sub-title"><p>CATEGORY</p></div>
+  <div class="category-filter">
+    <mat-form-field appearance="outline">
+      <mat-label>Gender</mat-label>
+      <mat-select [(ngModel)]="filters.categories.gender" (selectionChange)="updateFilter()">
+        <mat-option value="men">Men</mat-option>
+        <mat-option value="women">Women</mat-option>
+        <mat-option value="boy">Boy</mat-option>
+        <mat-option value="girl">Girl</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <hr>
+
+  <div class="font-weight-bold sub-title"><p>PRICE</p></div>
+  <mat-slider
+    thumbLabel
+    tickInterval="auto"
+    (valueChange)="updateFilter()"
+    [displayWith]="formatLabel"
+    [(ngModel)]="filters.price.max"
+    [min]="filters.price.inMin"
+    [max]="filters.price.inMax"></mat-slider>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Min</mat-label>
+        <input matInput [(ngModel)]="filters.price.min"  (ngModelChange)="updateFilter()">
+        <mat-hint align="end">&#x20B9;</mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Max</mat-label>
+        <input matInput [(ngModel)]="filters.price.max"  (ngModelChange)="updateFilter()">
+        <mat-hint align="end">&#x20B9;</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr>
+
+
+  <div class="font-weight-bold sub-title"><p>SIZE</p></div>
+  <div class="size-filter">
+    <mat-checkbox *ngFor="let availableSize of availableSizes" (change)="filters.size = availableSize; updateFilter();">{{availableSize}}</mat-checkbox>
+  </div>
+  <hr>
+  <div class=" font-weight-bold sub-title
+    "><p>OCCASIONS</p></div>
+  <div class="occasion-filter">
+
+    <div *ngFor="let availableOccasion of availableOccasions">
+      <mat-checkbox (change)="filters.occasion = availableOccasion; updateFilter();" [ngModel]="(filters.occasion === availableOccasion)">{{availableOccasion}}</mat-checkbox>
+    </div>
+  </div>
+  <hr>
+  <div class="font-weight-bold sub-title"><p>AVAILABILITY</p></div>
+  <div class="availability-filter">
+    <div>
+      <mat-checkbox [(ngModel)]="filters.allowOutOfStock" (change)="updateFilter()">Include Out of Stock</mat-checkbox>
+    </div>
+
+  </div>
+
+
+</div>
