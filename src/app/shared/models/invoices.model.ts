@@ -1,32 +1,50 @@
+import Timestamp = firebase.firestore.Timestamp;
+import GeoPoint = firebase.firestore.GeoPoint;
+
 export class InvoiceModel {
   invoiceId: string;
   customerNumber: string;
-  cartProducts: object[];
+  customerName: string;
+  cartProducts: object[] = [];
   typeOfPayment: 'Card' | 'Cash' | 'Cash & Card';
+  isDiscountApplied = false;
+  discount: object = {};
+  discountPrice = 0;
   totalPrice: number;
   totalQuantity: number;
+  gstNumber: string;
+  hasNoGstNumber: boolean;
   totalTax: number;
   storeUid: string;
-  createdOn: Date;
+  sendSms: boolean;
+  storeDetails: { storeName: string, mobileNumber: string, address: object, location: GeoPoint, gstNumber: string, storeLogo: string[] };
+  createdOn: Timestamp;
   billedBy: string;
 
   constructor() {
+    this.customerNumber = '';
     this.totalQuantity = 0;
     this.totalPrice = 0;
     this.totalTax = 0;
+    this.sendSms = true;
   }
 
   fromJson(data) {
-    this.customerNumber = data['customerNumber'];
-    this.cartProducts = data['cartProducts'];
-    this.typeOfPayment = data['typeOfPayment'];
-    this.billedBy = data['billedBy'];
-    this.totalPrice = data['totalPrice'];
-    this.totalQuantity = data['totalQuantity'];
-    this.createdOn = data['createdOn'];
-    this.totalTax = data['totalTax'];
-    this.invoiceId = data['invoiceId'];
-    this.storeUid = data['storeUid'];
+    this.customerNumber = data.customerNumber;
+    this.customerName = data.customerName;
+    this.cartProducts = data.cartProducts;
+    this.typeOfPayment = data.typeOfPayment;
+    this.billedBy = data.billedBy;
+    this.totalPrice = data.totalPrice;
+    this.totalQuantity = data.totalQuantity;
+    this.createdOn = data.createdOn;
+    this.totalTax = data.totalTax;
+    this.invoiceId = data.invoiceId;
+    this.storeUid = data.storeUid;
+    this.hasNoGstNumber = data.hasNoGstNumber;
+    this.discount = data.discount;
+    this.isDiscountApplied = data.isDiscountApplied;
+    this.discountPrice = data.discountPrice;
   }
 
   cartProductsToJson(arrayOfProducts: CartProduct[]) {
@@ -45,14 +63,22 @@ export class InvoiceModel {
   toJson() {
     return {
       'customerNumber': this.customerNumber,
+      'customerName': this.customerName,
       'cartProducts': this.cartProducts,
+      'discount': this.discount,
+      'isDiscountApplied': this.isDiscountApplied,
       'typeOfPayment': this.typeOfPayment,
       'billedBy': this.billedBy,
+      'gstNumber': this.gstNumber,
+      'hasNoGstNumber': this.hasNoGstNumber,
+      'discountPrice': this.discountPrice,
       'totalPrice': this.totalPrice,
       'totalQuantity': this.totalQuantity,
       'totalTax': this.totalTax,
       'storeUid': this.storeUid,
-      'createdOn': Date.now(),
+      'sendSms': this.sendSms,
+      'storeDetails': this.storeDetails,
+      'createdOn': Timestamp.now(),
       'invoiceId': this.invoiceId ? this.invoiceId : '',
       'pending': true
     };

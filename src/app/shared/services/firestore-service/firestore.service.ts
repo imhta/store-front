@@ -5,6 +5,8 @@ import {AuthState} from '../../state/auth.state';
 import {CartedProduct, FavProduct, SingleProductModel} from '../../models/product.model';
 import {GotCartsSuccessfully, GotFavoritesSuccessfully} from '../../actions/user.actions';
 import {GotCartProductsSuccessfully} from '../../actions/cart.actions';
+import {ErrorInGettingInvoiceById, GotInvoiceByIdSuccessfully, InvoiceNotFoundById} from '../../actions/invoice.actions';
+import {InvoiceModel} from '../../models/invoices.model';
 
 @Injectable({
   providedIn: 'root'
@@ -161,5 +163,16 @@ export class FirestoreService {
     return this.store.dispatch([new GotCartProductsSuccessfully(cartedProductsWithDetail)]);
   }
 
+  getInvoiceById(invoiceId: string) {
+    this.db.doc(`invoices/${invoiceId}`).ref
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return this.store.dispatch([new GotInvoiceByIdSuccessfully(doc.data() as InvoiceModel)]);
+        }
+        this.store.dispatch([new InvoiceNotFoundById()]);
+      })
+      .catch((err) => this.store.dispatch([new ErrorInGettingInvoiceById(err)]));
+  }
 
 }

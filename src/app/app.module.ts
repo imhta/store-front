@@ -47,6 +47,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {FilterBoxComponent} from './filter-box/filter-box.component';
 import {SortBoxComponent} from './sort-box/sort-box.component';
+import {FindInvoiceComponent} from './find-invoice/find-invoice.component';
+import {InvoicePageComponent} from './invoice-page/invoice-page.component';
+import {NoState} from './shared/state/no.state';
+import {NgxKjuaModule} from 'ngx-kjua';
 
 @NgModule({
   declarations: [
@@ -59,15 +63,18 @@ import {SortBoxComponent} from './sort-box/sort-box.component';
     CartPageComponent,
     StoreCatalogueComponent,
     FilterBoxComponent,
-    SortBoxComponent
+    SortBoxComponent,
+    FindInvoiceComponent,
+    InvoicePageComponent
   ],
   imports: [
     BrowserModule,
+    NgxKjuaModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState]),
+    NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState, NoState]),
     // NgxsLoggerPluginModule.forRoot(),
     // NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
