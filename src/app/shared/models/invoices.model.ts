@@ -17,7 +17,8 @@ export class InvoiceModel {
   totalTax: number;
   storeUid: string;
   sendSms: boolean;
-  storeDetails: { storeName: string, mobileNumber: string, address: object, location: GeoPoint, gstNumber: string, storeLogo: string[] };
+  storeDetails: InvoiceStoreDetails;
+  customerFeedback: CustomerFeedback;
   createdOn: Timestamp;
   billedBy: string;
 
@@ -47,18 +48,18 @@ export class InvoiceModel {
     this.discountPrice = data.discountPrice;
   }
 
-  cartProductsToJson(arrayOfProducts: CartProduct[]) {
-    this.cartProducts = [];
-    this.totalQuantity = 0;
-    this.totalPrice = 0;
-    this.totalTax = 0;
-    arrayOfProducts.forEach((product) => {
-      this.totalQuantity = this.totalQuantity + product.totalQuantity;
-      this.totalPrice = this.totalPrice + product.totalPrice;
-      this.totalTax = this.totalTax + product.totalTax;
-      this.cartProducts.push(product.toJson());
-    });
-  }
+  // cartProductsToJson(arrayOfProducts: CartProduct[]) {
+  //   this.cartProducts = [];
+  //   this.totalQuantity = 0;
+  //   this.totalPrice = 0;
+  //   this.totalTax = 0;
+  //   arrayOfProducts.forEach((product) => {
+  //     this.totalQuantity = this.totalQuantity + product.totalQuantity;
+  //     this.totalPrice = this.totalPrice + product.totalPrice;
+  //     this.totalTax = this.totalTax + product.totalTax;
+  //     this.cartProducts.push(product.toJson());
+  //   });
+  // }
 
   toJson() {
     return {
@@ -78,6 +79,7 @@ export class InvoiceModel {
       'storeUid': this.storeUid,
       'sendSms': this.sendSms,
       'storeDetails': this.storeDetails,
+      'customerFeedback': this.customerFeedback,
       'createdOn': Timestamp.now(),
       'invoiceId': this.invoiceId ? this.invoiceId : '',
       'pending': true
@@ -140,3 +142,25 @@ export class CartProduct {
 
 }
 
+export class CustomerFeedback {
+  feedbackText = '';
+  reaction = '';
+  createdOn: Timestamp;
+
+  toJson() {
+    return {
+      'feedbackText': this.feedbackText,
+      'reaction': this.reaction,
+      'createdOn': Timestamp.now()
+    };
+  }
+}
+
+export interface InvoiceStoreDetails {
+  storeName: string;
+  mobileNumber: string;
+  address: object;
+  location: GeoPoint;
+  gstNumber: string;
+  storeLogo: string;
+}

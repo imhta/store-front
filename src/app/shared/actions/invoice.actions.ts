@@ -1,4 +1,4 @@
-import {InvoiceModel} from '../models/invoices.model';
+import {CustomerFeedback, InvoiceModel} from '../models/invoices.model';
 
 export class GetInvoiceById {
   static readonly type = '[Invoice] Get Invoice by ID';
@@ -25,23 +25,20 @@ export class ErrorInGettingInvoiceById {
   }
 }
 
-// export class GetStoreDetailsForInvoice {
-//   static readonly type = '[Invoice] Get Store details for invoice';
-//
-//   constructor(public storeUid: string) {
-//   }
-// }
-//
-// export class GotStoreDetailsForInvoiceSuccessfully {
-//   static readonly type = '[Invoice] Got Store details for invoice successfully';
-//
-//   constructor(public store: any) {
-//   }
-// }
-//
-// export class ErrorInGettingStoreDetails {
-//   static readonly type = '[Error] Getting Store details';
-//
-//   constructor(public err: string) {
-//   }
-// }
+export class SaveCustomerFeedback {
+  static readonly type = '[Invoice] Save customer feedback for invoice';
+
+  constructor(public invoiceId: string, public feedback: CustomerFeedback) {
+  }
+}
+
+export class CustomerFeedbackSavedSuccessfully {
+  static readonly type = '[Invoice] Customer feedback for invoice saved successfully';
+}
+
+export class ErrorInSavingCustomerFeedback {
+  static readonly type = '[Error] Saving customer feedback';
+
+  constructor(public err: string) {
+  }
+}

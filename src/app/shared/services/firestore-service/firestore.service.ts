@@ -5,8 +5,15 @@ import {AuthState} from '../../state/auth.state';
 import {CartedProduct, FavProduct, SingleProductModel} from '../../models/product.model';
 import {GotCartsSuccessfully, GotFavoritesSuccessfully} from '../../actions/user.actions';
 import {GotCartProductsSuccessfully} from '../../actions/cart.actions';
-import {ErrorInGettingInvoiceById, GotInvoiceByIdSuccessfully, InvoiceNotFoundById} from '../../actions/invoice.actions';
-import {InvoiceModel} from '../../models/invoices.model';
+import {
+  CustomerFeedbackSavedSuccessfully,
+  ErrorInGettingInvoiceById,
+  ErrorInSavingCustomerFeedback,
+  GotInvoiceByIdSuccessfully,
+  InvoiceNotFoundById
+} from '../../actions/invoice.actions';
+import {CustomerFeedback, InvoiceModel} from '../../models/invoices.model';
+import {LoadingFalse} from '../../state/loading.state';
 
 @Injectable({
   providedIn: 'root'
@@ -175,4 +182,10 @@ export class FirestoreService {
       .catch((err) => this.store.dispatch([new ErrorInGettingInvoiceById(err)]));
   }
 
+  updateFeedback(invoiceId: string, feedback: CustomerFeedback) {
+    this.db.doc(`invoices/${invoiceId}`)
+      .set({'feedback': feedback.toJson()}, {merge: true})
+      .then(() => this.store.dispatch([new CustomerFeedbackSavedSuccessfully(), new LoadingFalse()]))
+      .catch((err) => this.store.dispatch([new ErrorInSavingCustomerFeedback(err), new LoadingFalse()]));
+  }
 }
