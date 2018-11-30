@@ -1,0 +1,80 @@
+.grey-logo {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  width: 120px;
+  margin: 0 auto;
+}
+
+.content {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  color: grey;
+}
+
+.setup-link {
+  max-width: 300px;
+  border-radius: 30px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 15px 20px;
+  border: solid 4px aquamarine;
+  color: #214c3f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.setup-link:hover {
+  border: solid 5px aquamarine;
+}
+
+.setup-link:active {
+  border: solid 3px aquamarine;
+}
+
+.navbar-brand {
+  margin: 10px;
+  .brand-title {
+    font-family: 'Audiowide', cursive;
+    color: #545454;
+    span {
+      color: #09bda9;
+    }
+  }
+}
+
+.container {
+  max-width: 700px;
+  margin-top: 20px;
+  .jumbotron {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 40px 10px 10px;
+    background-color: whitesmoke;
+  }
+  i {
+    font-size: 60px;
+    margin: 20px;
+    color: gray;
+    cursor: pointer;
+    @media only screen and (max-width: 600px) {
+      margin: 10px;
+    }
+  }
+
+  i:hover, i:active {
+    color: #FFEB3B;
+  }
+  .active {
+    color: #FFEB3B;
+  }
+}
