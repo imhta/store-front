@@ -49,7 +49,7 @@ export class StoreProductsNotFound {
 }
 
 export class SearchForProductInCatalog {
-  static readonly type = '[Product] Search for product';
+  static readonly type = '[Store-Catalog] Search for product in catalog';
 
   constructor(public  searchQuery: { storeId: string, query: string }) {
   }

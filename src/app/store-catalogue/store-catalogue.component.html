@@ -82,17 +82,19 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!isNotFound">
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img src="../../assets/logo.png" width="80" alt="clothx logo">
-      </a>
-    </nav>
 
-    <div style="text-align: center;">
-      <img src="../../assets/logo.png" class="grey-logo" width="60" alt="clothx logo">
-    </div>
-    <div class="content">There is no store named {{param}} yet</div>
-    <div class="setup-link" (click)="navigateHome() ">Browse other stores</div>
+</div>
+<div *ngIf="!isNotFound">
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="../../assets/logo.png" width="80" alt="clothx logo">
+    </a>
+  </nav>
 
+  <div style="text-align: center;">
+    <img src="../../assets/logo.png" class="grey-logo" width="60" alt="clothx logo">
   </div>
+  <div class="content">There is no store named {{param}} yet</div>
+  <div class="setup-link" (click)="navigateHome() ">Browse other stores</div>
+
+</div>

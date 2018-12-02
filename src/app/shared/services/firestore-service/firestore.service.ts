@@ -52,6 +52,7 @@ export class FirestoreService {
 
   async getAllFavorites() {
     this.uid = this.store.selectSnapshot(AuthState.uid);
+    console.log(this.uid);
     if (this.uid) {
       const allFavorites: FavProduct[] = [];
       await this.favCollectionRef

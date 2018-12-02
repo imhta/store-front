@@ -51,6 +51,8 @@ import {FindInvoiceComponent} from './find-invoice/find-invoice.component';
 import {InvoicePageComponent} from './invoice-page/invoice-page.component';
 import {NoState} from './shared/state/no.state';
 import {NgxKjuaModule} from 'ngx-kjua';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 
 @NgModule({
   declarations: [
@@ -75,8 +77,8 @@ import {NgxKjuaModule} from 'ngx-kjua';
     NgbModule,
     FormsModule,
     NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState, NoState]),
-    // NgxsLoggerPluginModule.forRoot(),
-    // NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
