@@ -46,9 +46,14 @@
             <!--</button>-->
           </mat-card-actions>
           <mat-chip-list>
-            <mat-chip *ngFor="let variant of product.variants" (click)=" showSelectedPrice = variant.sellingPrice ">
+            <span *ngFor="let variant of product.variants">
+            <mat-chip *ngIf="variant.size != ''">
               {{variant.size.toUpperCase()}}
-              <span *ngIf="variant.sellingPrice==showSelectedPrice"> &nbsp;: &#x20B9;{{variant.sellingPrice}}</span>
+              <span *ngIf="!product.isVariantsWithSamePrice"> &nbsp; : &#x20B9;{{variant.sellingPrice}}</span>
+            </mat-chip>
+            </span>
+            <mat-chip *ngIf="product.isVariantsWithSamePrice">
+              <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
             </mat-chip>
           </mat-chip-list>
         </mat-card-content>
@@ -58,4 +63,5 @@
   </div>
 
 </div>
+
 

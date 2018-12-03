@@ -53,6 +53,7 @@ import {NoState} from './shared/state/no.state';
 import {NgxKjuaModule} from 'ngx-kjua';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {ScrollableDirective} from './shared/directives/scrollable/scrollable.directive';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
     FilterBoxComponent,
     SortBoxComponent,
     FindInvoiceComponent,
-    InvoicePageComponent
+    InvoicePageComponent,
+    ScrollableDirective
   ],
   imports: [
     BrowserModule,

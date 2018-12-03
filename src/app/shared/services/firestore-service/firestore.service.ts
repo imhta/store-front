@@ -47,6 +47,8 @@ export class FirestoreService {
     return this.db.collection(`products`).ref
       .where('isListable', '==', true)
       .where('isDeleted', '==', false)
+      .orderBy('createdOn', 'desc')
+      .orderBy('productName')
       .get();
   }
 

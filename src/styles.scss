@@ -28,3 +28,4 @@ $cx-app-theme: mat-light-theme($cx-app-primary, $cx-app-accent, $cx-app-warn);
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($cx-app-theme);
+

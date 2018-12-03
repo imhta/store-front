@@ -1,5 +1,5 @@
 export class GetStoreDetails {
-  static readonly type = '[Products] Get all products';
+  static readonly type = '[Store-Catalog] Get Store Details';
 
   constructor(public usn: string) {
   }

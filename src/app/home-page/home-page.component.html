@@ -1,3 +1,6 @@
-<cx-navbar></cx-navbar>
-<cx-product-listing></cx-product-listing>
-<cx-logo></cx-logo>
+<div cxScrollable (scrollPosition)="scrollHandler($event)">
+  <cx-navbar></cx-navbar>
+  <cx-product-listing></cx-product-listing>
+  <cx-logo></cx-logo>
+
+</div>
