@@ -12,6 +12,7 @@ import {
 } from '../shared/actions/invoice.actions';
 import {CustomerFeedback, InvoiceModel} from '../shared/models/invoices.model';
 import {LoadingTrue} from '../shared/state/loading.state';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'cx-invoice-page',
@@ -38,14 +39,16 @@ export class InvoicePageComponent implements OnInit {
   }
 
   saveFeedback(reaction: 'happy' | 'sad' | 'ok') {
-    this.store.dispatch([new LoadingTrue(), new SaveCustomerFeedback(this.invoice.invoiceId, this.feedback)]);
+    this.feedback.reaction = reaction;
     this.actions$
-      .pipe(ofActionDispatched(CustomerFeedbackSavedSuccessfully))
+      .pipe(ofActionDispatched(CustomerFeedbackSavedSuccessfully), take(5))
       .subscribe(() => this.feedbackStatus = 'GIVEN');
     this.actions$
-      .pipe(ofActionDispatched(ErrorInSavingCustomerFeedback))
+      .pipe(ofActionDispatched(ErrorInSavingCustomerFeedback), take(5))
       .subscribe(({err}) => {
         this.feedbackStatus = 'ERROR';
       });
+    this.store.dispatch([new LoadingTrue(), new SaveCustomerFeedback(this.invoice.invoiceId, this.feedback)]);
+
   }
 }

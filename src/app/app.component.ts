@@ -13,4 +13,5 @@ export class AppComponent {
   constructor(private  store: Store) {
     this.store.dispatch([new LoadingTrue(), new CheckAuthState()]);
   }
+
 }

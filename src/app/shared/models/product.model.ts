@@ -31,12 +31,13 @@ export class SingleProductModel implements OnInit {
   constructor() {
     this.isListable = false;
   }
+
   ngOnInit() {
     this.isFavorite = false;
     this.isCart = false;
   }
 
-  fromFromData(data) {
+  fromFormData(data) {
     this.gender = data.gender;
     this.brandName = data.brandName;
     this.productName = data.productName;
@@ -54,6 +55,31 @@ export class SingleProductModel implements OnInit {
     this.hasNoGstNumber = data.hasNoGstNumber;
   }
 
+  fromFireData(data) {
+    this.gender = data.gender;
+    this.brandName = data.brandName;
+    this.productName = data.productName;
+    this.categories = data.categories;
+    this.description = data.description;
+    this.variants = data.variants;
+    this.addedBy = data.addedBy;
+    this.storeId = data.storeId;
+    this.tags = data.tags;
+    this.taxType = data.taxType;
+    this.hsnCode = data.hsnCode;
+    this.otherTax = +data.otherTax;
+    this.inclusiveAllTaxes = data.inclusiveAllTaxes;
+    this.isVariantsWithSamePrice = data.isVariantsWithSamePrice;
+    this.hasNoGstNumber = data.hasNoGstNumber;
+    this.productUid = data.productUid;
+
+    this.prn = data.prn;
+
+    this.picturesUrl = data.picturesUrl;
+    this.picturesPath = data.picturesPath;
+    this.createdOn = data.createdOn;
+    this.lastModified = data.lastModified;
+  }
 
   toJson() {
     return {
