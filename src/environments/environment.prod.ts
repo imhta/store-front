@@ -9,7 +9,7 @@ export const environment = {
     messagingSenderId: '909059793100'
   },
   algolia: {
-    appId: 'K5TY9WEM1N',
-    apiKey: 'c34f0706878bc2a520600b07f9587757'
+    appId: 'XYNZX5WQ9A',
+    apiKey: 'a38933be7a758f30bd0b1681b35fc15b'
   }
 };
