@@ -1,5 +1,5 @@
 {
-  "hosting": {
+  "hosting": [{
     "target": "spoteasy",
     "public": "dist/clothx",
     "ignore": [
@@ -13,5 +13,19 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },{
+    "target": "spoteasytest",
+    "public": "dist/clothx",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }]
 }

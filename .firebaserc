@@ -13,8 +13,8 @@
     },
     "clothxtest": {
       "hosting" :{
-        "spoteasy": [
-          "spoteasy"
+        "spoteasytest": [
+          "spoteasytest"
         ]
       }
     }

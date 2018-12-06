@@ -14,8 +14,8 @@
     "build_test_env": "ng build --configuration=test --base-href ./ ",
     "deploy_to_gitlab_page": "mkdir public && cp -a /dist/store-website/. /public/",
     "deploy_to_firebase": "firebase deploy --non-interactive --token $FIREBASE_TOKEN",
-    "deploy_to_prod": "firebase deploy --only hosting:console --non-interactive --token $FIREBASE_TOKEN",
-    "deploy_to_dev": "firebase deploy --only hosting:dev --non-interactive --token $FIREBASE_TOKEN"
+    "deploy_to_prod": "firebase deploy --only hosting:spoteasy --non-interactive --token $FIREBASE_TOKEN",
+    "deploy_to_dev": "firebase deploy --only hosting:spoteasytest --non-interactive --token $FIREBASE_TOKEN"
 },
   "private": true,
   "dependencies": {
