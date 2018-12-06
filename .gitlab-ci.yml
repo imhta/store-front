@@ -1,0 +1,33 @@
+image: node:8.11.1
+
+before_script:
+    - npm install
+    - npm install -g @angular/cli
+    - npm install -g firebase-tools
+cache:
+    key: "$CI_COMMIT_REF_NAME"
+    paths:
+    - node_modules/
+
+stages:
+   - production_deployment
+   - test_app_deployment
+
+pages:
+   stage: test_app_deployment
+   script:
+     - npm run build_test_project
+   artifacts:
+     paths:
+       - public
+   only:
+      - development
+
+production_deployment:
+    stage: production_deployment
+    script:
+      - echo 'building production app'
+      - npm run build_prod_project
+      - npm deploy_prod
+    only:
+      - master
