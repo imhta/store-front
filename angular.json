@@ -79,6 +79,10 @@
             "production": {
               "browserTarget": "clothx:build:production"
             }
+            ,
+            "test": {
+              "browserTarget": "clothx:build:test"
+            }
           }
         },
         "extract-i18n": {
