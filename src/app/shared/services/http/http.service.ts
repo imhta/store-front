@@ -13,14 +13,14 @@ export class HttpService {
   }
 
   searchForProductInCatalog(searchQuery) {
-    this.http
+    return this.http
       .post('https://us-central1-clothxnet.cloudfunctions.net/algoliaSearch/store_search', searchQuery)
       .subscribe((res: any[]) => this.store.dispatch([new ProductFoundedInCatalog(res)]));
   }
 
   searchForProduct(searchQuery) {
     console.log(searchQuery);
-    this.http
+    return this.http
       .post('https://us-central1-clothxnet.cloudfunctions.net/algoliaSearch/product_search', searchQuery)
       .subscribe((res: any[]) => this.store.dispatch([new ProductFounded(res)]));
   }

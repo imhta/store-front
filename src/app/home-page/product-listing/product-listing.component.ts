@@ -7,8 +7,6 @@ import {SingleProductModel, WholeProducts} from '../../shared/models/product.mod
 import {
   AddToCart,
   AddToFavorite,
-  GetAllCarts,
-  GetAllFavorites,
   GotCartsSuccessfully,
   GotFavoritesSuccessfully,
   RemoveFromCart,
@@ -50,7 +48,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
-    this.store.dispatch([new LoadingTrue(), new GetAllProducts(), new GetAllCarts(), new GetAllFavorites()]);
+    this.store.dispatch([new LoadingTrue(), new GetAllProducts()]);
     this.productsSubscription = this.$productsState.subscribe((data) => {
       this.wholeProducts = data;
       this.products = this.wholeProducts.products;
@@ -70,10 +68,13 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        console.log(params);
+        if (params.length > 0) {
+          console.log(params);
 
-        this.queryParam = JSON.parse(params.filter);
-        this.localSorting(params['sortBy']);
+          this.queryParam = JSON.parse(params.filter);
+          this.localSorting(params['sortBy']);
+        }
+
       });
   }
 
@@ -123,22 +124,15 @@ export class ProductListingComponent implements OnInit, OnDestroy {
     this.store
       .dispatch([
         new LoadingTrue(),
-        new SearchForProduct(
-          {
-            query:
-              this.searchQuery.query
-              + ' '
-              + this.queryParam.categories.gender
-              + ' '
-              + this.queryParam.occasion
-              + ' '
-              + this.queryParam.size
-          })
+        new SearchForProduct(this.searchQuery)
       ]);
     this.actions$.pipe(ofActionDispatched(ProductFounded), take(5)).subscribe(({resultProducts}) => {
-      this.resultProduct = resultProducts;
+      if (resultProducts.length >= 0) {
+        this.resultProduct = resultProducts;
+        console.log(this.resultProduct);
+        this.store.dispatch([new LoadingFalse()]);
+      }
       console.log(this.resultProduct);
-      this.store.dispatch([new LoadingFalse()]);
     });
   }
 

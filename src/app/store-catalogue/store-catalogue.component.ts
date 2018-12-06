@@ -41,6 +41,7 @@ export class StoreCatalogueComponent implements OnInit {
               public dialog: MatDialog,
               private bottomSheet: MatBottomSheet) {
     this.route.params.pipe(take(1)).subscribe(params => {
+      console.log('ss');
       this.param = params['usn'];
       this.store.dispatch([new GetStoreDetails(params['usn'])]);
     });
@@ -59,9 +60,10 @@ export class StoreCatalogueComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        console.log(params);
+        if (params.length > 0) {
 
-        this.queryParam = JSON.parse(params.filter);
+          this.queryParam = JSON.parse(params.filter);
+        }
       });
   }
 
@@ -89,21 +91,15 @@ export class StoreCatalogueComponent implements OnInit {
     this.store
       .dispatch([
         new LoadingTrue(),
-        new SearchForProductInCatalog(
-          {
-            query:
-              this.searchQuery.query
-              + ' '
-              + this.queryParam.categories.gender
-              + ' '
-              + this.queryParam.occasion
-              + ' '
-              + this.queryParam.size,
-            storeId: this.searchQuery.storeId
-          })]);
+        new SearchForProductInCatalog(this.searchQuery)
+      ]);
     this.actions$.pipe(ofActionDispatched(ProductFoundedInCatalog), take(5)).subscribe(({resultProducts}) => {
-      this.resultProduct = resultProducts;
-      this.store.dispatch([new LoadingFalse()]);
+      if (resultProducts.length >= 0) {
+        this.resultProduct = resultProducts;
+        console.log(this.resultProduct);
+        this.store.dispatch([new LoadingFalse()]);
+      }
+      console.log(this.resultProduct);
     });
   }
 

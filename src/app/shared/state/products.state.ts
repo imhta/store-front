@@ -10,20 +10,16 @@ import {
   AddToFavorite,
   ErrorInAddingCart,
   ErrorInAddingFavorite,
-  ErrorInGettingCarts,
   ErrorInGettingFavorite,
   ErrorInRemovingItemFromCart,
   ErrorInRemovingItemFromFavorite,
-  GetAllCarts,
   GetAllFavorites,
-  GotCartsSuccessfully,
   GotFavoritesSuccessfully,
   RemovedFromCartSuccessfully,
   RemovedFromFavoriteSuccessfully,
   RemoveFromCart,
   RemoveFromFavorite,
 } from '../actions/user.actions';
-import {GetAllCartProducts, GotCartProductsSuccessfully} from '../actions/cart.actions';
 import {HttpService} from '../services/http/http.service';
 
 
@@ -45,8 +41,9 @@ export class ProductsState {
     const allProducts: SingleProductModel[] = [];
     this.dbService.getAllProducts().then((data) => {
       data.forEach((product) => {
-        // @ts-ignore
-        allProducts.push(product.data());
+        const productModel = new SingleProductModel();
+        productModel.fromFireData(product.data());
+        return allProducts.push(productModel);
       });
 
       this.store.dispatch([new GotAllProductsSuccessfully(allProducts)]);
@@ -101,10 +98,10 @@ export class ProductsState {
     this.dbService.getAllFavorites().catch((err) => this.store.dispatch([new ErrorInGettingFavorite(err)]));
   }
 
-  @Action(GetAllCarts)
-  getAllCarts() {
-    this.dbService.getAllCartItems().catch((err) => this.store.dispatch([new ErrorInGettingCarts(err)]));
-  }
+  // @Action(GetAllCarts)
+  // getAllCarts() {
+  //   this.dbService.getAllCartItems().catch((err) => this.store.dispatch([new ErrorInGettingCarts(err)]));
+  // }
 
   @Action(GotFavoritesSuccessfully)
   gotAllFavorites(ctx: StateContext<WholeProducts>, {favorites}: GotFavoritesSuccessfully) {
@@ -112,23 +109,24 @@ export class ProductsState {
     ctx.setState({...state, favorites: favorites});
   }
 
-  @Action(GotCartsSuccessfully)
-  gotAllCarts(ctx: StateContext<WholeProducts>, {carts}: GotCartsSuccessfully) {
-    const state = ctx.getState();
-    ctx.setState({...state, cartedProducts: carts});
-  }
+  //
+  // @Action(GotCartsSuccessfully)
+  // gotAllCarts(ctx: StateContext<WholeProducts>, {carts}: GotCartsSuccessfully) {
+  //   const state = ctx.getState();
+  //   ctx.setState({...state, cartedProducts: carts});
+  // }
+  //
+  // @Action(GetAllCartProducts)
+  // getAllCartProducts(ctx: StateContext<WholeProducts>, {products}: GetAllCartProducts) {
+  //   this.dbService.getAllCartedProducts(products);
+  // }
 
-  @Action(GetAllCartProducts)
-  getAllCartProducts(ctx: StateContext<WholeProducts>, {products}: GetAllCartProducts) {
-    this.dbService.getAllCartedProducts(products);
-  }
-
-  @Action(GotCartProductsSuccessfully)
-  gotAllCartProductsSuccessfully(ctx: StateContext<WholeProducts>, {products}: GotCartProductsSuccessfully) {
-    const state = ctx.getState();
-    ctx.setState({...state, cartedProductsWithDetail: products});
-    return this.store.dispatch([new LoadingFalse()]);
-  }
+  // @Action(GotCartProductsSuccessfully)
+  // gotAllCartProductsSuccessfully(ctx: StateContext<WholeProducts>, {products}: GotCartProductsSuccessfully) {
+  //   const state = ctx.getState();
+  //   ctx.setState({...state, cartedProductsWithDetail: products});
+  //   return this.store.dispatch([new LoadingFalse()]);
+  // }
 
   @Action(SearchForProduct)
   searchForProduct(cxt: StateContext<any[]>, {searchQuery}: SearchForProduct) {

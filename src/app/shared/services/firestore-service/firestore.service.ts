@@ -47,11 +47,14 @@ export class FirestoreService {
     return this.db.collection(`products`).ref
       .where('isListable', '==', true)
       .where('isDeleted', '==', false)
+      .orderBy('createdOn', 'desc')
+      .orderBy('productName')
       .get();
   }
 
   async getAllFavorites() {
     this.uid = this.store.selectSnapshot(AuthState.uid);
+    console.log(this.uid);
     if (this.uid) {
       const allFavorites: FavProduct[] = [];
       await this.favCollectionRef
