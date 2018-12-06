@@ -8,8 +8,15 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build_test_project": "ng build --configuration=test --base-href ./"
-  },
+    "set_production_environment": "firebase use clothxnet --non-interactive --token $FIREBASE_TOKEN ",
+    "set_development_environment": "firebase use clothxtest --non-interactive --token $FIREBASE_TOKEN ",
+    "build_prod_env": "ng build --configuration=production --base-href ./",
+    "build_test_env": "ng build --configuration=test --base-href ./ ",
+    "deploy_to_gitlab_page": "mkdir public && cp -a /dist/store-website/. /public/",
+    "deploy_to_firebase": "firebase deploy --non-interactive --token $FIREBASE_TOKEN",
+    "deploy_to_prod": "firebase deploy --only hosting:console --non-interactive --token $FIREBASE_TOKEN",
+    "deploy_to_dev": "firebase deploy --only hosting:dev --non-interactive --token $FIREBASE_TOKEN"
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.1.1",
