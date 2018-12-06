@@ -1,4 +1,4 @@
-
+import * as firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
 import GeoPoint = firebase.firestore.GeoPoint;
 
