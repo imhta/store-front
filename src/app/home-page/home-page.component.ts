@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from '../../environments/environment';
 import {AuthState} from '../shared/state/auth.state';
 import {Store} from '@ngxs/store';
 import {Navigate} from '@ngxs/router-plugin';
@@ -16,10 +15,6 @@ export class HomePageComponent implements OnInit {
   showResults = false;
 
   isLoggedIn: boolean;
-  searchConfig = {
-    ...environment.algolia,
-    indexName: 'product_search'
-  };
 
   constructor(private store: Store) {
   }

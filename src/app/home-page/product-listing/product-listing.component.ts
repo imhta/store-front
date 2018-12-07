@@ -113,8 +113,6 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   onChange() {
     if (this.searchQuery.query.length === 0) {
       this.resultProduct = [];
-    } else {
-      this.search();
     }
   }
 
