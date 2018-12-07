@@ -27,15 +27,16 @@ export class StoreCatalogState {
 
   @Action(GetStoreProducts)
   getStoreProducts(ctx: StateContext<any>, {storeUid}: GetStoreProducts) {
-    const storeProducts = [];
-    this.dbService.getStoreProducts(storeUid).then(async (data) => {
-      if (data.empty) {
-        return this.store.dispatch([new StoreProductsNotFound()]);
-      } else {
-        await data.forEach((doc) => storeProducts.push(doc.data()));
-        return this.store.dispatch([new GotStoreProductsSuccessfully(storeProducts)]);
-      }
-    }).catch((err) => this.store.dispatch([new ErrorInGettingStoreProducts(err)]));
+    this.dbService.getStoreProducts(storeUid)
+      .subscribe((data) => {
+          if (data.length === 0) {
+            this.store.dispatch([new StoreProductsNotFound()]);
+          } else {
+            this.store.dispatch([new GotStoreProductsSuccessfully(data)]);
+          }
+        },
+        error1 => this.store.dispatch([new ErrorInGettingStoreProducts(error1)])
+      );
 
   }
 

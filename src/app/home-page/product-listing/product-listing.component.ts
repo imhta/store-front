@@ -35,9 +35,8 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   showSelectedPrice;
   isLoggedIn: boolean;
   resultProduct: SingleProductModel[] = [];
-  searchQuery: { query: string } = {query: ''};
+  searchQuery: { query: string, filters: object, sortBy: string } = {query: '', filters: {}, sortBy: ''};
   screenWidth = window.screen.width;
-  queryParam;
   private temp: SingleProductModel;
 
   constructor(
@@ -68,15 +67,14 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params.length > 0) {
-          console.log(params);
-
-          this.queryParam = JSON.parse(params.filter);
-          this.localSorting(params['sortBy']);
+        if (params.filter.length > 0 && params.sortBy.length > 0) {
+          this.searchQuery.filters = JSON.parse(params.filter);
+          this.searchQuery.sortBy = params.sortBy;
+          this.search();
         }
-
       });
   }
+
 
   localSorting(sortBy) {
     switch (sortBy) {
@@ -115,6 +113,8 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   onChange() {
     if (this.searchQuery.query.length === 0) {
       this.resultProduct = [];
+    } else {
+      this.search();
     }
   }
 

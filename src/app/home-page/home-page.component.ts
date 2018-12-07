@@ -28,9 +28,9 @@ export class HomePageComponent implements OnInit {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
   }
 
-  scrollHandler(e) {
-    console.log(e);
-  }
+  // scrollHandler(e) {
+  //   console.log(e);
+  // }
   navigateTo(path: string) {
     if (this.isLoggedIn) {
       return this.store.dispatch([new LoadingTrue(), new Navigate([path])]);

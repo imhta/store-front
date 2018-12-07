@@ -31,7 +31,7 @@ export class StoreCatalogueComponent implements OnInit {
   isProductFound = true;
   param;
   resultProduct: any[] = [];
-  searchQuery: { storeId: string, query: string } = {storeId: '', query: ''};
+  searchQuery: { storeId: string, query: string, filters: object, sortBy: string } = {storeId: '', query: '', filters: {}, sortBy: ''};
   screenWidth = window.screen.width;
   queryParam;
 
@@ -61,8 +61,9 @@ export class StoreCatalogueComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         if (params.length > 0) {
-
-          this.queryParam = JSON.parse(params.filter);
+          this.searchQuery.filters = JSON.parse(params.filter);
+          this.searchQuery.sortBy = params.sortBy;
+          this.search();
         }
       });
   }
@@ -84,7 +85,11 @@ export class StoreCatalogueComponent implements OnInit {
   }
 
   onChange() {
-    this.resultProduct = [];
+    if (this.searchQuery.query.length === 0) {
+      this.resultProduct = [];
+    } else {
+      this.search();
+    }
   }
 
   search() {

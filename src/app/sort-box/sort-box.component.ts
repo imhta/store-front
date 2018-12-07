@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {Router} from '@angular/router';
 
@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class SortBoxComponent implements OnInit {
 screenWidth = window.screen.width;
-sortBy;
+  sortBy = 'high2low';
   constructor(private bottomSheetRef: MatBottomSheetRef<SortBoxComponent>, private router: Router) {}
 
   openLink(event): void {

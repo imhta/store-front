@@ -5,7 +5,9 @@
            (keyup.enter)="search()">
     <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
   </div>
+
 </div>
+
 <div class="mobile-tab" *ngIf="screenWidth < 600">
   <div class="row">
     <div class="col" (click)="openSortBottomSheet()">
@@ -30,8 +32,10 @@
       <cx-sort-box></cx-sort-box>
     </div>
     <hr *ngIf="!(screenWidth < 600)">
+
     <div class="container">
-      <mat-card *ngFor="let product of searchQuery.query.length === 0 ? products: resultProduct" class="product-card">
+
+      <mat-card *ngFor="let product of  products" class="product-card">
         <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
         <mat-card-content>
           <mat-card-actions>

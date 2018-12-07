@@ -7,9 +7,5 @@ export const environment = {
     projectId: 'clothxnet',
     storageBucket: 'clothxnet.appspot.com',
     messagingSenderId: '909059793100'
-  },
-  algolia: {
-    appId: 'XYNZX5WQ9A',
-    apiKey: 'a38933be7a758f30bd0b1681b35fc15b'
   }
 };
