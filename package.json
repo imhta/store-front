@@ -7,23 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    <<<<<<<
-    Updated
-    upstream
     "e2e": "ng e2e"
-    =======
-    "e2e": "ng e2e",
-    "set_production_environment": "firebase use clothxnet --non-interactive --token $FIREBASE_TOKEN ",
-    "set_development_environment": "firebase use clothxtest --non-interactive --token $FIREBASE_TOKEN ",
-    "build_prod_env": "ng build --configuration=production --base-href ./",
-    "build_test_env": "ng build --configuration=test --base-href ./ ",
-    "deploy_to_gitlab_page": "mkdir public && cp -a /dist/store-website/. /public/",
-    "deploy_to_firebase": "firebase deploy --non-interactive --token $FIREBASE_TOKEN",
-    "deploy_to_prod": "firebase deploy --only hosting:spoteasy --non-interactive --token $FIREBASE_TOKEN",
-    "deploy_to_dev": "firebase deploy --only hosting:spoteasytest --non-interactive --token $FIREBASE_TOKEN"
-    >>>>>>>
-    Stashed
-    changes
   },
   "private": true,
   "dependencies": {
@@ -56,7 +40,6 @@
     "hammerjs": "^2.0.8",
     "kjua": "^0.1.2",
     "ngx-kjua": "^1.3.0",
-    "npm": "^6.4.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "tslib": "^1.9.0",
