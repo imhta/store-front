@@ -1,5 +1,7 @@
+import * as firebase from 'firebase';
 import {OnInit} from '@angular/core';
 import Timestamp = firebase.firestore.Timestamp;
+
 
 export class SingleProductModel implements OnInit {
   productUid: string;
