@@ -36,20 +36,23 @@ export class FirestoreService {
   }
 
   getStoreProducts(storeUid: string) {
-    return this.db.collection(`products`).ref
-      .where('storeId', '==', storeUid)
-      .where('isListable', '==', true)
-      .where('isDeleted', '==', false)
-      .get();
+    return this.db.collection(`products`, ref =>
+      ref
+        .where('storeId', '==', storeUid)
+        .where('isListable', '==', true)
+        .where('isDeleted', '==', false))
+      .valueChanges();
+
   }
 
   getAllProducts() {
-    return this.db.collection(`products`).ref
-      .where('isListable', '==', true)
-      .where('isDeleted', '==', false)
-      .orderBy('createdOn', 'desc')
-      .orderBy('productName')
-      .get();
+    return this.db.collection(`products`, ref =>
+      ref
+        .where('isListable', '==', true)
+        .where('isDeleted', '==', false)
+        .orderBy('createdOn', 'desc')
+        .orderBy('productName'))
+      .valueChanges();
   }
 
   async getAllFavorites() {

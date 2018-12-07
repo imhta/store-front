@@ -3,7 +3,6 @@
 <mat-chip-list *ngIf="screenWidth >= 600">
   <mat-chip (click)="addSort('low2high')" [selected]="sortBy === 'low2high'">Price -- Low to High</mat-chip>
   <mat-chip (click)="addSort('high2low')" [selected]="sortBy === 'high2low'">Price -- High to Low</mat-chip>
-  <mat-chip (click)="addSort('newestFirst')" [selected]="sortBy === 'newestFirst'">Newest First</mat-chip>
 </mat-chip-list>
 
 <mat-nav-list *ngIf="screenWidth < 600">
@@ -15,7 +14,4 @@
     <span mat-line>Price -- High to Low</span>
   </a>
 
-  <a  mat-list-item (click)="openLink('newestFirst')">
-    <span mat-line>Newest First</span>
-  </a>
 </mat-nav-list>

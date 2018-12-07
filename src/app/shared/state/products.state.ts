@@ -38,18 +38,12 @@ export class ProductsState {
 
   @Action(GetAllProducts)
   getAllProducts() {
-    const allProducts: SingleProductModel[] = [];
-    this.dbService.getAllProducts().then((data) => {
-      data.forEach((product) => {
-        const productModel = new SingleProductModel();
-        productModel.fromFireData(product.data());
-        return allProducts.push(productModel);
-      });
+    this.dbService.getAllProducts()
+      .subscribe((data: SingleProductModel[]) =>
+          this.store.dispatch([new GotAllProductsSuccessfully(data)]),
+        error1 => this.store.dispatch([new ErrorInGettingAllProducts(error1)])
+      );
 
-      this.store.dispatch([new GotAllProductsSuccessfully(allProducts)]);
-    }).catch((err) => {
-      this.store.dispatch([new ErrorInGettingAllProducts(err)]);
-    });
   }
 
   @Action(GotAllProductsSuccessfully)

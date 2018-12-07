@@ -2,6 +2,7 @@ import {SingleProductModel} from '../models/product.model';
 
 export class GetAllProducts {
   static readonly type = '[Products] Get all products';
+
 }
 
 export class GotAllProductsSuccessfully {
