@@ -8,4 +8,5 @@ export const environment = {
     storageBucket: 'clothxnet.appspot.com',
     messagingSenderId: '909059793100'
   }
+  
 };

@@ -24,4 +24,5 @@ export class HttpService {
       .post('https://us-central1-clothxnet.cloudfunctions.net/algoliaSearch/product_search', searchQuery)
       .subscribe((res: any[]) => this.store.dispatch([new ProductFounded(res)]));
   }
+
 }

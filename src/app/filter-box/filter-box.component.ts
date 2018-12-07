@@ -33,6 +33,7 @@ export class FilterBoxComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+
   }
 
   closeDialog(): void {
@@ -46,9 +47,8 @@ export class FilterBoxComponent implements OnInit {
           console.log(params);
 
           this.queryParam = JSON.parse(params.filter);
-          this.updateFilter();
         }
-
+        this.updateFilter();
       });
 
 

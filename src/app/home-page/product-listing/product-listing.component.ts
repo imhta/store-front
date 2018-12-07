@@ -67,32 +67,17 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params.filter.length > 0 && params.sortBy.length > 0) {
-          this.searchQuery.filters = JSON.parse(params.filter);
-          this.searchQuery.sortBy = params.sortBy;
-          this.search();
+        if (params && params.filter && params.sortBy) {
+          if (params.filter.length > 0 && params.sortBy.length > 0) {
+            this.searchQuery.filters = JSON.parse(params.filter);
+            this.searchQuery.sortBy = params.sortBy;
+            this.search();
+          }
         }
+
       });
   }
 
-
-  localSorting(sortBy) {
-    switch (sortBy) {
-      case 'low2high': {
-
-        break;
-      }
-      case 'high2low': {
-        break;
-      }
-      case 'newestFirst': {
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
 
   openFilter(): void {
     const dialogRef = this.dialog.open(FilterBoxComponent, {

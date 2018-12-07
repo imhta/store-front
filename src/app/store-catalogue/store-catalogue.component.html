@@ -69,7 +69,7 @@
             <mat-card-content>
               <mat-card-actions>
               </mat-card-actions>
-              <mat-chip-list>
+              <mat-chip-list *ngIf="searchQuery.query.length === 0">
             <span *ngFor="let variant of product.variants">
             <mat-chip *ngIf="variant.size != ''">
               {{variant.size.toUpperCase()}}
@@ -78,6 +78,13 @@
             </span>
                 <mat-chip *ngIf="product.isVariantsWithSamePrice">
                   <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
+                </mat-chip>
+              </mat-chip-list>
+              <mat-chip-list *ngIf="searchQuery.query.length !== 0">
+
+                <mat-chip *ngIf="product.size != ''">
+                  {{variant.size.toUpperCase()}}
+                  <span> &nbsp; : &#x20B9;{{product.sellingPrice}}</span>
                 </mat-chip>
               </mat-chip-list>
             </mat-card-content>
