@@ -43,10 +43,11 @@ export class FilterBoxComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params.length > 0) {
+        if (params !== {}) {
           console.log(params);
 
           this.queryParam = JSON.parse(params.filter);
+          this.filters = this.queryParam;
         }
         this.updateFilter();
       });
