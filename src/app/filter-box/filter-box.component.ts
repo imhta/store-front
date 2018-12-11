@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'cx-filter-box',
@@ -11,10 +11,11 @@ export class FilterBoxComponent implements OnInit {
   screenWidth = window.screen.width;
   availableSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'];
   availableOccasions = ['Casuals', 'Formals', 'Party', 'Sports'];
+  queryParam;
   filters = {
     location: 'Coimbatore',
     categories: {
-      gender: 'men'
+      gender: 'Men'
     },
     price: {
       inMin: 0,
@@ -29,8 +30,10 @@ export class FilterBoxComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<FilterBoxComponent>,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
+
   }
 
   closeDialog(): void {
@@ -38,7 +41,17 @@ export class FilterBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateFilter();
+    this.route.queryParams
+      .subscribe(params => {
+        if (params.length > 0) {
+          console.log(params);
+
+          this.queryParam = JSON.parse(params.filter);
+        }
+        this.updateFilter();
+      });
+
+
   }
 
   // addSize(size) {
@@ -52,7 +65,10 @@ export class FilterBoxComponent implements OnInit {
 
   updateFilter() {
     this.router
-      .navigate([this.router.url.split('?')[0]], {queryParams: {filter: JSON.stringify(this.filters)}, queryParamsHandling: 'merge'})
+      .navigate([this.router.url.split('?')[0]], {
+        queryParams: {filter: JSON.stringify(this.queryParam ? this.queryParam : this.filters)},
+        queryParamsHandling: 'merge'
+      })
       .then()
       .catch((err) => console.log(err));
   }

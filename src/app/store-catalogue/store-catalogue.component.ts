@@ -31,7 +31,13 @@ export class StoreCatalogueComponent implements OnInit {
   isProductFound = true;
   param;
   resultProduct: any[] = [];
-  searchQuery: { storeId: string, query: string } = {storeId: '', query: ''};
+  searchQuery: { storeId: string, query: string, filters: object, sortBy: string, page: number } = {
+    storeId: '',
+    query: '',
+    filters: {},
+    sortBy: '',
+    page: 0
+  };
   screenWidth = window.screen.width;
   queryParam;
 
@@ -41,13 +47,15 @@ export class StoreCatalogueComponent implements OnInit {
               public dialog: MatDialog,
               private bottomSheet: MatBottomSheet) {
     this.route.params.pipe(take(1)).subscribe(params => {
-      console.log('ss');
       this.param = params['usn'];
       this.store.dispatch([new GetStoreDetails(params['usn'])]);
     });
     this.storeCatalogSubscription = this.$storeCatalog.subscribe((data) => {
       this.storeCatalog = data;
       this.searchQuery.storeId = this.storeCatalog.storeDetails['storeUid'];
+      if (this.searchQuery.storeId) {
+        this.search();
+      }
     });
     this.actions$
       .pipe(ofActionDispatched(StoreNotFound))
@@ -60,10 +68,8 @@ export class StoreCatalogueComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params.length > 0) {
-
-          this.queryParam = JSON.parse(params.filter);
-        }
+        this.searchQuery.filters = JSON.parse(params.filter);
+        this.searchQuery.sortBy = params.sortBy;
       });
   }
 
@@ -83,9 +89,6 @@ export class StoreCatalogueComponent implements OnInit {
     this.bottomSheet.open(SortBoxComponent);
   }
 
-  onChange() {
-    this.resultProduct = [];
-  }
 
   search() {
     this.store

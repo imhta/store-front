@@ -35,9 +35,8 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   showSelectedPrice;
   isLoggedIn: boolean;
   resultProduct: SingleProductModel[] = [];
-  searchQuery: { query: string } = {query: ''};
+  searchQuery: { query: string, filters: object, sortBy: string, page: number } = {query: '', filters: {}, sortBy: '', page: 0};
   screenWidth = window.screen.width;
-  queryParam;
   private temp: SingleProductModel;
 
   constructor(
@@ -68,33 +67,17 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params.length > 0) {
-          console.log(params);
-
-          this.queryParam = JSON.parse(params.filter);
-          this.localSorting(params['sortBy']);
+        if (params && params.filter && params.sortBy) {
+          if (params.filter.length > 0 && params.sortBy.length > 0) {
+            this.searchQuery.filters = JSON.parse(params.filter);
+            this.searchQuery.sortBy = params.sortBy;
+            this.search();
+          }
         }
 
       });
   }
 
-  localSorting(sortBy) {
-    switch (sortBy) {
-      case 'low2high': {
-
-        break;
-      }
-      case 'high2low': {
-        break;
-      }
-      case 'newestFirst': {
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
 
   openFilter(): void {
     const dialogRef = this.dialog.open(FilterBoxComponent, {
@@ -112,11 +95,6 @@ export class ProductListingComponent implements OnInit, OnDestroy {
     this.bottomSheet.open(SortBoxComponent);
   }
 
-  onChange() {
-    if (this.searchQuery.query.length === 0) {
-      this.resultProduct = [];
-    }
-  }
 
   search() {
 

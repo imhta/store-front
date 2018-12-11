@@ -56,14 +56,14 @@ export class SearchForProductInCatalog {
 }
 
 export class ProductFoundedInCatalog {
-  static readonly type = '[Product] Product founded';
+  static readonly type = '[Store-Catalog] Product founded';
 
   constructor(public resultProducts: any[]) {
   }
 }
 
 export class ErrorInProductSearchInCatalog {
-  static readonly type = '[Product] Error: error in Product search';
+  static readonly type = '[Store-Catalog] Error: error in Product search';
 
   constructor(public  err: string) {
   }

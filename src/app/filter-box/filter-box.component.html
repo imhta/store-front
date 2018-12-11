@@ -9,8 +9,10 @@
   <div class="font-weight-bold sub-title"><p>LOCATION</p></div>
   <div class="location-filter">
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Current location" [(ngModel)]="filters.location" (ngModelChange)="updateFilter()">
+      <input matInput placeholder="Current location" disabled [(ngModel)]="filters.location"
+             (ngModelChange)="updateFilter()">
       <mat-icon matSuffix>my_location</mat-icon>
+      <mat-hint>We are now only available at Coimbatore!</mat-hint>
     </mat-form-field>
   </div>
   <hr>
@@ -21,16 +23,33 @@
     <mat-form-field appearance="outline">
       <mat-label>Gender</mat-label>
       <mat-select [(ngModel)]="filters.categories.gender" (selectionChange)="updateFilter()">
-        <mat-option value="men">Men</mat-option>
-        <mat-option value="women">Women</mat-option>
-        <mat-option value="boy">Boy</mat-option>
-        <mat-option value="girl">Girl</mat-option>
+        <mat-option value="Men">Men</mat-option>
+        <mat-option value="Women">Women</mat-option>
+        <mat-option value="Boy">Boy</mat-option>
+        <mat-option value="Girl">Girl</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <hr>
 
   <div class="font-weight-bold sub-title"><p>PRICE</p></div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Min</mat-label>
+        <input matInput [(ngModel)]="filters.price.min" type="number" readonly disabled
+               (ngModelChange)="updateFilter()">
+        <mat-hint align="end">&#x20B9;</mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Max</mat-label>
+        <input matInput [(ngModel)]="filters.price.max" type="number" (ngModelChange)="updateFilter()">
+        <mat-hint align="end">&#x20B9;</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
   <mat-slider
     thumbLabel
     tickInterval="auto"
@@ -39,22 +58,7 @@
     [(ngModel)]="filters.price.max"
     [min]="filters.price.inMin"
     [max]="filters.price.inMax"></mat-slider>
-  <div class="row">
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Min</mat-label>
-        <input matInput [(ngModel)]="filters.price.min"  (ngModelChange)="updateFilter()">
-        <mat-hint align="end">&#x20B9;</mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Max</mat-label>
-        <input matInput [(ngModel)]="filters.price.max"  (ngModelChange)="updateFilter()">
-        <mat-hint align="end">&#x20B9;</mat-hint>
-      </mat-form-field>
-    </div>
-  </div>
+
 
   <hr>
 
@@ -73,13 +77,13 @@
     </div>
   </div>
   <hr>
-  <div class="font-weight-bold sub-title"><p>AVAILABILITY</p></div>
-  <div class="availability-filter">
-    <div>
-      <mat-checkbox [(ngModel)]="filters.allowOutOfStock" (change)="updateFilter()">Include Out of Stock</mat-checkbox>
-    </div>
+  <!--<div class="font-weight-bold sub-title"><p>AVAILABILITY</p></div>-->
+  <!--<div class="availability-filter">-->
+  <!--<div>-->
+  <!--<mat-checkbox [(ngModel)]="filters.allowOutOfStock" (change)="updateFilter()">Include Out of Stock</mat-checkbox>-->
+  <!--</div>-->
 
-  </div>
+  <!--</div>-->
 
 
 </div>
