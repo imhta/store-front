@@ -5,6 +5,7 @@ $icon-background-color: #09bda9;
   bottom: 20px;
   z-index: 1;
   background-color: $icon-background-color;
+
   mat-icon {
     color: white;
   }
@@ -36,12 +37,12 @@ ngb-carousel {
 
   .product-card {
     display: inline-block;
-    margin-top: 15px;
+    margin: 10px;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
-    width: 150px;
-    height: 250px;
+    width: 200px;
+    height: 300px;
 
     mat-chip {
       background-color: #09bda9;
@@ -82,10 +83,15 @@ ngb-carousel {
 
     img {
       height: 250px;
-      width: 150px;
+      width: 200px;
       display: block;
       object-fit: cover;
 
+    }
+
+    .product-name {
+      display: block;
+      margin: 10px;
     }
   }
 
@@ -115,7 +121,7 @@ ngb-carousel {
   display: none;
 }
 
-.col-md {
+.col-md, .col-sm {
   padding: 0;
   position: relative;
   height: 300px;
@@ -157,4 +163,24 @@ ngb-carousel {
 
 }
 
+.col-sm {
+  height: 533px;
+}
 
+footer .col-sm {
+  height: 150px;
+}
+
+.brand-title {
+  font-family: 'Audiowide', cursive;
+  //color: #545454;
+  color: white;
+  font-size: 45px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.52);
+
+  span {
+    color: #09bda9;
+  }
+}

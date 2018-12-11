@@ -20,6 +20,21 @@ export class HomePageComponent implements OnInit {
   wholeProducts: WholeProducts;
   products: SingleProductModel[];
   isLoggedIn: boolean;
+  filters = {
+    location: 'Coimbatore',
+    categories: {
+      gender: 'Men'
+    },
+    price: {
+      inMin: 0,
+      inMax: 10000,
+      min: 0,
+      max: 10000
+    },
+    size: '',
+    occasion: '',
+    allowOutOfStock: false
+  };
 
   constructor(private config: NgbCarouselConfig, private store: Store) {
     config.showNavigationArrows = false;
@@ -35,9 +50,50 @@ export class HomePageComponent implements OnInit {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
   }
 
-  // scrollHandler(e) {
-  //   console.log(e);
-  // }
+  navigateWithFilters(path: string) {
+    switch (path) {
+      case 'Men': {
+        this.filters.categories.gender = 'Men';
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        break;
+      }
+      case 'Women': {
+        this.filters.categories.gender = 'Women';
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        break;
+      }
+      case 'Boy': {
+        this.filters.categories.gender = 'Boy';
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        break;
+      }
+      case 'Girl': {
+        this.filters.categories.gender = 'Girl';
+        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        break;
+      }
+      case 'Formals': {
+        this.filters.occasion = 'Formals';
+        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        break;
+      }
+      case 'Casuals': {
+        this.filters.occasion = 'Casuals';
+        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        break;
+      }
+      case 'Wedding': {
+        this.filters.occasion = 'Wedding';
+        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        break;
+      }
+      case 'Sports': {
+        this.filters.occasion = 'Sports';
+        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        break;
+      }
+    }
+  }
   scrollLeft() {
     document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft + 50;
 
