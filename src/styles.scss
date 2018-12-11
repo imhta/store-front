@@ -29,3 +29,6 @@ $cx-app-theme: mat-light-theme($cx-app-primary, $cx-app-accent, $cx-app-warn);
 // that you are using.
 @include angular-material-theme($cx-app-theme);
 
+body {
+  overflow-x: hidden;
+}

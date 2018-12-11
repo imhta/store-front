@@ -9,8 +9,10 @@
   <div class="font-weight-bold sub-title"><p>LOCATION</p></div>
   <div class="location-filter">
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Current location" [(ngModel)]="filters.location" (ngModelChange)="updateFilter()">
+      <input matInput placeholder="Current location" disabled [(ngModel)]="filters.location"
+             (ngModelChange)="updateFilter()">
       <mat-icon matSuffix>my_location</mat-icon>
+      <mat-hint>We are now only available at Coimbatore!</mat-hint>
     </mat-form-field>
   </div>
   <hr>
@@ -35,14 +37,15 @@
     <div class="col">
       <mat-form-field appearance="outline">
         <mat-label>Min</mat-label>
-        <input matInput [(ngModel)]="filters.price.min" readonly disabled (ngModelChange)="updateFilter()">
+        <input matInput [(ngModel)]="filters.price.min" type="number" readonly disabled
+               (ngModelChange)="updateFilter()">
         <mat-hint align="end">&#x20B9;</mat-hint>
       </mat-form-field>
     </div>
     <div class="col">
       <mat-form-field appearance="outline">
         <mat-label>Max</mat-label>
-        <input matInput [(ngModel)]="filters.price.max"  (ngModelChange)="updateFilter()">
+        <input matInput [(ngModel)]="filters.price.max" type="number" (ngModelChange)="updateFilter()">
         <mat-hint align="end">&#x20B9;</mat-hint>
       </mat-form-field>
     </div>

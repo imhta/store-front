@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Store} from '@ngxs/store';
 import {ProductFoundedInCatalog} from '../../actions/store-catalog.actions';
 import {ProductFounded} from '../../actions/products.actions';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,14 @@ export class HttpService {
 
   searchForProductInCatalog(searchQuery) {
     return this.http
-      .post('https://us-central1-clothxnet.cloudfunctions.net/algoliaSearch/store_search', searchQuery)
+      .post(`https://us-central1-${environment.config.projectId}.cloudfunctions.net/algoliaSearch/search/store`, searchQuery)
       .subscribe((res: any[]) => this.store.dispatch([new ProductFoundedInCatalog(res)]));
   }
 
   searchForProduct(searchQuery) {
     console.log(searchQuery);
     return this.http
-      .post('https://us-central1-clothxnet.cloudfunctions.net/algoliaSearch/product_search', searchQuery)
+      .post(`https://us-central1-${environment.config.projectId}.cloudfunctions.net/algoliaSearch/search/product`, searchQuery)
       .subscribe((res: any[]) => this.store.dispatch([new ProductFounded(res)]));
   }
 

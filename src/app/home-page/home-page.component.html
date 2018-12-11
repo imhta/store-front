@@ -1,6 +1,131 @@
 <!--<div cxScrollable (scrollPosition)="scrollHandler($event)">-->
-  <cx-navbar></cx-navbar>
-  <cx-product-listing></cx-product-listing>
+
 <!--<cx-logo></cx-logo>-->
 
 <!--</div>-->
+<cx-navbar></cx-navbar>
+<!--<div class="addthis_inline_share_toolbox_6o6o"></div>-->
+
+<ngb-carousel>
+  <ng-template ngbSlide>
+    <img class="slide" src="https://spot.page.link/gg7P" alt="first slide">
+    <div class="carousel-caption">
+      <h3>SPOT YOUR FASHION</h3>
+      <p>YOUR NEIGHBOURHOOD FASHION</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img class="slide" src="https://spot.page.link/Tbeh" alt="second slide">
+    <div class="carousel-caption">
+      <h3>SPOT YOUR FASHION</h3>
+      <p>YOUR NEIGHBOURHOOD FASHION</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img class="slide" src="https://spot.page.link/HVFx" alt="third slide">
+    <div class="carousel-caption">
+      <h3>SPOT YOUR FASHION</h3>
+      <p>YOUR NEIGHBOURHOOD FASHION</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img class="slide" src="https://spot.page.link/on1o" alt="fourth slide">
+    <div class="carousel-caption">
+      <h3>SPOT YOUR FASHION</h3>
+      <p>YOUR NEIGHBOURHOOD FASHION</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
+<div class="divide m-2">
+  <h3 class="text-center font-weight-bold">SPOT COLLECTION BY</h3>
+</div>
+<div class="row">
+  <div class="col-md"><img src="https://spot.page.link/ADpo" alt="second slide">
+    <div class="after"><span>WOMEN</span></div>
+  </div>
+  <div class="col-md"><img src="https://spot.page.link/Uxvd" alt="second slide">
+    <div class="after"><span>MEN</span></div>
+  </div>
+  <div class="col-md"><img src="https://spot.page.link/QxvY" alt="second slide">
+    <div class="after"><span>BOY</span></div>
+  </div>
+  <div class="col-md"><img src="https://spot.page.link/3vXm" alt="second slide">
+    <div class="after"><span>GIRL</span></div>
+  </div>
+</div>
+<div class="divide m-2">
+  <h3 class="text-center font-weight-bold"><span class="text-danger">LIVE</span> COLLECTIONS FROM NEARBY STORES</h3>
+</div>
+<div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="products">
+  <mat-card *ngFor="let product of  products" class="product-card">
+    <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+    <mat-card-content>
+      <mat-card-actions>
+        <!--<button mat-icon-button (click)="addToFavorite(product.productUid)">-->
+        <!--<mat-icon [ngClass]="product.isFavorite ? 'favorite-icon-red': 'favorite-icon-grey'"-->
+        <!--&gt;favorite-->
+        <!--</mat-icon>-->
+        <!--</button>-->
+        <!--<button mat-icon-button (click)="addToCart(product.productUid)">-->
+        <!--<mat-icon class="add-shopping-icon" *ngIf="!product.isCart">add_shopping_cart</mat-icon>-->
+        <!--<mat-icon class="remove-shopping-icon" *ngIf="product.isCart">remove_shopping_cart</mat-icon>-->
+        <!--</button>-->
+      </mat-card-actions>
+      <mat-chip-list>
+            <span *ngFor="let variant of product.variants">
+            <mat-chip *ngIf="variant.size != ''">
+              {{variant.size.toUpperCase()}}
+              <span *ngIf="!product.isVariantsWithSamePrice"> &nbsp; : &#x20B9;{{variant.sellingPrice}}</span>
+            </mat-chip>
+            </span>
+        <mat-chip *ngIf="product.isVariantsWithSamePrice">
+          <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
+        </mat-chip>
+      </mat-chip-list>
+
+    </mat-card-content>
+  </mat-card>
+  <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
+    <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
+  </button>
+  <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
+    <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
+  </button>
+</div>
+<br>
+
+<footer class="footer bg-dark text-white">
+  <div class="container ">
+
+    <div class="row">
+      <div class="col-sm">
+        <h2 class="font-weight-bold m-2">YOUR FASHION WAND</h2>
+      </div>
+      <div class="col-sm  m-2">
+        <a><p>
+          HOME
+        </p></a>
+        <a><p>
+          BLOG
+        </p></a>
+        <a><p>
+          CONTACT US
+        </p></a>
+      </div>
+      <div class="col-sm  m-2">
+        <a><p>
+          FACEBOOK
+        </p></a>
+        <a><p>
+          INSTAGRAM
+        </p></a>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container text-center">
+    <small>
+      SPOTEASY © 2018 ALL RIGHTS ARE RESERVED TO CLOTHX
+    </small>
+  </div>
+</footer>

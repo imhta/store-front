@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomePageComponent} from '../../home-page/home-page.component';
 import {StoreCatalogueComponent} from '../../store-catalogue/store-catalogue.component';
 import {InvoicePageComponent} from '../../invoice-page/invoice-page.component';
+import {ProductListingComponent} from '../../home-page/product-listing/product-listing.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
     component: HomePageComponent
   },
   {
+    path: 'products',
+    component: ProductListingComponent
+  },
+  {
     path: 'u',
     children: [
       {
@@ -22,10 +27,6 @@ const routes: Routes = [
         redirectTo: 'home',
         pathMatch: 'full'
       },
-      // {
-      //   path: 'find/invoice',
-      //   component: FindInvoiceComponent
-      // },
       {
         path: 'invoice/:id',
         component: InvoicePageComponent

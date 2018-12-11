@@ -35,7 +35,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   showSelectedPrice;
   isLoggedIn: boolean;
   resultProduct: SingleProductModel[] = [];
-  searchQuery: { query: string, filters: object, sortBy: string } = {query: '', filters: {}, sortBy: ''};
+  searchQuery: { query: string, filters: object, sortBy: string, page: number } = {query: '', filters: {}, sortBy: '', page: 0};
   screenWidth = window.screen.width;
   private temp: SingleProductModel;
 
@@ -95,11 +95,6 @@ export class ProductListingComponent implements OnInit, OnDestroy {
     this.bottomSheet.open(SortBoxComponent);
   }
 
-  onChange() {
-    if (this.searchQuery.query.length === 0) {
-      this.resultProduct = [];
-    }
-  }
 
   search() {
 

@@ -32,7 +32,6 @@
     <div class="m-4">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
-               (ngModelChange)="onChange()"
                (keyup.enter)="search()">
         <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
       </div>
@@ -63,13 +62,13 @@
         <hr *ngIf="!(screenWidth < 600)">
         <div class="container">
 
-          <mat-card *ngFor="let product of searchQuery.query.length === 0 ? storeCatalog.products: resultProduct"
+          <mat-card *ngFor="let product of  resultProduct"
                     class="product-card">
             <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
             <mat-card-content>
               <mat-card-actions>
               </mat-card-actions>
-              <mat-chip-list *ngIf="searchQuery.query.length === 0">
+              <mat-chip-list>
             <span *ngFor="let variant of product.variants">
             <mat-chip *ngIf="variant.size != ''">
               {{variant.size.toUpperCase()}}
@@ -80,13 +79,7 @@
                   <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
                 </mat-chip>
               </mat-chip-list>
-              <mat-chip-list *ngIf="searchQuery.query.length !== 0">
 
-                <mat-chip *ngIf="product.size != ''">
-                  {{variant.size.toUpperCase()}}
-                  <span> &nbsp; : &#x20B9;{{product.sellingPrice}}</span>
-                </mat-chip>
-              </mat-chip-list>
             </mat-card-content>
           </mat-card>
         </div>
