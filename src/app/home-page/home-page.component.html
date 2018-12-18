@@ -47,10 +47,10 @@
     <div class="after"><span>MEN</span></div>
   </div>
   <div class="col-md" (click)="navigateWithFilters('Boy')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FBoy%2Fed73754728793b224a3f38d320b39668.jpg?alt=media&token=a1c13c7d-3396-4b6e-908b-504e5760190e" alt="second slide">
-    <div class="after"><span>KIDS-MALE</span></div>
+    <div class="after"><span>BOY</span></div>
   </div>
   <div class="col-md" (click)="navigateWithFilters('Girl')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FGirl%2Fgirl.jpg?alt=media&token=3dd7d2f1-38af-4a1f-a364-2eab277fedcd" alt="second slide">
-    <div class="after"><span>KIDS-FEMALE</span></div>
+    <div class="after"><span>GIRL</span></div>
   </div>
 </div>
 <div class="divide m-4">
@@ -62,13 +62,8 @@
     <mat-card-content>
 
       <mat-chip-list>
-            <span *ngFor="let variant of product.variants">
-            <!--<mat-chip *ngIf="variant.size != ''">-->
-              <!--{{variant.size.toUpperCase()}}-->
-              <!--<span *ngIf="!product.isVariantsWithSamePrice"> &nbsp; : &#x20B9;{{variant.sellingPrice}}</span>-->
-              <!--</mat-chip>-->
-            </span>
-        <p class="product-name">{{product.productName}}</p>
+
+        <p class="product-name">{{product.productName | slice:0:12}} ...</p>
         <mat-chip>
           <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
         </mat-chip>
@@ -84,7 +79,7 @@
   </button>
 </div>
 <div class="divide m-4">
-  <h3 class="text-center font-weight-bold">STEREOTYPES</h3>
+  <h3 class="text-center font-weight-bold">OCCASIONS</h3>
 </div>
 <div class="row occasions">
   <div class="col-sm" (click)="navigateWithFilters('Formals')"><img src="https://images.pexels.com/photos/1702/bow-tie-businessman-fashion-man.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
