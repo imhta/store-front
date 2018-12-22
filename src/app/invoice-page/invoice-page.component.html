@@ -1,8 +1,4 @@
-<div>
-  <a href="https://www.spoteasy.in">
-    <div class="navbar-brand"><h4 class="brand-title m-2"><span>Spot</span>easy</h4></div>
-  </a>
-</div>
+<cx-navbar></cx-navbar>
 <div *ngIf="status === 'NOTFOUND'">
   <div style="text-align: center;">
     <img src="../../assets/logo.png" class="grey-logo" width="80" alt="clothx logo">
@@ -23,7 +19,8 @@
 <div class="container text-center" *ngIf="status === 'FOUND'">
   <div>
     <div *ngIf="invoice.storeDetails?.storeLogo !== undefined">
-      <img [src]="invoice.storeDetails?.storeLogo" width="80" [alt]="invoice.storeDetails?.storeName + 'logo'">
+      <img *ngIf="invoice.storeDetails?.storeLogo" [src]="invoice.storeDetails?.storeLogo" width="80"
+           [alt]="invoice.storeDetails?.storeName + 'logo'">
     </div>
     <h2> {{ invoice.storeDetails?.storeName}}</h2>
     <p style="font-weight: normal;">

@@ -57,8 +57,9 @@ import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {ScrollableDirective} from './shared/directives/scrollable/scrollable.directive';
 import {InfiniteLoadingSpinerComponent} from './general-components/infinite-loading-spiner/infinite-loading-spiner.component';
 import {ProductPageComponent} from './product-page/product-page.component';
-import {FooterComponent} from './footer/footer.component';
-
+import {FooterComponent} from './general-components/footer/footer.component';
+import {ShareButtonsModule} from '@ngx-share/buttons';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,8 +106,10 @@ import {FooterComponent} from './footer/footer.component';
     MatToolbarModule,
     MatRippleModule,
     MatDialogModule,
+    ShareButtonsModule,
     MatBottomSheetModule,
     MatListModule,
+    FontAwesomeModule,
     BrowserAnimationsModule,
     NgAisModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})

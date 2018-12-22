@@ -65,7 +65,8 @@
 
   <div class="font-weight-bold sub-title"><p>SIZE</p></div>
   <div class="size-filter">
-    <mat-checkbox *ngFor="let availableSize of availableSizes" (change)="filters.size = availableSize; updateFilter();">{{availableSize}}</mat-checkbox>
+    <mat-checkbox *ngFor="let availableSize of availableSizes" (change)="filters.size = availableSize; updateFilter();"
+                  [ngModel]="filters.size === availableSize">{{availableSize}}</mat-checkbox>
   </div>
   <hr>
   <div class=" font-weight-bold sub-title

@@ -9,6 +9,11 @@
            [alt]="product.productName" (click)="selectedImg = productPic">
       <br>
       <br>
+      <share-buttons [theme]="'modern-light'"
+                     [include]="['facebook','twitter','linkedin','google','pinterest','reddit','tumblr','mix','vk','telegram','messenger','whatsapp','sms','email','print','copy']"
+                     [show]="4"
+      ></share-buttons>
+      <br>
     </div>
     <div class="col-md">
       <p class="text-muted">{{product.prn}}</p>
@@ -53,6 +58,7 @@
     <h3 class="text-center font-weight-bold"><span class="text-danger">Recommended</span> Products
       From {{product?.storeDetails.name}}</h3>
   </div>
+
   <div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="recommendedProducts">
     <mat-card *ngFor="let product of  recommendedProducts | slice:0:10;" class="product-card"
               (click)="navigateToProduct(product.productUid)">

@@ -20,6 +20,7 @@ export class HomePageComponent implements OnInit {
   wholeProducts: WholeProducts;
   products: SingleProductModel[];
   isLoggedIn: boolean;
+
   filters = {
     location: 'Coimbatore',
     categories: {
@@ -35,7 +36,7 @@ export class HomePageComponent implements OnInit {
     occasion: '',
     allowOutOfStock: false
   };
-
+  searchQuery = '';
   constructor(private config: NgbCarouselConfig, private store: Store) {
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -70,27 +71,27 @@ export class HomePageComponent implements OnInit {
       }
       case 'Girl': {
         this.filters.categories.gender = 'Girl';
-        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Formals': {
         this.filters.occasion = 'Formals';
-        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Casuals': {
         this.filters.occasion = 'Casuals';
-        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Wedding': {
         this.filters.occasion = 'Wedding';
-        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Sports': {
         this.filters.occasion = 'Sports';
-        this.store.dispatch([new Navigate(['products'], this.filters)]);
+        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
         break;
       }
     }
@@ -119,4 +120,7 @@ export class HomePageComponent implements OnInit {
   }
 
 
+  search() {
+    this.store.dispatch([new Navigate(['products'], {query: this.searchQuery, filter: JSON.stringify(this.filters)})]);
+  }
 }

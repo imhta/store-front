@@ -13,8 +13,9 @@
         <div class="brand-title"><h4>FIND YOUR NEIGHBOURHOOD FASHION</h4></div>
         <div class="m-4">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for Products">
-            <button class="input-group-append btn btn-primary">Search</button>
+            <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery"
+                   (keyup.enter)="search()">
+            <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
           </div>
 
         </div>
