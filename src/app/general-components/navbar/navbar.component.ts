@@ -3,6 +3,7 @@ import {Login, Logout} from '../../shared/actions/auth.actions';
 import {Select, Store} from '@ngxs/store';
 import {Observable, Subscription} from 'rxjs';
 import {LoadingTrue} from '../../shared/state/loading.state';
+import {Navigate} from '@ngxs/router-plugin';
 
 @Component({
   selector: 'cx-navbar',
@@ -22,6 +23,9 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  navigateHome() {
+    this.store.dispatch([new Navigate(['home'])]);
+  }
 
   login() {
     return this.store.dispatch([new Login()]);

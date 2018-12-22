@@ -3,10 +3,13 @@
   <div>
     <a class="navbar-brand" href="./"><h4 class="brand-title m-2"><span>Spot</span>easy</h4></a>
   </div>
-  <mat-chip *ngIf="user">
-    <img matChipAvatar [src]="user['photoUrl']">
-    <strong *ngIf="screenWidth > 600">{{user['displayName']}}</strong>
-    <mat-icon matChipTrailingIcon (click)="logout()">exit_to_app</mat-icon>
-  </mat-chip>
+  <div>
+    <a (click)="navigateHome()" class="nav-link" style="cursor: pointer">Home</a>
+  </div>
+  <!--<mat-chip *ngIf="user">-->
+  <!--<img matChipAvatar [src]="user['photoUrl']">-->
+  <!--<strong *ngIf="screenWidth > 600">{{user['displayName']}}</strong>-->
+  <!--<mat-icon matChipTrailingIcon (click)="logout()">exit_to_app</mat-icon>-->
+  <!--</mat-chip>-->
   <!--<button mat-flat-button color="primary" (click)="login()" *ngIf="!user">Login / Sign up</button>-->
 </nav>

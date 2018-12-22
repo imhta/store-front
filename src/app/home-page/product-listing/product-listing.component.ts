@@ -77,6 +77,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         if (params && params.filter && params.sortBy) {
           if (params.filter.length > 0 && params.sortBy.length > 0) {
+            this.searchQuery.query = params.query;
             this.searchQuery.filters = JSON.parse(params.filter);
             this.searchQuery.sortBy = params.sortBy;
             this.search();
