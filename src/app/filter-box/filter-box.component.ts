@@ -45,9 +45,9 @@ export class FilterBoxComponent implements OnInit {
       .subscribe(params => {
         if (params !== {}) {
           console.log(params);
-
-          this.queryParam = JSON.parse(params.filter);
-          this.filters = this.queryParam;
+          console.log(typeof (params.filter));
+          // this.queryParam = JSON.parse(typeof (params.filter) === 'object' ? params.filter : '');
+          // this.filters = this.queryParam;
         }
         this.updateFilter();
       });

@@ -1,5 +1,11 @@
 import {Action, State, StateContext, Store} from '@ngxs/store';
-import {ErrorInGettingAllProducts, GetAllProducts, GotAllProductsSuccessfully, SearchForProduct} from '../actions/products.actions';
+import {
+  ErrorInGettingAllProducts,
+  GetAllProducts,
+  GotAllProductsSuccessfully,
+  ProductNextPage,
+  SearchForProduct
+} from '../actions/products.actions';
 import {FirestoreService} from '../services/firestore-service/firestore.service';
 import {LoadingFalse} from './loading.state';
 import {SingleProductModel, WholeProducts} from '../models/product.model';
@@ -125,5 +131,10 @@ export class ProductsState {
   @Action(SearchForProduct)
   searchForProduct(cxt: StateContext<any[]>, {searchQuery}: SearchForProduct) {
     this.httpService.searchForProduct(searchQuery);
+  }
+
+  @Action(ProductNextPage)
+  searchForProductNextPage(cxt: StateContext<any[]>, {searchQuery}: ProductNextPage) {
+    this.httpService.searchForProduct(searchQuery, 'next');
   }
 }

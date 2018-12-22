@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Actions, ofActionDispatched, Select, Store} from '@ngxs/store';
 import {
@@ -73,6 +73,13 @@ export class StoreCatalogueComponent implements OnInit {
       });
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
+      console.log('bottom');
+    }
+  }
+
   openFilter(): void {
     const dialogRef = this.dialog.open(FilterBoxComponent, {
       width: '100vw',
@@ -109,4 +116,9 @@ export class StoreCatalogueComponent implements OnInit {
   navigateHome() {
     this.store.dispatch([new Navigate([''])]);
   }
+
+  navigateToProduct(productUid: string) {
+    this.store.dispatch(new Navigate(['/product', productUid]));
+  }
+
 }

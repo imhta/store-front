@@ -35,23 +35,17 @@
 
     <div class="container">
 
-      <mat-card *ngFor="let product of  resultProduct " class="product-card">
+      <mat-card *ngFor="let product of  resultProduct " class="product-card"
+                (click)="navigateToProduct(product.productUid)">
         <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
         <mat-card-content>
-
-
           <mat-chip-list>
-            <span *ngFor="let variant of product.variants">
-            <mat-chip *ngIf="variant.size != ''">
-              {{variant.size.toUpperCase()}}
-              <span *ngIf="!product.isVariantsWithSamePrice"> &nbsp; : &#x20B9;{{variant.sellingPrice}}</span>
-            </mat-chip>
-            </span>
-            <mat-chip *ngIf="product.isVariantsWithSamePrice">
+
+            <!--<p class="product-name">{{product.productName | slice:0:8}} ...</p>-->
+            <mat-chip>
               <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
             </mat-chip>
           </mat-chip-list>
-
         </mat-card-content>
       </mat-card>
     </div>
@@ -61,3 +55,4 @@
 </div>
 
 
+<cx-infinite-loading-spiner></cx-infinite-loading-spiner>

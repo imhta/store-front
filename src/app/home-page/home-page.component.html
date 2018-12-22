@@ -1,19 +1,24 @@
 <!--<div cxScrollable (scrollPosition)="scrollHandler($event)">-->
 
 
-
 <!--</div>-->
 
 <!--<div class="addthis_inline_share_toolbox_6o6o"></div>-->
-
+<cx-navbar></cx-navbar>
 <ngb-carousel>
   <ng-template ngbSlide>
-    <img class="slide" src="https://images.pexels.com/photos/264554/pexels-photo-264554.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="first slide">
+    <img class="slide" src="../../assets/main-back.jpg" alt="first slide">
     <div class="carousel-caption">
-      <div>
-        <div class="navbar-brand"><h4 class="brand-title m-2"><span>Spot</span>easy</h4></div>
+      <div class="wrapper">
+        <div class="brand-title"><h4>FIND YOUR NEIGHBOURHOOD FASHION</h4></div>
+        <div class="m-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for Products">
+            <button class="input-group-append btn btn-primary">Search</button>
+          </div>
+
+        </div>
       </div>
-      <p class="font-weight-bold">FIND YOUR NEIGHBOURHOOD FASHION</p>
     </div>
   </ng-template>
   <!--<ng-template ngbSlide>-->
@@ -39,25 +44,36 @@
 <div class="divide m-4">
   <h3 class="text-center font-weight-bold">CATEGORIES</h3>
 </div>
+<div class="container">
 <div class="row">
-  <div class="col-md" (click)="navigateWithFilters('Women')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FWomen%2FInShot_20181216_222744576.jpg?alt=media&token=d74e4ffe-2414-46e6-9839-73e1006c76c4" alt="second slide">
+  <div class="col-md" (click)="navigateWithFilters('Women')">
+    <img
+      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FWomen%2FInShot_20181216_222744576.jpg?alt=media&token=d74e4ffe-2414-46e6-9839-73e1006c76c4"
+      alt="second slide">
     <div class="after"><span>WOMEN</span></div>
   </div>
-  <div class="col-md" (click)="navigateWithFilters('Men')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FMen%2Fpexels-photo-1482067.jpg?alt=media&token=26feb507-704d-4b83-8138-70a4d84a50c2" alt="second slide">
+  <div class="col-md" (click)="navigateWithFilters('Men')"><img
+    src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FMen%2Fpexels-photo-1482067.jpg?alt=media&token=26feb507-704d-4b83-8138-70a4d84a50c2"
+    alt="second slide">
     <div class="after"><span>MEN</span></div>
   </div>
-  <div class="col-md" (click)="navigateWithFilters('Boy')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FBoy%2Fed73754728793b224a3f38d320b39668.jpg?alt=media&token=a1c13c7d-3396-4b6e-908b-504e5760190e" alt="second slide">
+  <div class="col-md" (click)="navigateWithFilters('Boy')"><img
+    src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FBoy%2Fed73754728793b224a3f38d320b39668.jpg?alt=media&token=a1c13c7d-3396-4b6e-908b-504e5760190e"
+    alt="second slide">
     <div class="after"><span>BOY</span></div>
   </div>
-  <div class="col-md" (click)="navigateWithFilters('Girl')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FGirl%2Fgirl.jpg?alt=media&token=3dd7d2f1-38af-4a1f-a364-2eab277fedcd" alt="second slide">
+  <div class="col-md" (click)="navigateWithFilters('Girl')"><img
+    src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FGirl%2Fgirl.jpg?alt=media&token=3dd7d2f1-38af-4a1f-a364-2eab277fedcd"
+    alt="second slide">
     <div class="after"><span>GIRL</span></div>
   </div>
 </div>
-<div class="divide m-4">
-  <h3 class="text-center font-weight-bold"><span class="text-danger">NEW</span> ARRIVALS IN COIMBATORE</h3>
+
+  <div class="divide m-4">
+    <h3 class="text-center font-weight-bold"><span class="text-danger">NEW</span> ARRIVALS IN COIMBATORE</h3>
 </div>
 <div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="products">
-  <mat-card *ngFor="let product of  products" class="product-card">
+  <mat-card *ngFor="let product of  products" class="product-card" (click)="navigateToProduct(product.productUid)">
     <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
     <mat-card-content>
 
@@ -82,57 +98,30 @@
   <h3 class="text-center font-weight-bold">OCCASIONS</h3>
 </div>
 <div class="row occasions">
-  <div class="col-sm" (click)="navigateWithFilters('Formals')"><img src="https://images.pexels.com/photos/1702/bow-tie-businessman-fashion-man.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                                                                    alt="second slide">
+  <div class="col-sm" (click)="navigateWithFilters('Formals')"><img
+    src="https://images.pexels.com/photos/1702/bow-tie-businessman-fashion-man.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    alt="second slide">
     <div class="after"><span>Formals</span></div>
   </div>
-  <div class="col-sm" (click)="navigateWithFilters('Casuals')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FCasuals%2Fpexels-photo-1049317.jpeg?alt=media&token=e90c2d4c-493b-40b0-af04-60b3279cb664"
-                                                                    alt="second slide">
+  <div class="col-sm" (click)="navigateWithFilters('Casuals')"><img
+    src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FCasuals%2Fpexels-photo-1049317.jpeg?alt=media&token=e90c2d4c-493b-40b0-af04-60b3279cb664"
+    alt="second slide">
     <div class="after"><span>Casuals</span></div>
   </div>
 
 </div>
 <div class="row ">
-  <div class="col-sm" (click)="navigateWithFilters('Wedding')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FWedding%2Fpexels-photo-1182963.jpeg?alt=media&token=e28717fc-4e08-4e4b-b13e-441cd8e50440"
-                                                                    alt="second slide">
+  <div class="col-sm" (click)="navigateWithFilters('Wedding')"><img
+    src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FWedding%2Fpexels-photo-1182963.jpeg?alt=media&token=e28717fc-4e08-4e4b-b13e-441cd8e50440"
+    alt="second slide">
     <div class="after"><span>Wedding</span></div>
   </div>
-  <div class="col-sm" (click)="navigateWithFilters('Sports')"><img src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FSportsWear%2Fpexels-photo-1103833.jpeg?alt=media&token=8ba065a9-511b-48df-97a0-bd3c2aa7fa13" alt="second slide">
+  <div class="col-sm" (click)="navigateWithFilters('Sports')"><img
+    src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FSportsWear%2Fpexels-photo-1103833.jpeg?alt=media&token=8ba065a9-511b-48df-97a0-bd3c2aa7fa13"
+    alt="second slide">
     <div class="after"><span>Sports Wear</span></div>
   </div>
 </div>
-
+</div>
 <br>
-
-<footer class="footer bg-dark text-white">
-  <div class="container ">
-
-    <div class="row">
-      <div class="col-sm">
-        <h2 class="font-weight-bold ">YOUR FASHION WAND</h2>
-      </div>
-      <div class="col-sm  m-2">
-        <a><p>
-          HOME
-        </p></a>
-        <a><p>
-          BLOG
-        </p></a>
-        <a><p>
-          CONTACT US
-        </p></a>
-
-          <a href="https://www.instagram.com/clothx.official" target="_blank"><p>
-            INSTAGRAM
-          </p></a>
-      </div>
-
-    </div>
-  </div>
-  <hr>
-  <div class="container text-center">
-    <small>
-      SPOTEASY © 2018 ALL RIGHTS ARE RESERVED TO CLOTHX.
-    </small>
-  </div>
-</footer>
+<cx-footer></cx-footer>

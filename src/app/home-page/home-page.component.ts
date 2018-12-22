@@ -50,6 +50,7 @@ export class HomePageComponent implements OnInit {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
   }
 
+
   navigateWithFilters(path: string) {
     switch (path) {
       case 'Men': {
@@ -94,6 +95,7 @@ export class HomePageComponent implements OnInit {
       }
     }
   }
+
   scrollLeft() {
     document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft + 50;
 
@@ -110,6 +112,10 @@ export class HomePageComponent implements OnInit {
     } else {
       console.log('not logged in');
     }
+  }
+
+  navigateToProduct(productUid: string) {
+    this.store.dispatch(new Navigate(['/product', productUid]));
   }
 
 
