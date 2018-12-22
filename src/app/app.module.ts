@@ -34,6 +34,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatBottomSheetModule, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AuthService} from './shared/services/auth/auth.service';
@@ -54,6 +55,9 @@ import {NgxKjuaModule} from 'ngx-kjua';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {ScrollableDirective} from './shared/directives/scrollable/scrollable.directive';
+import {InfiniteLoadingSpinerComponent} from './general-components/infinite-loading-spiner/infinite-loading-spiner.component';
+import {ProductPageComponent} from './product-page/product-page.component';
+import {FooterComponent} from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,10 @@ import {ScrollableDirective} from './shared/directives/scrollable/scrollable.dir
     SortBoxComponent,
     FindInvoiceComponent,
     InvoicePageComponent,
-    ScrollableDirective
+    ScrollableDirective,
+    InfiniteLoadingSpinerComponent,
+    ProductPageComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +102,7 @@ import {ScrollableDirective} from './shared/directives/scrollable/scrollable.dir
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatToolbarModule,
     MatRippleModule,
     MatDialogModule,
     MatBottomSheetModule,

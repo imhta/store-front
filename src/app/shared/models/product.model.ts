@@ -1,7 +1,7 @@
-import * as firebase from 'firebase';
 import {OnInit} from '@angular/core';
 import Timestamp = firebase.firestore.Timestamp;
-
+import GeoPoint = firebase.firestore.GeoPoint;
+import * as firebase from 'firebase';
 
 export class SingleProductModel implements OnInit {
   productUid: string;
@@ -29,6 +29,7 @@ export class SingleProductModel implements OnInit {
   isFavorite: boolean;
   isCart: boolean;
   lastModified: Timestamp;
+  storeDetails: { address: { city: string, pinCode: number, state: string, street: string }, location: GeoPoint, name: string };
 
   constructor() {
     this.isListable = false;

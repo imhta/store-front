@@ -14,6 +14,7 @@ import {
 } from '../../actions/invoice.actions';
 import {CustomerFeedback, InvoiceModel} from '../../models/invoices.model';
 import {LoadingFalse} from '../../state/loading.state';
+import {ErrorInGettingProduct, GotProductSuccessfully, ProductNotFound} from '../../actions/products.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -193,5 +194,20 @@ export class FirestoreService {
       .set({'feedback': feedback.toJson()}, {merge: true})
       .then(() => this.store.dispatch([new CustomerFeedbackSavedSuccessfully(), new LoadingFalse()]))
       .catch((err) => this.store.dispatch([new ErrorInSavingCustomerFeedback(err), new LoadingFalse()]));
+  }
+
+  getProduct(productId: string) {
+    this.db
+      .collection('products')
+      .doc(`${productId}`).ref
+      .get()
+      .then((product) => {
+          if (product.exists) {
+            this.store.dispatch([new GotProductSuccessfully(product.data())]);
+          } else {
+            this.store.dispatch([new ProductNotFound()]);
+          }
+        }
+      ).catch((err) => this.store.dispatch([new ErrorInGettingProduct(err)]));
   }
 }

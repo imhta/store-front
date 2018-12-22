@@ -1,5 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {GetAllProducts, ProductFounded, SearchForProduct} from '../../shared/actions/products.actions';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {
+  GetAllProducts,
+  ProductFounded,
+  ProductNextPage,
+  ProductNextPageFounded,
+  SearchForProduct
+} from '../../shared/actions/products.actions';
 import {Actions, ofActionDispatched, ofActionSuccessful, Select, Store} from '@ngxs/store';
 import {LoadingFalse, LoadingTrue} from '../../shared/state/loading.state';
 import {Observable, Subscription} from 'rxjs';
@@ -19,6 +25,7 @@ import {FilterBoxComponent} from '../../filter-box/filter-box.component';
 import {SortBoxComponent} from '../../sort-box/sort-box.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ActivatedRoute} from '@angular/router';
+import {Navigate} from '@ngxs/router-plugin';
 
 @Component({
   selector: 'cx-product-listing',
@@ -33,6 +40,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   wholeProducts: WholeProducts;
   products: SingleProductModel[];
   showSelectedPrice;
+  pageEmpty = false;
   isLoggedIn: boolean;
   resultProduct: SingleProductModel[] = [];
   searchQuery: { query: string, filters: object, sortBy: string, page: number } = {query: '', filters: {}, sortBy: '', page: 0};
@@ -78,6 +86,14 @@ export class ProductListingComponent implements OnInit, OnDestroy {
       });
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
+      if (!this.pageEmpty) {
+        this.search('next');
+      }
+    }
+  }
 
   openFilter(): void {
     const dialogRef = this.dialog.open(FilterBoxComponent, {
@@ -96,22 +112,48 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   }
 
 
-  search() {
-
-    // @ts-ignore
-    this.store
-      .dispatch([
-        new LoadingTrue(),
-        new SearchForProduct(this.searchQuery)
-      ]);
-    this.actions$.pipe(ofActionDispatched(ProductFounded), take(5)).subscribe(({resultProducts}) => {
-      if (resultProducts.length >= 0) {
-        this.resultProduct = resultProducts;
-        console.log(this.resultProduct);
-        this.store.dispatch([new LoadingFalse()]);
+  search(choice?) {
+    switch (choice) {
+      case 'next': {
+        this.searchQuery.page++;
+        // @ts-ignore
+        this.store
+          .dispatch([
+            new LoadingTrue(),
+            new ProductNextPage(this.searchQuery)
+          ]);
+        this.actions$.pipe(ofActionDispatched(ProductNextPageFounded), take(5)).subscribe(({resultProducts}) => {
+          if (resultProducts.length > 0) {
+            this.resultProduct.concat(resultProducts);
+            console.log(this.resultProduct);
+            this.store.dispatch([new LoadingFalse()]);
+          } else if (resultProducts.length === 0) {
+            this.pageEmpty = true;
+            this.store.dispatch([new LoadingFalse()]);
+          }
+          console.log(this.resultProduct);
+        });
+        break;
       }
-      console.log(this.resultProduct);
-    });
+      default : {
+        // @ts-ignore
+        this.store
+          .dispatch([
+            new LoadingTrue(),
+            new SearchForProduct(this.searchQuery)
+          ]);
+        this.actions$.pipe(ofActionDispatched(ProductFounded), take(5)).subscribe(({resultProducts}) => {
+          if (resultProducts.length >= 0) {
+            this.resultProduct = resultProducts;
+            console.log(this.resultProduct);
+            this.store.dispatch([new LoadingFalse()]);
+          }
+          console.log(this.resultProduct);
+        });
+        break;
+      }
+    }
+
   }
 
   updateFav() {
@@ -163,4 +205,9 @@ export class ProductListingComponent implements OnInit, OnDestroy {
     }
 
   }
+
+  navigateToProduct(productUid: string) {
+    this.store.dispatch(new Navigate(['/product', productUid]));
+  }
+
 }

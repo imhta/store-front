@@ -4,6 +4,7 @@ import {HomePageComponent} from '../../home-page/home-page.component';
 import {StoreCatalogueComponent} from '../../store-catalogue/store-catalogue.component';
 import {InvoicePageComponent} from '../../invoice-page/invoice-page.component';
 import {ProductListingComponent} from '../../home-page/product-listing/product-listing.component';
+import {ProductPageComponent} from '../../product-page/product-page.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'products',
     component: ProductListingComponent
+  },
+  {
+    path: 'product/:id',
+    component: ProductPageComponent
   },
   {
     path: 'u',

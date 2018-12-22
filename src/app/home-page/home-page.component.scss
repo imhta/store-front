@@ -25,6 +25,39 @@ ngb-carousel {
     height: 50vh;
     object-fit: cover;
   }
+
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.50);
+    overflow-y: hidden;
+    z-index: 10;
+    width: 100%;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+
+    .wrapper {
+      position: absolute;
+      top: 25%;
+      bottom: 25%;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  .brand-title {
+    font-family: 'Audiowide', cursive;
+    color: white;
+    font-size: 45px;
+    padding: 40px 40px 5px;
+
+
+    span {
+      color: #09bda9;
+    }
+  }
 }
 
 .scrolling-wrapper {
@@ -125,6 +158,7 @@ ngb-carousel {
   padding: 0;
   position: relative;
   height: 300px;
+  border-radius: 50%;
 
   img {
     width: 100%;
@@ -135,7 +169,8 @@ ngb-carousel {
 
   .after {
     position: absolute;
-    display: none;
+    display: block;
+    background: rgba(0, 0, 0, .4);
     top: 0;
     left: 0;
     bottom: 0;
@@ -157,8 +192,7 @@ ngb-carousel {
   }
 
   &:hover .after {
-    display: block;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .8);
   }
 
 }
@@ -171,16 +205,36 @@ footer .col-sm {
   height: 150px;
 }
 
-.brand-title {
-  font-family: 'Audiowide', cursive;
-  //color: #545454;
-  color: white;
-  font-size: 45px;
-  padding: 20px;
-  border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.52);
+.input-group {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
 
-  span {
-    color: #09bda9;
-  }
+
+.form-control, small {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-control:focus {
+  border-color: #06bca9;
+  box-shadow: 0 1px 1px #06bca9 inset, 0 0 8px #06bca9;
+  outline: 0 none;
+}
+
+.input-group .btn {
+  border-color: #06bca9;
+  background-color: #06bca9;
+}
+
+.input-group .btn:hover {
+  background-color: #06bca9;
+  color: white;
+}
+
+.input-group .btn:focus {
+  border-color: #06bca9;
+  box-shadow: 0 1px 1px #06bca9 inset, 0 0 8px #06bca9;
+  outline: 0 none;
 }

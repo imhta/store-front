@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Login, Logout} from '../../shared/actions/auth.actions';
 import {Select, Store} from '@ngxs/store';
 import {Observable, Subscription} from 'rxjs';
@@ -9,16 +9,12 @@ import {LoadingTrue} from '../../shared/state/loading.state';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
-  @Select('loading') $loadingState: Observable<boolean>;
+export class NavbarComponent implements OnInit {
   @Select('user') $userState: Observable<object>;
-  loading: boolean;
-  loadingSubscription: Subscription;
   user: object;
   userSubscription: Subscription;
   screenWidth = window.screen.width;
   constructor(private store: Store) {
-    this.loadingSubscription = this.$loadingState.subscribe((data) => this.loading = data.valueOf());
     this.userSubscription = this.$userState.subscribe((data) => this.user = data);
   }
 
@@ -26,9 +22,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
-    this.loadingSubscription.unsubscribe();
-  }
 
   login() {
     return this.store.dispatch([new Login()]);
