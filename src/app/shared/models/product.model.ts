@@ -1,6 +1,7 @@
 import {OnInit} from '@angular/core';
 import Timestamp = firebase.firestore.Timestamp;
 import GeoPoint = firebase.firestore.GeoPoint;
+import * as firebase from 'firebase';
 
 export class SingleProductModel implements OnInit {
   productUid: string;
