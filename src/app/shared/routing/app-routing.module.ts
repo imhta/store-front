@@ -5,6 +5,7 @@ import {StoreCatalogueComponent} from '../../store-catalogue/store-catalogue.com
 import {InvoicePageComponent} from '../../invoice-page/invoice-page.component';
 import {ProductListingComponent} from '../../home-page/product-listing/product-listing.component';
 import {ProductPageComponent} from '../../product-page/product-page.component';
+import {NotFoundPageComponent} from '../../general-components/not-found-page/not-found-page.component';
 
 const routes: Routes = [
   {
@@ -25,22 +26,18 @@ const routes: Routes = [
     component: ProductPageComponent
   },
   {
-    path: 'u',
-    children: [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
-      {
-        path: 'invoice/:id',
-        component: InvoicePageComponent
-      }
-    ]
-  },
-  {
     path: 'store/:usn',
     component: StoreCatalogueComponent
+  },
+
+  {
+    path: 'u/invoice/:id',
+    component: InvoicePageComponent
+  },
+
+  {
+    path: '**',
+    component: NotFoundPageComponent
   }
 
 ];

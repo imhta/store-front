@@ -14,12 +14,14 @@ export class HttpService {
   }
 
   searchForProductInCatalog(searchQuery) {
+    console.log(searchQuery);
     return this.http
       .post(`https://us-central1-${environment.config.projectId}.cloudfunctions.net/algoliaSearch/search/store`, searchQuery)
       .subscribe((res: any[]) => this.store.dispatch([new ProductFoundedInCatalog(res)]));
   }
 
   searchForProduct(searchQuery, page?) {
+    console.log(searchQuery);
     switch (page) {
       case 'next' : {
         this.http

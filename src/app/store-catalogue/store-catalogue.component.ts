@@ -113,6 +113,13 @@ export class StoreCatalogueComponent implements OnInit {
     });
   }
 
+  onChange() {
+    if (this.searchQuery.query === '') {
+      this.search();
+    }
+
+  }
+
   navigateHome() {
     this.store.dispatch([new Navigate([''])]);
   }
