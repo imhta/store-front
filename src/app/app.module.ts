@@ -60,6 +60,7 @@ import {ProductPageComponent} from './product-page/product-page.component';
 import {FooterComponent} from './general-components/footer/footer.component';
 import {ShareButtonsModule} from '@ngx-share/buttons';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NotFoundPageComponent} from './general-components/not-found-page/not-found-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +78,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     ScrollableDirective,
     InfiniteLoadingSpinerComponent,
     ProductPageComponent,
-    FooterComponent
+    FooterComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule,

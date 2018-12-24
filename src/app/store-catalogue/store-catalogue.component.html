@@ -32,7 +32,7 @@
     <div class="m-4">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
-               (keyup.enter)="search()">
+               (change)="onChange()" (keyup.enter)="search()">
         <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
       </div>
     </div>
@@ -75,7 +75,7 @@
               </mat-chip-list>
             </mat-card-content>
           </mat-card>
-          <cx-infinite-loading-spiner></cx-infinite-loading-spiner>
+          <!--<cx-infinite-loading-spiner></cx-infinite-loading-spiner>-->
         </div>
       </div>
     </div>
