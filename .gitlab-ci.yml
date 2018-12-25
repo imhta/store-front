@@ -1,9 +1,7 @@
-image: node:8.11.1
+image: node:8.11.3
 
 before_script:
     - npm install
-    - npm install -g @angular/cli
-    - npm install -g firebase-tools
 
 cache:
     key: "$CI_COMMIT_REF_NAME"
