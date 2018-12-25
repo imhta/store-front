@@ -8,9 +8,6 @@ cache:
     paths:
     - node_modules/
 
-stages:
-   - firebase_deploy
-   - test_app_deploy
 
 test_app_deploy:
     stage: test_app_deploy
