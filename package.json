@@ -15,7 +15,7 @@
     "set_production_environment": "firebase use clothxnet --non-interactive --token $FIREBASE_TOKEN ",
     "set_development_environment": "firebase use clothxtest --non-interactive --token $FIREBASE_TOKEN ",
     "build_prod_env": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build  --configuration=production --base-href https://www.spoteasy.in/",
-    "build_test_env": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=test --base-href https://www.spoteasytest.in/ ",
+    "build_test_env": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=test --base-href https://spoteasytest.firebaseapp.com/ ",
     "deploy_to_gitlab_page": "mkdir public && cp -a /dist/store-website/. /public/",
     "deploy_to_firebase": "firebase deploy --non-interactive --token $FIREBASE_TOKEN",
     "deploy_to_prod": "firebase deploy --only hosting:spoteasy --non-interactive --token $FIREBASE_TOKEN",
