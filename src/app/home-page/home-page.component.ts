@@ -8,6 +8,7 @@ import {Observable, Subscription} from 'rxjs';
 import {SingleProductModel, WholeProducts} from '../shared/models/product.model';
 import {GetAllProducts} from '../shared/actions/products.actions';
 import {SeoService} from '../shared/services/seo/seo.service';
+import {FirestoreService} from '../shared/services/firestore-service/firestore.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class HomePageComponent implements OnInit {
   wholeProducts: WholeProducts;
   products: SingleProductModel[];
   isLoggedIn: boolean;
-
+  storesWithUsn = [];
   filters = {
     location: 'Coimbatore',
     categories: {
@@ -39,13 +40,17 @@ export class HomePageComponent implements OnInit {
   };
   searchQuery = '';
 
-  constructor(private config: NgbCarouselConfig, private store: Store, private seo: SeoService) {
+  constructor(private config: NgbCarouselConfig, private store: Store, private seo: SeoService, private  dbService: FirestoreService) {
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
     this.store.dispatch([new LoadingTrue(), new GetAllProducts()]);
     this.productsSubscription = this.$productsState.subscribe((data) => {
       this.wholeProducts = data;
       this.products = this.wholeProducts.products.slice(0, 10);
+    });
+    this.dbService.getStoreWithUsn().then((data) => {
+      this.storesWithUsn = [];
+      data.forEach((doc) => this.storesWithUsn.push(doc.data()));
     });
   }
 
@@ -127,6 +132,9 @@ export class HomePageComponent implements OnInit {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }
 
+  browseStore(usn) {
+    this.store.dispatch([new Navigate(['store', usn])]);
+  }
 
   search() {
     console.log('s', this.searchQuery);

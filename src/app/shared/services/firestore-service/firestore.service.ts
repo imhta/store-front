@@ -15,6 +15,7 @@ import {
 import {CustomerFeedback, InvoiceModel} from '../../models/invoices.model';
 import {LoadingFalse} from '../../state/loading.state';
 import {ErrorInGettingProduct, GotProductSuccessfully, ProductNotFound} from '../../actions/products.actions';
+import {Navigate} from '@ngxs/router-plugin';
 
 @Injectable({
   providedIn: 'root'
@@ -209,5 +210,12 @@ export class FirestoreService {
           }
         }
       ).catch((err) => this.store.dispatch([new ErrorInGettingProduct(err)]));
+  }
+
+  getStoreWithUsn() {
+    return this.db.collection('stores').ref
+      .orderBy('usn', 'asc')
+      .limit(6)
+      .get();
   }
 }

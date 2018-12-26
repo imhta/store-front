@@ -37,6 +37,12 @@ ngb-carousel {
     left: 0;
     right: 0;
 
+    small {
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1.0px;
+      font-weight: bold;
+      font-size: 12px;
+    }
 
     .wrapper {
       position: absolute;
