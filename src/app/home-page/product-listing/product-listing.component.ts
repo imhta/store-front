@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductFounded, ProductNextPage, ProductNextPageFounded, SearchForProduct} from '../../shared/actions/products.actions';
 import {Actions, ofActionDispatched, Select, Store} from '@ngxs/store';
 import {LoadingFalse, LoadingTrue} from '../../shared/state/loading.state';
@@ -18,7 +18,7 @@ import {Navigate} from '@ngxs/router-plugin';
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.scss']
 })
-export class ProductListingComponent implements OnInit, OnDestroy {
+export class ProductListingComponent implements OnInit {
   @Select('products') $productsState: Observable<WholeProducts>;
   productsSubscription: Subscription;
   favSubscription: Subscription;
@@ -87,6 +87,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
           }
         } else {
           this.createSearchParams();
+
           this.search();
         }
 
@@ -100,13 +101,12 @@ export class ProductListingComponent implements OnInit, OnDestroy {
 
   createSearchParams() {
     if (typeof (this.searchQuery.filters) === 'object') {
-
       return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {
         query: this.searchQuery.query,
         filters: JSON.stringify(this.searchQuery.filters),
         sortBy: '',
         page: 0
-      })]);
+      }, {queryParamsHandling: 'merge'})]);
     } else {
       return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], this.searchQuery)]);
     }
@@ -200,11 +200,6 @@ export class ProductListingComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  ngOnDestroy() {
-    this.productsSubscription.unsubscribe();
-    // this.favSubscription.unsubscribe();
-    // this.cartsSubscription.unsubscribe();
-  }
 
   // addToFavorite(productUid: string) {
   //   this.temp = this.products.filter((product) => product.productUid === productUid)[0];

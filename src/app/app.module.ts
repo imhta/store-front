@@ -88,7 +88,7 @@ import {NotFoundPageComponent} from './general-components/not-found-page/not-fou
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState, NoState]),
+    NgxsModule.forRoot([AuthState, LoadingState, ProductsState, StoreCatalogState, NoState], {developmentMode: !environment.production}),
     // NgxsLoggerPluginModule.forRoot(),
     // NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
