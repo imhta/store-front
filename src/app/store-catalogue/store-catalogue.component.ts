@@ -98,6 +98,7 @@ export class StoreCatalogueComponent implements OnInit {
 
 
   search() {
+    this.store.dispatch([new Navigate(['products'], this.searchQuery)]);
     this.store
       .dispatch([
         new LoadingTrue(),

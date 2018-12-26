@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
   filters = {
     location: 'Coimbatore',
     categories: {
-      gender: 'Men'
+      gender: 'All'
     },
     price: {
       inMin: 0,

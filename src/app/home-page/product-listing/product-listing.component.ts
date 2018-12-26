@@ -114,6 +114,7 @@ export class ProductListingComponent implements OnInit, OnDestroy {
 
 
   search(choice?) {
+    this.store.dispatch([new Navigate(['products'], this.searchQuery)]);
     switch (choice) {
       case 'next': {
         this.searchQuery.page++;
