@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Store} from '@ngxs/store';
-import {ProductFoundedInCatalog} from '../../actions/store-catalog.actions';
+import {ProductFoundedInCatalog, ProductNextPageFoundedInCatalog} from '../../actions/store-catalog.actions';
 import {ProductFounded, ProductNextPageFounded} from '../../actions/products.actions';
 import {environment} from 'src/environments/environment';
 
@@ -13,11 +13,22 @@ export class HttpService {
   constructor(private http: HttpClient, private store: Store) {
   }
 
-  searchForProductInCatalog(searchQuery) {
+  searchForProductInCatalog(searchQuery, page?) {
     console.log(searchQuery);
-    return this.http
-      .post(`https://us-central1-${environment.config.projectId}.cloudfunctions.net/algoliaSearch/search/store`, searchQuery)
-      .subscribe((res: any[]) => this.store.dispatch([new ProductFoundedInCatalog(res)]));
+    switch (page) {
+      case 'next' : {
+        this.http
+          .post(`https://us-central1-${environment.config.projectId}.cloudfunctions.net/algoliaSearch/search/store`, searchQuery)
+          .subscribe((res: any[]) => this.store.dispatch([new ProductNextPageFoundedInCatalog(res)]));
+        break;
+      }
+      default: {
+        this.http
+          .post(`https://us-central1-${environment.config.projectId}.cloudfunctions.net/algoliaSearch/search/store`, searchQuery)
+          .subscribe((res: any[]) => this.store.dispatch([new ProductFoundedInCatalog(res)]));
+        break;
+      }
+    }
   }
 
   searchForProduct(searchQuery, page?) {

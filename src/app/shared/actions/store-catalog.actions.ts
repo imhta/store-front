@@ -68,3 +68,24 @@ export class ErrorInProductSearchInCatalog {
   constructor(public  err: string) {
   }
 }
+
+export class ProductNextPageInCatalog {
+  static readonly type = '[Store-Catalog] Search for NextPage in catalog';
+
+  constructor(public  searchQuery: object) {
+  }
+}
+
+export class ProductNextPageFoundedInCatalog {
+  static readonly type = '[Store-Catalog] Search for NextPage Founded  in catalog';
+
+  constructor(public resultProducts: any[]) {
+  }
+}
+
+export class ErrorInNextPageInCatalog {
+  static readonly type = '[Store-Catalog]  Error in Search for NextPage In catalog';
+
+  constructor(public  err: string) {
+  }
+}

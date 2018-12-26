@@ -19,9 +19,9 @@ export class FilterBoxComponent implements OnInit {
     },
     price: {
       inMin: 0,
-      inMax: 10000,
+      inMax: 100000,
       min: 0,
-      max: 10000
+      max: 100000
     },
     size: '',
     occasion: '',
@@ -43,8 +43,8 @@ export class FilterBoxComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params.filter) {
-          this.queryParam = JSON.parse(typeof (params.filter) === 'string' ? params.filter : '');
+        if (params.filters) {
+          this.queryParam = JSON.parse(typeof (params.filters) === 'string' ? params.filters : '');
           this.filters = this.queryParam;
         }
         this.updateFilter();
@@ -63,9 +63,10 @@ export class FilterBoxComponent implements OnInit {
   // }
 
   updateFilter() {
+    console.log(this.router.url.split('?')[0]);
     this.router
       .navigate([this.router.url.split('?')[0]], {
-        queryParams: {filter: JSON.stringify(this.queryParam ? this.queryParam : this.filters)},
+        queryParams: {filters: JSON.stringify(this.queryParam ? this.queryParam : this.filters)},
         queryParamsHandling: 'merge'
       })
       .then()

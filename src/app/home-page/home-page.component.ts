@@ -28,15 +28,16 @@ export class HomePageComponent implements OnInit {
     },
     price: {
       inMin: 0,
-      inMax: 10000,
+      inMax: 100000,
       min: 0,
-      max: 10000
+      max: 100000
     },
     size: '',
     occasion: '',
     allowOutOfStock: false
   };
   searchQuery = '';
+
   constructor(private config: NgbCarouselConfig, private store: Store) {
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -56,42 +57,42 @@ export class HomePageComponent implements OnInit {
     switch (path) {
       case 'Men': {
         this.filters.categories.gender = 'Men';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Women': {
         this.filters.categories.gender = 'Women';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Boy': {
         this.filters.categories.gender = 'Boy';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Girl': {
         this.filters.categories.gender = 'Girl';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Formals': {
         this.filters.occasion = 'Formals';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Casuals': {
         this.filters.occasion = 'Casuals';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Wedding': {
         this.filters.occasion = 'Wedding';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
       case 'Sports': {
         this.filters.occasion = 'Sports';
-        this.store.dispatch([new Navigate(['products'], {filter: JSON.stringify(this.filters)})]);
+        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)})]);
         break;
       }
     }
@@ -121,6 +122,7 @@ export class HomePageComponent implements OnInit {
 
 
   search() {
-    this.store.dispatch([new Navigate(['products'], {query: this.searchQuery, filter: JSON.stringify(this.filters)})]);
+    console.log('s', this.searchQuery);
+    this.store.dispatch([new Navigate(['products'], {query: this.searchQuery, filters: JSON.stringify(this.filters)})]);
   }
 }

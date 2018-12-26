@@ -77,6 +77,9 @@
           </mat-card>
           <!--<cx-infinite-loading-spiner></cx-infinite-loading-spiner>-->
         </div>
+        <div *ngIf="pageEmpty" class="w-100 text-center"><b>You reached end of the world !</b></div>
+        <button (click)="search('next')" *ngIf="!pageEmpty" class="w-100" color="primary" mat-raised-button><b
+          class="text-white">Load More</b></button>
       </div>
     </div>
   </div>

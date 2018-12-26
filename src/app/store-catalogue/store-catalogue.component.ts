@@ -1,9 +1,11 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Actions, ofActionDispatched, Select, Store} from '@ngxs/store';
 import {
   GetStoreDetails,
   ProductFoundedInCatalog,
+  ProductNextPageFoundedInCatalog,
+  ProductNextPageInCatalog,
   SearchForProductInCatalog,
   StoreNotFound,
   StoreProductsNotFound
@@ -34,18 +36,33 @@ export class StoreCatalogueComponent implements OnInit {
   searchQuery: { storeId: string, query: string, filters: object, sortBy: string, page: number } = {
     storeId: '',
     query: '',
-    filters: {},
+    filters: {
+      location: 'Coimbatore',
+      categories: {
+        gender: 'All'
+      },
+      price: {
+        inMin: 0,
+        inMax: 100000,
+        min: 0,
+        max: 100000
+      },
+      size: '',
+      occasion: '',
+      allowOutOfStock: false
+    },
     sortBy: '',
     page: 0
   };
   screenWidth = window.screen.width;
-  queryParam;
-
+  pageEmpty = false;
+  regNoSpace = /^[^-\s][a-zA-Z0-9_\s-]+$/;
   constructor(private route: ActivatedRoute,
               private store: Store,
               private actions$: Actions,
               public dialog: MatDialog,
-              private bottomSheet: MatBottomSheet) {
+              private bottomSheet: MatBottomSheet,
+              private router: Router) {
     this.route.params.pipe(take(1)).subscribe(params => {
       this.param = params['usn'];
       this.store.dispatch([new GetStoreDetails(params['usn'])]);
@@ -53,7 +70,7 @@ export class StoreCatalogueComponent implements OnInit {
     this.storeCatalogSubscription = this.$storeCatalog.subscribe((data) => {
       this.storeCatalog = data;
       this.searchQuery.storeId = this.storeCatalog.storeDetails['storeUid'];
-      if (this.searchQuery.storeId) {
+      if (this.regNoSpace.test(this.searchQuery.storeId) && this.searchQuery.storeId) {
         this.search();
       }
     });
@@ -66,19 +83,57 @@ export class StoreCatalogueComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.route.queryParams
       .subscribe(params => {
-        this.searchQuery.filters = JSON.parse(params.filter);
-        this.searchQuery.sortBy = params.sortBy;
+        if (this.regNoSpace.test(this.searchQuery.storeId) && this.searchQuery.storeId) {
+          console.log(this.searchQuery.storeId);
+          this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {
+              storeId: this.storeCatalog.storeDetails['storeUid'],
+              page: 0
+            }, {queryParamsHandling: 'merge'}
+          )]);
+
+          if (params && params.filters && params.sortBy) {
+            if (params.filters.length > 0 && params.sortBy.length > 0) {
+              console.log(params.query);
+              this.searchQuery.query = params.query ? params.query : '';
+              this.searchQuery.filters = JSON.parse(params.filters);
+              this.searchQuery.sortBy = params.sortBy;
+              this.search();
+            }
+          } else {
+            this.createSearchParams();
+            this.search();
+          }
+        }
       });
+
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
-      console.log('bottom');
+  updateQueryParams() {
+
+    return this.store.dispatch([
+      new Navigate([
+        this.router.url.split('?')[0]], {query: this.searchQuery.query}, {queryParamsHandling: 'merge'})
+    ]);
+  }
+
+  createSearchParams() {
+    if (typeof (this.searchQuery.filters) === 'object') {
+
+      return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {
+        storeId: this.searchQuery.storeId,
+        query: this.searchQuery.query,
+        filters: JSON.stringify(this.searchQuery.filters),
+        sortBy: '',
+        page: 0
+      }, {queryParamsHandling: 'merge'})]);
+    } else {
+      return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], this.searchQuery, {queryParamsHandling: 'merge'})]);
     }
   }
+
 
   openFilter(): void {
     const dialogRef = this.dialog.open(FilterBoxComponent, {
@@ -97,21 +152,58 @@ export class StoreCatalogueComponent implements OnInit {
   }
 
 
-  search() {
-    this.store.dispatch([new Navigate(['products'], this.searchQuery)]);
-    this.store
-      .dispatch([
-        new LoadingTrue(),
-        new SearchForProductInCatalog(this.searchQuery)
-      ]);
-    this.actions$.pipe(ofActionDispatched(ProductFoundedInCatalog), take(5)).subscribe(({resultProducts}) => {
-      if (resultProducts.length >= 0) {
-        this.resultProduct = resultProducts;
-        console.log(this.resultProduct);
-        this.store.dispatch([new LoadingFalse()]);
+  search(choice?) {
+
+    switch (choice) {
+      case 'next': {
+        this.searchQuery.page++;
+        this.store.dispatch([
+          new Navigate([
+            this.router.url.split('?')[0]], {query: this.searchQuery.query, page: this.searchQuery.page}, {queryParamsHandling: 'merge'})
+        ]);
+        // @ts-ignore
+        this.store
+          .dispatch([
+            new LoadingTrue(),
+            new ProductNextPageInCatalog(this.searchQuery)
+          ]);
+        this.actions$.pipe(ofActionDispatched(ProductNextPageFoundedInCatalog), take(5)).subscribe(({resultProducts}) => {
+
+          if (this.searchQuery.page > 0 && resultProducts.length > 0) {
+            resultProducts.forEach((product) => this.resultProduct.push(product));
+
+            this.store.dispatch([new LoadingFalse()]);
+          } else {
+            this.pageEmpty = true;
+            this.store.dispatch([new LoadingFalse()]);
+          }
+
+        });
+        break;
       }
-      console.log(this.resultProduct);
-    });
+      default : {
+        this.pageEmpty = false;
+        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {page: 0}, {queryParamsHandling: 'merge'})]);
+        this.updateQueryParams();
+        // @ts-ignore
+        this.store
+          .dispatch([
+            new LoadingTrue(),
+            new SearchForProductInCatalog(this.searchQuery)
+          ]);
+        this.actions$.pipe(ofActionDispatched(ProductFoundedInCatalog), take(5)).subscribe(({resultProducts}) => {
+
+          if (this.searchQuery.page === 0) {
+            this.resultProduct = resultProducts;
+            console.log(this.resultProduct);
+            this.store.dispatch([new LoadingFalse()]);
+          }
+          console.log(this.resultProduct);
+        });
+        break;
+      }
+    }
+
   }
 
   onChange() {

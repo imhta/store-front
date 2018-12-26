@@ -49,7 +49,9 @@
         </mat-card-content>
       </mat-card>
     </div>
-
+    <div *ngIf="pageEmpty" class="w-100 text-center"><b>You reached end of the world !</b></div>
+    <button *ngIf="!pageEmpty" mat-raised-button class="w-100" color="primary" (click)="search('next')"><b
+      class="text-white">Load More</b></button>
   </div>
 
 </div>

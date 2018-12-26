@@ -8,6 +8,7 @@ import {
   GetStoreProducts,
   GotStoreDetailsSuccessfully,
   GotStoreProductsSuccessfully,
+  ProductNextPageInCatalog,
   SearchForProductInCatalog,
   StoreNotFound,
   StoreProductsNotFound
@@ -60,7 +61,7 @@ export class StoreCatalogState {
         return this.store.dispatch([new StoreNotFound()]);
       } else {
         data.forEach((doc) =>
-          this.store.dispatch([new GotStoreDetailsSuccessfully(doc.data()), new GetStoreProducts(doc.id)]));
+          this.store.dispatch([new GotStoreDetailsSuccessfully(doc.data()), new GetStoreProducts(doc.data().storeUid)]));
       }
     }).catch((err) => this.store.dispatch([new ErrorInGettingStoreDetails(err)]));
   }
@@ -79,8 +80,13 @@ export class StoreCatalogState {
   }
 
   @Action(SearchForProductInCatalog)
-  searchForProduct(cxt: StateContext<any[]>, {searchQuery}: SearchForProductInCatalog) {
+  searchForProductInCatalog(cxt: StateContext<any[]>, {searchQuery}: SearchForProductInCatalog) {
     this.httpService.searchForProductInCatalog(searchQuery);
   }
 
+
+  @Action(ProductNextPageInCatalog)
+  searchForProductNextPage(cxt: StateContext<any[]>, {searchQuery}: ProductNextPageInCatalog) {
+    this.httpService.searchForProductInCatalog(searchQuery, 'next');
+  }
 }

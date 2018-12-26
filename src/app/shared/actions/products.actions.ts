@@ -43,7 +43,7 @@ export class ErrorInProductSearch {
 export class ProductNextPage {
   static readonly type = '[Product] Search for NextPage';
 
-  constructor(public  searchQuery: { query: string }) {
+  constructor(public  searchQuery: object) {
   }
 }
 
