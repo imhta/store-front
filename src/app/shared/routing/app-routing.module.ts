@@ -17,10 +17,10 @@ const routes: Routes = [
     path: 'home',
     component: HomePageComponent
   },
-  // {
-  //   path: 'products',
-  //   component: ProductListingComponent
-  // },
+  {
+    path: 'products',
+    component: ProductListingComponent
+  },
   {
     path: 'product/:id',
     component: ProductPageComponent
