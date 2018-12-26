@@ -13,6 +13,7 @@ import {
 import {CustomerFeedback, InvoiceModel} from '../shared/models/invoices.model';
 import {LoadingTrue} from '../shared/state/loading.state';
 import {take} from 'rxjs/operators';
+import {SeoService} from '../shared/services/seo/seo.service';
 
 @Component({
   selector: 'cx-invoice-page',
@@ -25,7 +26,7 @@ export class InvoicePageComponent implements OnInit {
   feedbackStatus: 'GIVEN' | 'NOTGIVEN' | 'ERROR' = 'NOTGIVEN';
   feedback = new CustomerFeedback();
 
-  constructor(private route: ActivatedRoute, private store: Store, private actions$: Actions) {
+  constructor(private route: ActivatedRoute, private store: Store, private actions$: Actions, private seo: SeoService) {
     this.store.dispatch([new GetInvoiceById(this.route.snapshot.paramMap.get('id'))]);
     this.actions$.pipe(ofActionDispatched(GotInvoiceByIdSuccessfully)).subscribe(({invoice}) => {
       this.status = 'FOUND';

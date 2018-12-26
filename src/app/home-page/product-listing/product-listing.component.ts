@@ -12,6 +12,7 @@ import {SortBoxComponent} from '../../sort-box/sort-box.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Navigate} from '@ngxs/router-plugin';
+import {SeoService} from '../../shared/services/seo/seo.service';
 
 @Component({
   selector: 'cx-product-listing',
@@ -56,13 +57,19 @@ export class ProductListingComponent implements OnInit {
     private bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
     private router: Router,
+    private seo: SeoService
   ) {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
 
   }
 
   ngOnInit() {
-
+    this.seo.generateTags({
+      title: 'Products Page',
+      description: 'Find nearby fashion destination',
+      image: 'https://spoteasy.in/assets/logo.png',
+      slug: 'products'
+    });
     this.route.queryParams
       .subscribe(params => {
         console.log(params);

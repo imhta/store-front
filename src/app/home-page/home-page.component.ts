@@ -7,6 +7,7 @@ import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
 import {SingleProductModel, WholeProducts} from '../shared/models/product.model';
 import {GetAllProducts} from '../shared/actions/products.actions';
+import {SeoService} from '../shared/services/seo/seo.service';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class HomePageComponent implements OnInit {
   };
   searchQuery = '';
 
-  constructor(private config: NgbCarouselConfig, private store: Store) {
+  constructor(private config: NgbCarouselConfig, private store: Store, private seo: SeoService) {
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
     this.store.dispatch([new LoadingTrue(), new GetAllProducts()]);
@@ -50,6 +51,12 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
+    this.seo.generateTags({
+      title: 'Home Page',
+      description: 'Explore fashion',
+      image: 'https://spoteasy.in/assets/logo.png',
+      slug: 'home'
+    });
   }
 
 

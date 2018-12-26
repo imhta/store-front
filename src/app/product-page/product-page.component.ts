@@ -12,6 +12,7 @@ import {
 import {SingleProductModel} from '../shared/models/product.model';
 import {take} from 'rxjs/operators';
 import {Navigate} from '@ngxs/router-plugin';
+import {SeoService} from '../shared/services/seo/seo.service';
 
 @Component({
   selector: 'cx-product-page',
@@ -27,7 +28,8 @@ export class ProductPageComponent implements OnInit {
   constructor(
     private store: Store,
     private actions$: Actions,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private seo: SeoService
   ) {
     this.route.params.subscribe((params) => {
       if (params.id) {
@@ -40,6 +42,14 @@ export class ProductPageComponent implements OnInit {
       .subscribe(({product}) => {
         this.product = product;
         this.selectedImg = this.product.picturesUrl[0];
+        if (product) {
+          this.seo.generateTags({
+            title: this.product.productName + '' + 'from' + '' + this.product.storeDetails.name,
+            description: this.product.brandName + ' ' + this.product.description + ' ' + this.product.gender,
+            image: this.product.picturesUrl[0],
+            slug: 'product/' + this.product.productUid
+          });
+        }
         this.store.dispatch([new LoadingFalse(), new GettingRecommendedStoreProducts(this.product.storeId)]);
       });
     this.actions$
@@ -53,6 +63,7 @@ export class ProductPageComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   scrollLeft() {

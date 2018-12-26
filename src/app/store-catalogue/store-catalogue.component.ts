@@ -18,6 +18,7 @@ import {LoadingFalse, LoadingTrue} from '../shared/state/loading.state';
 import {FilterBoxComponent} from '../filter-box/filter-box.component';
 import {SortBoxComponent} from '../sort-box/sort-box.component';
 import {MatBottomSheet, MatDialog} from '@angular/material';
+import {SeoService} from '../shared/services/seo/seo.service';
 
 @Component({
   selector: 'cx-store-catalogue',
@@ -57,12 +58,14 @@ export class StoreCatalogueComponent implements OnInit {
   screenWidth = window.screen.width;
   pageEmpty = false;
   regNoSpace = /^[^-\s][a-zA-Z0-9_\s-]+$/;
+
   constructor(private route: ActivatedRoute,
               private store: Store,
               private actions$: Actions,
               public dialog: MatDialog,
               private bottomSheet: MatBottomSheet,
-              private router: Router) {
+              private router: Router,
+              private seo: SeoService) {
     this.route.params.pipe(take(1)).subscribe(params => {
       this.param = params['usn'];
       this.store.dispatch([new GetStoreDetails(params['usn'])]);
@@ -71,6 +74,16 @@ export class StoreCatalogueComponent implements OnInit {
       this.storeCatalog = data;
       this.searchQuery.storeId = this.storeCatalog.storeDetails['storeUid'];
       if (this.regNoSpace.test(this.searchQuery.storeId) && this.searchQuery.storeId) {
+        this.seo.generateTags({
+          title: this.storeCatalog.storeDetails['storeName']
+            + ' '
+            + this.storeCatalog.storeDetails['address']['city']
+            + ' '
+            + this.storeCatalog.storeDetails['address']['state'],
+          description: this.storeCatalog.storeDetails['description'],
+          image: this.storeCatalog.storeDetails['storeLogo']['localDownloadUrl'],
+          slug: 'store/' + this.storeCatalog.storeDetails['usn']
+        });
         this.search();
       }
     });
