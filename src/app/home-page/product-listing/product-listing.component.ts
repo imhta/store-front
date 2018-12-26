@@ -44,7 +44,7 @@ export class ProductListingComponent implements OnInit {
       size: '',
       occasion: '',
       allowOutOfStock: false
-    }, sortBy: '', page: 0
+    }, sortBy: 'high2low', page: 0
   };
   screenWidth = window.screen.width;
   private temp: SingleProductModel;
@@ -59,23 +59,14 @@ export class ProductListingComponent implements OnInit {
   ) {
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
 
-    // this.favSubscription = this.actions$
-    //   .pipe(ofActionSuccessful(GotFavoritesSuccessfully))
-    //   .subscribe(() => {
-    //     this.updateFav();
-    //   });
-    // this.cartsSubscription = this.actions$
-    //   .pipe(ofActionSuccessful(GotCartsSuccessfully))
-    //   .subscribe(() => {
-    //     this.updateCarts();
-    //   });
   }
 
   ngOnInit() {
 
     this.route.queryParams
       .subscribe(params => {
-        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {page: 0})]);
+        console.log(params);
+        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {page: 0}, {queryParamsHandling: 'merge'})]);
 
         if (params && params.filters && params.sortBy) {
           if (params.filters.length > 0 && params.sortBy.length > 0) {
@@ -89,26 +80,22 @@ export class ProductListingComponent implements OnInit {
           this.createSearchParams();
 
           this.search();
+
         }
 
       });
   }
 
-  updateQueryParams() {
-
-    return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {query: this.searchQuery.query})]);
-  }
 
   createSearchParams() {
     if (typeof (this.searchQuery.filters) === 'object') {
-      return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {
+
+      this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {
         query: this.searchQuery.query,
         filters: JSON.stringify(this.searchQuery.filters),
-        sortBy: '',
+        sortBy: 'high2low',
         page: 0
       }, {queryParamsHandling: 'merge'})]);
-    } else {
-      return this.store.dispatch([new Navigate([this.router.url.split('?')[0]], this.searchQuery)]);
     }
   }
 
@@ -134,7 +121,10 @@ export class ProductListingComponent implements OnInit {
     switch (choice) {
       case 'next': {
         this.searchQuery.page++;
-        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {query: this.searchQuery.query, page: this.searchQuery.page})]);
+        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {
+          query: this.searchQuery.query,
+          page: this.searchQuery.page
+        }, {queryParamsHandling: 'merge'})]);
         // @ts-ignore
         this.store
           .dispatch([
@@ -157,8 +147,8 @@ export class ProductListingComponent implements OnInit {
       }
       default : {
         this.pageEmpty = false;
-        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {page: 0})]);
-        this.updateQueryParams();
+        this.store.dispatch([new Navigate([this.router.url.split('?')[0]], {page: 0}, {queryParamsHandling: 'merge'})]);
+        this.updateParams();
         // @ts-ignore
         this.store
           .dispatch([
@@ -180,51 +170,19 @@ export class ProductListingComponent implements OnInit {
 
   }
 
-  // updateFav() {
-  //   this.products.forEach((product) => {
-  //     this.wholeProducts.favorites.forEach((favProduct) => {
-  //       if (product.productUid === favProduct.productUid) {
-  //         product.isFavorite = favProduct.isFav;
-  //       }
-  //     });
-  //   });
-  // }
-  //
-  // updateCarts() {
-  //   this.products.forEach((product) => {
-  //     this.wholeProducts.cartedProducts.forEach((cartItem) => {
-  //       if (product.productUid === cartItem.productUid) {
-  //         product.isCart = cartItem.isCart;
-  //       }
-  //     });
-  //   });
-  // }
+  updateParams() {
+    return this.store.dispatch([
+      new Navigate([this.router.url.split('?')[0]],
+        {query: this.searchQuery.query},
+        {queryParamsHandling: 'merge'})]);
+  }
 
+  onChange() {
+    if (this.searchQuery.query === '') {
+      this.search();
+    }
 
-  // addToFavorite(productUid: string) {
-  //   this.temp = this.products.filter((product) => product.productUid === productUid)[0];
-  //   if (this.temp.isFavorite) {
-  //     this.store.dispatch([new RemoveFromFavorite(productUid)]);
-  //     this.temp.isFavorite = !this.temp.isFavorite;
-  //   } else {
-  //     this.store.dispatch([new AddToFavorite(productUid)]);
-  //     this.temp.isFavorite = !this.temp.isFavorite;
-  //   }
-  //
-  // }
-  //
-  // addToCart(productUid: string) {
-  //   this.temp = this.products.filter((product) => product.productUid === productUid)[0];
-  //   if (this.temp.isCart) {
-  //     this.store.dispatch([new RemoveFromCart(productUid)]);
-  //     this.temp.isCart = !this.temp.isCart;
-  //   } else {
-  //     this.store.dispatch([new AddToCart(productUid)]);
-  //     this.temp.isCart = !this.temp.isCart;
-  //   }
-  //
-  // }
-
+  }
   navigateToProduct(productUid: string) {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }

@@ -14,13 +14,13 @@ export class SortBoxComponent implements OnInit {
   constructor(private bottomSheetRef: MatBottomSheetRef<SortBoxComponent>, private router: Router) {
   }
 
-  openLink(event): void {
+  openLink(event) {
     this.sortBy = event;
     this.router.navigate([this.router.url.split('?')[0]], {queryParams: {sortBy: event}, queryParamsHandling: 'merge'})
       .then()
       .catch((err) => console.log(err));
     this.bottomSheetRef.dismiss();
-    event.preventDefault();
+    // event.preventDefault();
   }
 
   ngOnInit() {

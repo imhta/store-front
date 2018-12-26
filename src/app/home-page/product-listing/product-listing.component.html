@@ -2,7 +2,7 @@
 <div class="m-4">
   <div class="input-group">
     <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
-           (keyup.enter)="search()">
+           (keyup.enter)="search()" (ngModelChange)="  onChange()">
     <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
   </div>
 

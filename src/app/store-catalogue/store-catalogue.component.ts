@@ -51,7 +51,7 @@ export class StoreCatalogueComponent implements OnInit {
       occasion: '',
       allowOutOfStock: false
     },
-    sortBy: '',
+    sortBy: 'high2low',
     page: 0
   };
   screenWidth = window.screen.width;
@@ -126,7 +126,7 @@ export class StoreCatalogueComponent implements OnInit {
         storeId: this.searchQuery.storeId,
         query: this.searchQuery.query,
         filters: JSON.stringify(this.searchQuery.filters),
-        sortBy: '',
+        sortBy: 'high2low',
         page: 0
       }, {queryParamsHandling: 'merge'})]);
     } else {
