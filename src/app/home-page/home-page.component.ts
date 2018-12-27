@@ -171,6 +171,10 @@ export class HomePageComponent implements OnInit {
   search() {
     console.log('s', this.searchQuery);
     this.store.dispatch([
-      new Navigate(['products'], {query: this.searchQuery, filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+      new Navigate(['products'], {
+        query: this.searchQuery, filters: JSON.stringify(this.filters),
+        sortBy: 'high2low',
+        page: 0
+      }, {queryParamsHandling: 'merge'})]);
   }
 }
