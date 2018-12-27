@@ -61,6 +61,7 @@ import {FooterComponent} from './general-components/footer/footer.component';
 import {ShareButtonsModule} from '@ngx-share/buttons';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NotFoundPageComponent} from './general-components/not-found-page/not-found-page.component';
+import {StoresComponent} from './stores/stores.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,8 @@ import {NotFoundPageComponent} from './general-components/not-found-page/not-fou
     InfiniteLoadingSpinerComponent,
     ProductPageComponent,
     FooterComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    StoresComponent
   ],
   imports: [
     BrowserModule,

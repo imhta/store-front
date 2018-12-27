@@ -23,6 +23,9 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  navigatePath(path) {
+    this.store.dispatch(new Navigate([path]));
+  }
   navigateHome() {
     this.store.dispatch([new Navigate(['home'])]);
   }

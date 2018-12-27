@@ -48,9 +48,10 @@ export class HomePageComponent implements OnInit {
       this.wholeProducts = data;
       this.products = this.wholeProducts.products.slice(0, 10);
     });
-    this.dbService.getStoreWithUsn().then((data) => {
+    this.dbService.getStoreWithUsn(6).then((data) => {
       this.storesWithUsn = [];
       data.forEach((doc) => this.storesWithUsn.push(doc.data()));
+      console.log(this.storesWithUsn);
     });
   }
 
@@ -164,9 +165,6 @@ export class HomePageComponent implements OnInit {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }
 
-  browseStore(usn) {
-    this.store.dispatch([new Navigate(['store', usn])]);
-  }
 
   search() {
     console.log('s', this.searchQuery);

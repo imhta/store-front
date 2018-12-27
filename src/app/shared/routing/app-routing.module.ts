@@ -6,6 +6,7 @@ import {InvoicePageComponent} from '../../invoice-page/invoice-page.component';
 import {ProductListingComponent} from '../../home-page/product-listing/product-listing.component';
 import {ProductPageComponent} from '../../product-page/product-page.component';
 import {NotFoundPageComponent} from '../../general-components/not-found-page/not-found-page.component';
+import {StoresComponent} from '../../stores/stores.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'product/:id',
     component: ProductPageComponent
+  },
+  {
+    path: 'stores',
+    component: StoresComponent
   },
   {
     path: 'store/:usn',

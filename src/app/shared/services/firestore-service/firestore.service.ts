@@ -212,10 +212,10 @@ export class FirestoreService {
       ).catch((err) => this.store.dispatch([new ErrorInGettingProduct(err)]));
   }
 
-  getStoreWithUsn() {
+  getStoreWithUsn(limit: number) {
     return this.db.collection('stores').ref
       .orderBy('usn', 'asc')
-      .limit(6)
+      .limit(limit)
       .get();
   }
 }
