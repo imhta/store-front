@@ -177,7 +177,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getImageOpUrl(url: string) {
-    url = url.slice(0, 49) + 'q_80,w_200,h_250/' + url.slice(49 + Math.abs(0));
+    url = url.slice(0, 49) + 'q_80,h_300/' + url.slice(49 + Math.abs(0));
     return url;
   }
 
