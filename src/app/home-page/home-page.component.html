@@ -73,35 +73,42 @@
   <div class="divide m-4">
     <h3 class="text-center font-weight-bold"><span class="text-danger">NEW</span> ARRIVALS IN COIMBATORE</h3>
   </div>
-  <div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="products">
-    <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
-      <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
-    </button>
+  <div class="row">
+    <div class="col-sm-0">
+      <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
+        <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
+      </button>
+    </div>
+    <div class="scrolling-wrapper col" id="scrolling-wrapper" *ngIf="products">
+      <mat-card *ngFor="let product of  products" class="product-card" (click)="navigateToProduct(product.productUid)">
+        <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
+        <mat-card-content>
 
-    <mat-card *ngFor="let product of  products" class="product-card" (click)="navigateToProduct(product.productUid)">
-      <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
-      <mat-card-content>
+          <mat-chip-list>
 
-        <mat-chip-list>
+            <p class="product-name">{{product.productName | slice:0:12}} ...</p>
+            <mat-chip>
+              <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
+            </mat-chip>
+          </mat-chip-list>
 
-          <p class="product-name">{{product.productName | slice:0:12}} ...</p>
-          <mat-chip>
-            <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
-          </mat-chip>
-        </mat-chip-list>
+        </mat-card-content>
+      </mat-card>
 
-      </mat-card-content>
-    </mat-card>
-    <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
-      <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
-    </button>
+    </div>
+    <div class="col-sm-0">
+      <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
+        <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
+      </button>
+    </div>
   </div>
-</div>
-<div class="divide m-4">
+
+
+  <div class="divide m-4">
   <h3 class="text-center font-weight-bold">EXPLORE NEARBY FASHION STORES</h3>
 </div>
 <div class="row">
-  <mat-card class="col-md-2 m-2 bg-dark text-white" *ngFor="let storeDetail of storesWithUsn">
+  <mat-card class="col-md-2 m-3 bg-dark text-white" *ngFor="let storeDetail of storesWithUsn">
     <mat-card-header>
       <mat-card-title><b>{{storeDetail.storeName}}</b></mat-card-title>
     </mat-card-header>
@@ -112,7 +119,7 @@
     <button mat-button class="float-right" (click)="browseStore(storeDetail.usn)">BROWSE</button>
   </mat-card>
 </div>
-<div class="container">
+
   <div class="divide m-4">
     <h3 class="text-center font-weight-bold">OCCASIONS</h3>
   </div>
