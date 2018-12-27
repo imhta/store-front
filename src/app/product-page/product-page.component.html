@@ -54,33 +54,42 @@
 
   </div>
 
-  <div class="divide m-4">
-    <h3 class="text-center font-weight-bold"><span class="text-danger">Recommended</span> Products
-      From {{product?.storeDetails.name}}</h3>
-  </div>
 
-  <div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="recommendedProducts">
-    <mat-card *ngFor="let product of  recommendedProducts | slice:0:10;" class="product-card"
-              (click)="navigateToProduct(product.productUid)">
-      <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
-      <mat-card-content>
+  <div *ngIf="recommendedProducts.length > 0">
+    <div class="divide m-4">
+      <h3 class="text-center font-weight-bold"><span class="text-danger">Recommended</span> Products
+        From {{product?.storeDetails.name}}</h3>
+    </div>
+    <div class="row">
+      <div class="col-sm-0">
+        <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
+          <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
+        </button>
+      </div>
+      <div class="scrolling-wrapper col" id="scrolling-wrapper" *ngIf="recommendedProducts">
+        <mat-card *ngFor="let product of  recommendedProducts" class="product-card"
+                  (click)="navigateToProduct(product.productUid)">
+          <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
+          <mat-card-content>
 
-        <mat-chip-list>
+            <mat-chip-list>
 
-          <p class="product-name">{{product.productName | slice:0:12}} ...</p>
-          <mat-chip>
-            <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
-          </mat-chip>
-        </mat-chip-list>
+              <p class="product-name">{{product.productName | slice:0:12}} ...</p>
+              <mat-chip>
+                <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
+              </mat-chip>
+            </mat-chip-list>
 
-      </mat-card-content>
-    </mat-card>
-    <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
-      <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
-    </button>
-    <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
-      <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
-    </button>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div class="col-sm-0">
+        <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
+          <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 
 </div>

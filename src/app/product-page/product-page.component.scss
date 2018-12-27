@@ -81,15 +81,19 @@
     }
   }
 
+
+}
+
+.col-sm-0 {
+  height: 300px;
+
   .left-scroll-arrow {
-    position: absolute;
-    left: 10px;
+    margin: 100px auto;
     z-index: 100;
   }
 
   .right-scroll-arrow {
-    position: absolute;
-    right: 10px;
+    margin: 100px auto;
     z-index: 100;
   }
 }
