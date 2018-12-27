@@ -25,7 +25,7 @@
       <img src="../../assets/logo.png" class="grey-logo" width="80" alt="clothx logo">
     </div>
     <div class="content">There is no products add to {{param}} yet</div>
-    <div class="setup-link">Browse other stores</div>
+    <div (click)="navigateHome()" class="setup-link">Browse other stores</div>
   </div>
   <div *ngIf="isProductFound">
 

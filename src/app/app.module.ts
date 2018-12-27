@@ -114,7 +114,7 @@ import {NotFoundPageComponent} from './general-components/not-found-page/not-fou
     FontAwesomeModule,
     BrowserAnimationsModule,
     NgAisModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+    // ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   entryComponents: [FilterBoxComponent, SortBoxComponent],
   providers: [

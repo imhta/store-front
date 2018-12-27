@@ -230,6 +230,7 @@ export class StoreCatalogueComponent implements OnInit {
     this.store.dispatch([new Navigate([''])]);
   }
 
+
   navigateToProduct(productUid: string) {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }
