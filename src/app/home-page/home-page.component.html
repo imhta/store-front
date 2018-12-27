@@ -7,7 +7,8 @@
 <cx-navbar></cx-navbar>
 <ngb-carousel>
   <ng-template ngbSlide>
-    <img class="slide" src="../../assets/main-back.jpg" alt="first slide">
+    <img class="slide" src="https://res.cloudinary.com/spoteasy/image/upload/q_60/v1545899608/gen_img/main-back.jpg"
+         alt="first slide">
     <div class="carousel-caption">
       <div class="wrapper">
         <div class="brand-title"><h4>FIND YOUR NEIGHBOURHOOD FASHION</h4></div>
@@ -48,22 +49,22 @@
   <div class="row">
     <div class="col-md" (click)="navigateWithFilters('Women')">
       <img
-        src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FWomen%2FInShot_20181216_222744576.jpg?alt=media&token=d74e4ffe-2414-46e6-9839-73e1006c76c4"
+        src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_300/v1545899717/gen_img/spot_women.jpg"
         alt="second slide">
       <div class="after"><span>WOMEN</span></div>
     </div>
     <div class="col-md" (click)="navigateWithFilters('Men')"><img
-      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FMen%2Fpexels-photo-1482067.jpg?alt=media&token=26feb507-704d-4b83-8138-70a4d84a50c2"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_300/v1545899717/gen_img/spot_men.jpg"
       alt="second slide">
       <div class="after"><span>MEN</span></div>
     </div>
     <div class="col-md" (click)="navigateWithFilters('Boy')"><img
-      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FBoy%2Fed73754728793b224a3f38d320b39668.jpg?alt=media&token=a1c13c7d-3396-4b6e-908b-504e5760190e"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_300/v1545899894/gen_img/spot_boy.jpg"
       alt="second slide">
       <div class="after"><span>BOY</span></div>
     </div>
     <div class="col-md" (click)="navigateWithFilters('Girl')"><img
-      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FGirl%2Fgirl.jpg?alt=media&token=3dd7d2f1-38af-4a1f-a364-2eab277fedcd"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_300/v1545899851/gen_img/spot_girl.jpg"
       alt="second slide">
       <div class="after"><span>GIRL</span></div>
     </div>
@@ -73,8 +74,12 @@
     <h3 class="text-center font-weight-bold"><span class="text-danger">NEW</span> ARRIVALS IN COIMBATORE</h3>
   </div>
   <div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="products">
+    <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
+      <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
+    </button>
+
     <mat-card *ngFor="let product of  products" class="product-card" (click)="navigateToProduct(product.productUid)">
-      <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+      <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
       <mat-card-content>
 
         <mat-chip-list>
@@ -87,9 +92,6 @@
 
       </mat-card-content>
     </mat-card>
-    <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
-      <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
-    </button>
     <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
       <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
     </button>
@@ -116,12 +118,12 @@
   </div>
   <div class="row occasions">
     <div class="col-sm" (click)="navigateWithFilters('Formals')"><img
-      src="https://images.pexels.com/photos/1702/bow-tie-businessman-fashion-man.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_533/v1545899982/gen_img/spot_fw.jpg"
       alt="second slide">
       <div class="after"><span>Formals</span></div>
     </div>
     <div class="col-sm" (click)="navigateWithFilters('Casuals')"><img
-      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FCasuals%2Fpexels-photo-1049317.jpeg?alt=media&token=e90c2d4c-493b-40b0-af04-60b3279cb664"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_533/v1545900007/gen_img/spot_cw.jpg"
       alt="second slide">
       <div class="after"><span>Casuals</span></div>
     </div>
@@ -129,12 +131,12 @@
   </div>
   <div class="row ">
     <div class="col-sm" (click)="navigateWithFilters('Wedding')"><img
-      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FWedding%2Fpexels-photo-1182963.jpeg?alt=media&token=e28717fc-4e08-4e4b-b13e-441cd8e50440"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_533/v1545900037/gen_img/spot_ww.jpg"
       alt="second slide">
       <div class="after"><span>Wedding</span></div>
     </div>
     <div class="col-sm" (click)="navigateWithFilters('Sports')"><img
-      src="https://firebasestorage.googleapis.com/v0/b/clothxnet.appspot.com/o/spoteasy%2Fcat-img%2FSportsWear%2Fpexels-photo-1103833.jpeg?alt=media&token=8ba065a9-511b-48df-97a0-bd3c2aa7fa13"
+      src="https://res.cloudinary.com/spoteasy/image/upload/q_60,h_533/v1545900066/gen_img/spot_sw.jpg"
       alt="second slide">
       <div class="after"><span>Sports Wear</span></div>
     </div>

@@ -74,6 +74,18 @@ ngb-carousel {
   -webkit-overflow-scrolling: touch;
 
 
+  .left-scroll-arrow {
+    position: absolute;
+    left: 10px;
+    z-index: 100;
+  }
+
+  .right-scroll-arrow {
+    position: absolute;
+    right: 10px;
+    z-index: 100;
+  }
+}
   .product-card {
     display: inline-block;
     margin: 10px;
@@ -132,20 +144,9 @@ ngb-carousel {
       display: block;
       margin: 10px;
     }
+
   }
 
-  .left-scroll-arrow {
-    position: absolute;
-    left: 10px;
-    z-index: 100;
-  }
-
-  .right-scroll-arrow {
-    position: absolute;
-    right: 10px;
-    z-index: 100;
-  }
-}
 
 .scrolling-wrapper::-webkit-scrollbar {
   display: none;

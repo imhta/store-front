@@ -30,6 +30,7 @@ export class SingleProductModel implements OnInit {
   isCart: boolean;
   lastModified: Timestamp;
   storeDetails: { address: { city: string, pinCode: number, state: string, street: string }, location: GeoPoint, name: string };
+  cloudinaryUrls: object[];
 
   constructor() {
     this.isListable = false;

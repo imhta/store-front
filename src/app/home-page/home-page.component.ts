@@ -144,12 +144,12 @@ export class HomePageComponent implements OnInit {
   }
 
   scrollLeft() {
-    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft + 50;
+    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft + 150;
 
   }
 
   scrollRight() {
-    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft - 50;
+    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft - 150;
 
   }
 
@@ -174,5 +174,10 @@ export class HomePageComponent implements OnInit {
         sortBy: 'high2low',
         page: 0
       }, {queryParamsHandling: 'merge'})]);
+  }
+
+  getImageOpUrl(url: string) {
+    url = url.slice(0, 49) + 'q_80,w_200,h_250/' + url.slice(49 + Math.abs(0));
+    return url;
   }
 }

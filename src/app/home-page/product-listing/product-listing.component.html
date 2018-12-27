@@ -38,7 +38,7 @@
 
       <mat-card *ngFor="let product of  resultProduct " class="product-card"
                 (click)="navigateToProduct(product.productUid)">
-        <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+        <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
         <mat-card-content>
           <mat-chip-list>
 

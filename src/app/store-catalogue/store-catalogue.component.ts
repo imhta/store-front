@@ -235,4 +235,8 @@ export class StoreCatalogueComponent implements OnInit {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }
 
+  getImageOpUrl(url: string) {
+    url = url.slice(0, 49) + 'q_80,w_200,h_250/' + url.slice(49 + Math.abs(0));
+    return url;
+  }
 }
