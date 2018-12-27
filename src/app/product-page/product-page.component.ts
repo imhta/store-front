@@ -41,7 +41,7 @@ export class ProductPageComponent implements OnInit {
       .pipe(ofActionDispatched(GotProductSuccessfully), take(5))
       .subscribe(({product}) => {
         this.product = product;
-        this.selectedImg = this.product.picturesUrl[0];
+        this.selectedImg = this.product.cloudinaryUrls[0]['secure_url'];
         if (product) {
           this.seo.generateTags({
             title: this.product.productName + '' + 'from' + '' + this.product.storeDetails.name,
@@ -80,4 +80,8 @@ export class ProductPageComponent implements OnInit {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }
 
+  getImageOpUrl(url: string) {
+    url = url.slice(0, 49) + 'q_80,w_200,h_250/' + url.slice(49 + Math.abs(0));
+    return url;
+  }
 }

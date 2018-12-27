@@ -5,8 +5,8 @@
     <div class="col-md " *ngIf="product.picturesUrl[0]">
       <img class="selectedImg" [src]="selectedImg" [alt]="product.productName">
       <hr>
-      <img class="not-selected-img" *ngFor="let productPic of product.picturesUrl" [src]="productPic"
-           [alt]="product.productName" (click)="selectedImg = productPic">
+      <img class="not-selected-img" *ngFor="let productPic of product.cloudinaryUrls" [src]=" productPic['secure_url']"
+           [alt]="product.productName" (click)="selectedImg = productPic['secure_url']">
       <br>
       <br>
       <share-buttons [theme]="'modern-light'"
@@ -62,7 +62,7 @@
   <div class="scrolling-wrapper" id="scrolling-wrapper" *ngIf="recommendedProducts">
     <mat-card *ngFor="let product of  recommendedProducts | slice:0:10;" class="product-card"
               (click)="navigateToProduct(product.productUid)">
-      <img mat-card-image [src]="product.picturesUrl[0]" alt="product-photo">
+      <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
       <mat-card-content>
 
         <mat-chip-list>
