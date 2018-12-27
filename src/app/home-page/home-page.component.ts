@@ -69,42 +69,74 @@ export class HomePageComponent implements OnInit {
     switch (path) {
       case 'Men': {
         this.filters.categories.gender = 'Men';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Women': {
         this.filters.categories.gender = 'Women';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Boy': {
         this.filters.categories.gender = 'Boy';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Girl': {
         this.filters.categories.gender = 'Girl';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Formals': {
         this.filters.occasion = 'Formals';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Casuals': {
         this.filters.occasion = 'Casuals';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Wedding': {
         this.filters.occasion = 'Wedding';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
       case 'Sports': {
         this.filters.occasion = 'Sports';
-        this.store.dispatch([new Navigate(['products'], {filters: JSON.stringify(this.filters)}, {queryParamsHandling: 'merge'})]);
+        this.store.dispatch([new Navigate(['products'], {
+          filters: JSON.stringify(this.filters),
+          sortBy: 'high2low',
+          page: 0
+        }, {queryParamsHandling: 'merge'})]);
         break;
       }
     }
