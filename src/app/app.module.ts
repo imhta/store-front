@@ -62,6 +62,10 @@ import {ShareButtonsModule} from '@ngx-share/buttons';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NotFoundPageComponent} from './general-components/not-found-page/not-found-page.component';
 import {StoresComponent} from './stores/stores.component';
+import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -116,6 +120,8 @@ import {StoresComponent} from './stores/stores.component';
     FontAwesomeModule,
     BrowserAnimationsModule,
     NgAisModule,
+    ApolloModule,
+    HttpLinkModule,
     // ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   entryComponents: [FilterBoxComponent, SortBoxComponent],
@@ -131,7 +137,21 @@ import {StoresComponent} from './stores/stores.component';
     {
       provide: MatBottomSheetRef,
       useValue: {}
-    }],
+    },
+    // {
+    //   provide: APOLLO_OPTIONS,
+    //   useFactory(httpLink: HttpLink) {
+    //     return {
+    //       cache: new InMemoryCache(),
+    //       link: httpLink.create({
+    //         uri: 'https://api-apeast.graphcms.com/v1/cjq9q14shgemh01bn97uwug8x/master'
+    //       })
+    //     // tslint:disable-next-line:semicolon
+    //     }
+    //   },
+    //   deps: [HttpLink]
+    // }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
