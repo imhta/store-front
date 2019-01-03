@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, CollectionReference} from '@angular/fire/firestore';
+import {AngularFirestore, CollectionReference, DocumentReference} from '@angular/fire/firestore';
 import {Store} from '@ngxs/store';
 import {AuthState} from '../../state/auth.state';
 import {CartedProduct, FavProduct, SingleProductModel} from '../../models/product.model';
@@ -15,7 +15,6 @@ import {
 import {CustomerFeedback, InvoiceModel} from '../../models/invoices.model';
 import {LoadingFalse} from '../../state/loading.state';
 import {ErrorInGettingProduct, GotProductSuccessfully, ProductNotFound} from '../../actions/products.actions';
-import {Navigate} from '@ngxs/router-plugin';
 
 @Injectable({
   providedIn: 'root'
@@ -205,11 +204,30 @@ export class FirestoreService {
       .then((product) => {
           if (product.exists) {
             this.store.dispatch([new GotProductSuccessfully(product.data())]);
+            this.updateProductView(product.ref);
           } else {
             this.store.dispatch([new ProductNotFound()]);
           }
         }
       ).catch((err) => this.store.dispatch([new ErrorInGettingProduct(err)]));
+  }
+
+  updateProductView(productRef: DocumentReference) {
+    this.db.firestore.runTransaction(transaction =>
+      transaction
+        .get(productRef)
+        .then((prod) => {
+          if (prod.exists) {
+            const newView = prod.data().views + 1;
+            transaction.update(prod.ref, {views: newView});
+          } else {
+            transaction.set(prod.ref, {views: 1}, {merge: true});
+          }
+        })).then(function () {
+      console.log('Transaction successfully committed!');
+    }).catch(function (error) {
+      console.log('Transaction failed: ', error);
+    });
   }
 
   getStoreWithUsn(limit: number) {
