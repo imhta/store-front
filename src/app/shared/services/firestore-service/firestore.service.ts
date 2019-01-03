@@ -218,10 +218,8 @@ export class FirestoreService {
         .get(productRef)
         .then((prod) => {
           if (prod.exists) {
-            const newView = prod.data().views + 1;
+            const newView = prod.data().views ? prod.data().views + 1 : 1;
             transaction.update(prod.ref, {views: newView});
-          } else {
-            transaction.set(prod.ref, {views: 1}, {merge: true});
           }
         })).then(function () {
       console.log('Transaction successfully committed!');
