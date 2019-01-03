@@ -218,8 +218,9 @@ export class FirestoreService {
         .get(productRef)
         .then((prod) => {
           if (prod.exists) {
+            const newTimeHit = prod.data().timeHits ? (prod.data().timeHits + Date.now()) / 2 : Date.now();
             const newView = prod.data().views ? prod.data().views + 1 : 1;
-            transaction.update(prod.ref, {views: newView});
+            transaction.update(prod.ref, {views: newView, timeHits: newTimeHit});
           }
         })).then(function () {
       console.log('Transaction successfully committed!');
