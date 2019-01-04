@@ -21,15 +21,18 @@
       <p class="text-muted">{{product.categories.colorCategory}}</p>
       <div class="row" *ngIf="!product.isVariantsWithSamePrice">
         <mat-card class="col m-2" *ngFor="let variant of product.variants">
-          <p style="text-transform: uppercase">{{variant.size}}</p>
-          <h3><b>&#x20B9;{{variant.sellingPrice}}</b></h3>
+          <p style="text-transform: uppercase" *ngIf="variant.stock > 0" {{variant.size}}</p>
+          <h3 *ngIf="variant.stock > 0"><b>&#x20B9;{{variant.sellingPrice}}</b></h3>
         </mat-card>
       </div>
       <div class="row m-2" *ngIf="product.isVariantsWithSamePrice">
         <mat-card class="col" style=" max-width: 125px">
           <mat-chip-list>
-            <mat-chip style="text-transform: uppercase"
-                      *ngFor="let variant of product.variants">{{variant.size}}</mat-chip>
+            <span *ngFor="let variant of product.variants">
+            <mat-chip style="text-transform: uppercase" *ngIf="variant.stock > 0">
+              {{variant.size}}
+            </mat-chip>
+              </span>
           </mat-chip-list>
           <br>
           <h3><b>&#x20B9;{{product.variants[0].sellingPrice}}</b></h3>
