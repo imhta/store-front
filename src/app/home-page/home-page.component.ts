@@ -46,7 +46,7 @@ export class HomePageComponent implements OnInit {
     this.store.dispatch([new LoadingTrue(), new GetAllProducts()]);
     this.productsSubscription = this.$productsState.subscribe((data) => {
       this.wholeProducts = data;
-      this.products = this.wholeProducts.products.slice(0, 10);
+      this.products = this.wholeProducts.products.slice(0, 20);
     });
     this.dbService.getStoreWithUsn(6).then((data) => {
       this.storesWithUsn = [];
@@ -144,12 +144,12 @@ export class HomePageComponent implements OnInit {
   }
 
   scrollLeft() {
-    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft + 150;
+    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft + 200;
 
   }
 
   scrollRight() {
-    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft - 150;
+    document.getElementById('scrolling-wrapper').scrollLeft = document.getElementById('scrolling-wrapper').scrollLeft - 200;
 
   }
 

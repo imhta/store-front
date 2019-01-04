@@ -80,7 +80,7 @@
       </button>
     </div>
     <div class="scrolling-wrapper col" id="scrolling-wrapper" *ngIf="products">
-      <div *ngFor="let product of  products">
+      <span *ngFor="let product of  products">
         <mat-card class="product-card" *ngIf="product.variants[0].stock > 0"
                   (click)="navigateToProduct(product.productUid)">
         <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
@@ -88,7 +88,7 @@
 
           <mat-chip-list>
 
-            <p class="product-name">{{product.productName | slice:0:12}} ...</p>
+            <p class="product-name">{{product.productName | slice:0:10}} ...</p>
             <mat-chip>
               <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
             </mat-chip>
@@ -96,7 +96,7 @@
 
         </mat-card-content>
       </mat-card>
-      </div>
+      </span>
     </div>
     <div class="col-sm-0">
       <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
