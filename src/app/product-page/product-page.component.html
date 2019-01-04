@@ -21,7 +21,7 @@
       <p class="text-muted">{{product.categories.colorCategory}}</p>
       <div class="row" *ngIf="!product.isVariantsWithSamePrice">
         <mat-card class="col m-2" *ngFor="let variant of product.variants">
-          <p style="text-transform: uppercase" *ngIf="variant.stock > 0" {{variant.size}}</p>
+          <p style="text-transform: uppercase" *ngIf="variant.stock > 0"> {{variant.size}}</p>
           <h3 *ngIf="variant.stock > 0"><b>&#x20B9;{{variant.sellingPrice}}</b></h3>
         </mat-card>
       </div>
