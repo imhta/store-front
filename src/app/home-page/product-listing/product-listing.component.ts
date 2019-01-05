@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductFounded, ProductNextPage, ProductNextPageFounded, SearchForProduct} from '../../shared/actions/products.actions';
 import {Actions, ofActionDispatched, Select, Store} from '@ngxs/store';
 import {LoadingFalse, LoadingTrue} from '../../shared/state/loading.state';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {SingleProductModel, WholeProducts} from '../../shared/models/product.model';
 import {AuthState} from '../../shared/state/auth.state';
 import {take} from 'rxjs/operators';
@@ -13,6 +13,8 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Navigate} from '@ngxs/router-plugin';
 import {SeoService} from '../../shared/services/seo/seo.service';
+import * as firebase from 'firebase';
+import GeoPoint = firebase.firestore.GeoPoint;
 
 @Component({
   selector: 'cx-product-listing',
@@ -21,21 +23,29 @@ import {SeoService} from '../../shared/services/seo/seo.service';
 })
 export class ProductListingComponent implements OnInit {
   @Select('products') $productsState: Observable<WholeProducts>;
-  productsSubscription: Subscription;
-  favSubscription: Subscription;
-  cartsSubscription: Subscription;
-  wholeProducts: WholeProducts;
   products: SingleProductModel[];
-  showSelectedPrice;
   pageEmpty = false;
   isLoggedIn: boolean;
   resultProduct: SingleProductModel[] = [];
-  searchQuery: { query: string, filters: object, sortBy: string, page: number } = {
-    query: '', filters: {
+  searchQuery: {
+    query: string,
+    location: { latlong: GeoPoint, locationAccuracy: number, locationTimeStamp: number },
+    filters: object
+    sortBy: string,
+    page: number
+  } = {
+    query: '',
+    location: {
+      latlong: null,
+      locationAccuracy: null,
+      locationTimeStamp: null
+    },
+    filters: {
       location: 'Coimbatore',
       categories: {
         gender: 'All'
       },
+
       price: {
         inMin: 0,
         inMax: 10000,
@@ -47,6 +57,7 @@ export class ProductListingComponent implements OnInit {
       allowOutOfStock: false
     }, sortBy: 'high2low', page: 0
   };
+  isLocated = false;
   screenWidth = window.screen.width;
   private temp: SingleProductModel;
 
@@ -59,6 +70,7 @@ export class ProductListingComponent implements OnInit {
     private router: Router,
     private seo: SeoService
   ) {
+    this.locateStore();
     this.isLoggedIn = !!this.store.selectSnapshot(AuthState.token);
   }
 
@@ -165,10 +177,10 @@ export class ProductListingComponent implements OnInit {
 
           if (this.searchQuery.page === 0) {
             this.resultProduct = resultProducts;
-            console.log(this.resultProduct);
+            // console.log(this.resultProduct);
             this.store.dispatch([new LoadingFalse()]);
           }
-          console.log(this.resultProduct);
+          // console.log(this.resultProduct);
         });
         break;
       }
@@ -179,7 +191,7 @@ export class ProductListingComponent implements OnInit {
   updateParams() {
     return this.store.dispatch([
       new Navigate([this.router.url.split('?')[0]],
-        {query: this.searchQuery.query},
+        {query: this.searchQuery.query, location: this.searchQuery.location},
         {queryParamsHandling: 'merge'})]);
   }
 
@@ -189,6 +201,7 @@ export class ProductListingComponent implements OnInit {
     }
 
   }
+
   navigateToProduct(productUid: string) {
     this.store.dispatch(new Navigate(['/product', productUid]));
   }
@@ -196,5 +209,37 @@ export class ProductListingComponent implements OnInit {
   getImageOpUrl(url: string) {
     url = url.slice(0, 49) + 'q_80,h_250/' + url.slice(49 + Math.abs(0));
     return url;
+  }
+
+  locateStore() {
+    this.getGeoLocation().then(() => {
+      this.isLocated = true;
+      this.updateParams();
+    });
+  }
+
+  getGeoLocation() {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.searchQuery.location.latlong = new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude);
+            this.searchQuery.location.locationAccuracy = position.coords.accuracy;
+            this.searchQuery.location.locationTimeStamp = position.timestamp;
+            console.log(this.searchQuery.location, this.searchQuery.location.locationTimeStamp);
+            resolve();
+          },
+          (err) => {
+            alert('Please enable your GPS position future.');
+            reject();
+          }, {maximumAge: 1, timeout: 10000, enableHighAccuracy: true}
+        );
+      } else {
+        console.log('Geo location not supported');
+        reject();
+      }
+
+
+    });
   }
 }

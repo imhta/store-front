@@ -19,6 +19,8 @@ import {FilterBoxComponent} from '../filter-box/filter-box.component';
 import {SortBoxComponent} from '../sort-box/sort-box.component';
 import {MatBottomSheet, MatDialog} from '@angular/material';
 import {SeoService} from '../shared/services/seo/seo.service';
+import * as firebase from 'firebase';
+import GeoPoint = firebase.firestore.GeoPoint;
 
 @Component({
   selector: 'cx-store-catalogue',
@@ -34,9 +36,18 @@ export class StoreCatalogueComponent implements OnInit {
   isProductFound = true;
   param;
   resultProduct: any[] = [];
-  searchQuery: { storeId: string, query: string, filters: object, sortBy: string, page: number } = {
+  searchQuery: {
+    storeId: string,
+    location: { latlong: GeoPoint, locationAccuracy: number, locationTimeStamp: number },
+    query: string, filters: object, sortBy: string, page: number
+  } = {
     storeId: '',
     query: '',
+    location: {
+      latlong: null,
+      locationAccuracy: null,
+      locationTimeStamp: null
+    },
     filters: {
       location: 'Coimbatore',
       categories: {
@@ -58,6 +69,7 @@ export class StoreCatalogueComponent implements OnInit {
   screenWidth = window.screen.width;
   pageEmpty = false;
   regNoSpace = /^[^-\s][a-zA-Z0-9_\s-]+$/;
+  isLocated = false;
 
   constructor(private route: ActivatedRoute,
               private store: Store,
@@ -66,6 +78,7 @@ export class StoreCatalogueComponent implements OnInit {
               private bottomSheet: MatBottomSheet,
               private router: Router,
               private seo: SeoService) {
+    this.locateStore();
     this.route.params.pipe(take(1)).subscribe(params => {
       this.param = params['usn'];
       this.store.dispatch([new GetStoreDetails(params['usn'])]);
@@ -128,7 +141,10 @@ export class StoreCatalogueComponent implements OnInit {
 
     return this.store.dispatch([
       new Navigate([
-        this.router.url.split('?')[0]], {query: this.searchQuery.query}, {queryParamsHandling: 'merge'})
+        this.router.url.split('?')[0]], {
+        query: this.searchQuery.query,
+        location: this.searchQuery.location,
+      }, {queryParamsHandling: 'merge'})
     ]);
   }
 
@@ -172,7 +188,10 @@ export class StoreCatalogueComponent implements OnInit {
         this.searchQuery.page++;
         this.store.dispatch([
           new Navigate([
-            this.router.url.split('?')[0]], {query: this.searchQuery.query, page: this.searchQuery.page}, {queryParamsHandling: 'merge'})
+            this.router.url.split('?')[0]], {
+            query: this.searchQuery.query,
+            page: this.searchQuery.page
+          }, {queryParamsHandling: 'merge'})
         ]);
         // @ts-ignore
         this.store
@@ -238,5 +257,37 @@ export class StoreCatalogueComponent implements OnInit {
   getImageOpUrl(url: string) {
     url = url.slice(0, 49) + 'q_80,h_250/' + url.slice(49 + Math.abs(0));
     return url;
+  }
+
+  locateStore() {
+    this.getGeoLocation().then(() => {
+      this.isLocated = true;
+      this.updateQueryParams();
+    });
+  }
+
+  getGeoLocation() {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.searchQuery.location.latlong = new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude);
+            this.searchQuery.location.locationAccuracy = position.coords.accuracy;
+            this.searchQuery.location.locationTimeStamp = position.timestamp;
+            console.log(this.searchQuery.location, this.searchQuery.location.locationTimeStamp);
+            resolve();
+          },
+          (err) => {
+            alert('Please enable your GPS position future.');
+            reject();
+          }, {maximumAge: 1, timeout: 10000, enableHighAccuracy: true}
+        );
+      } else {
+        console.log('Geo location not supported');
+        reject();
+      }
+
+
+    });
   }
 }
