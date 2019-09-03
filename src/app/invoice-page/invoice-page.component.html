@@ -1,0 +1,96 @@
+<cx-navbar></cx-navbar>
+<div *ngIf="status === 'NOTFOUND'">
+  <div style="text-align: center;">
+    <img src="../../assets/logo.png" class="grey-logo" width="80" alt="clothx logo">
+  </div>
+  <img src="../../assets/logo.png" class="grey-logo" width="80" alt="clothx logo">
+  <div class="content">There is no invoice</div>
+
+</div>
+<div *ngIf="status === 'ERROR'">
+  <div style="text-align: center;">
+    <img src="../../assets/logo.png" class="grey-logo" width="80" alt="clothx logo">
+  </div>
+  <div class="content">There is some error occurred !</div>
+  <div class="content"> While getting your invoice</div>
+
+</div>
+<!--store logo to store details in invoice-->
+<div class="container text-center" *ngIf="status === 'FOUND'">
+  <div>
+    <div *ngIf="invoice.storeDetails?.storeLogo !== undefined">
+      <img *ngIf="invoice.storeDetails?.storeLogo" [src]="invoice.storeDetails?.storeLogo" width="80"
+           [alt]="invoice.storeDetails?.storeName + 'logo'">
+    </div>
+    <h2> {{ invoice.storeDetails?.storeName}}</h2>
+    <p style="font-weight: normal;">
+      <span *ngIf="!invoice.hasNoGstNumber">GSTIN:{{invoice.storeDetails?.gstNumber}}</span><br>
+      {{invoice.storeDetails?.address['street'] + ' ' +
+      invoice.storeDetails?.address['city']}}
+      <br>Customer no: {{invoice.customerNumber}}<br>{{invoice.createdOn.toDate() | date: 'short'}}</p>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">PRN</th>
+        <th scope="col">Product name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of invoice.cartProducts; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{product['prn']}}</td>
+        <td>{{product['productName'] +' - ' + product['size']}}</td>
+        <td>{{product['totalQuantity']}}</td>
+        <td>&#8377; {{product['totalPrice']}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+    <div class="float-right">
+      <p *ngIf="!invoice.hasNoGstNumber">Total tax : &#8377; {{invoice.totalTax | number : '1.2-2'}}</p>
+      <p>Total products :{{invoice.cartProducts.length}}</p>
+      <p>Total quantity: {{invoice.totalQuantity}}</p>
+      <p [style.text-decoration]="invoice.isDiscountApplied ? 'line-through' : 'none'">Total price: &#8377;
+        {{invoice.totalPrice | number : '1.2-2'}}</p>
+      <p *ngIf="invoice.isDiscountApplied">Total Discounted price: &#8377; {{invoice.discountPrice | number :
+        '1.2-2'}}</p>
+    </div>
+    <div style="text-align: center;">
+      <ngx-kjua
+        [renderAsync]="true"
+        [text]="invoice.invoiceId"
+        [crisp]="true"
+        [size]="100"
+      ></ngx-kjua>
+    </div>
+  </div>
+  <div>
+    <br>
+    <div>
+      <hr class="my-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Leave your feedback</mat-label>
+        <textarea matInput placeholder="Leave your feedback" [(ngModel)]="feedback.feedbackText"></textarea>
+      </mat-form-field>
+      <div class="lead">
+        Your feedback will help us to improve our service
+      </div>
+      <i class="far fa-frown" [class.active]="feedback.reaction === 'sad'" (click)="saveFeedback('sad')"></i>
+      <i class="far fa-meh" [class.active]="feedback.reaction === 'ok' " (click)="saveFeedback('ok')"></i>
+      <i class="far fa-smile" [class.active]="feedback.reaction === 'happy' " (click)="saveFeedback('happy')"></i>
+      <hr class="my-4">
+      <div *ngIf="feedbackStatus === 'GIVEN'">
+        <hr class="my-4">
+        <p>Thank You for giving feedback!</p>
+      </div>
+      <div *ngIf="feedbackStatus === 'ERROR'">
+        <hr class="my-4">
+        <p>Sorry Error Occured! Try again later</p>
+      </div>
+    </div>
+  </div>
+</div>
+

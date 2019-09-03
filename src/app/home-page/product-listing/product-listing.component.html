@@ -1,0 +1,66 @@
+<cx-navbar></cx-navbar>
+<div class="m-4">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search for Products" [(ngModel)]="searchQuery.query"
+           (keyup.enter)="search()" (ngModelChange)="  onChange()">
+    <button class="input-group-append btn btn-primary" (click)="search()">Search</button>
+  </div>
+
+
+</div>
+
+<div class="mobile-tab" *ngIf="screenWidth < 600">
+  <div class="row">
+    <div class="col" (click)="openSortBottomSheet()">
+      <strong>Sort By
+        <mat-icon>sort</mat-icon>
+      </strong>
+    </div>
+    <div class="col" (click)="openFilter()">
+      <strong>Filters
+        <mat-icon>filter_list</mat-icon>
+      </strong>
+    </div>
+  </div>
+</div>
+
+<hr *ngIf="screenWidth < 600">
+<div class="row">
+  <div class="col-md-3" *ngIf="!(screenWidth < 600)">
+    <cx-filter-box></cx-filter-box>
+  </div>
+  <div class="col-md-8">
+    <div class="m-3" *ngIf="!(screenWidth < 600)">
+      <cx-sort-box></cx-sort-box>
+    </div>
+    <hr *ngIf="!(screenWidth < 600)">
+
+    <div class="container">
+      <div *ngFor="let product of  resultProduct ">
+        <mat-card class="product-card" *ngIf="product.variants.length > 0"
+                  (click)="navigateToProduct(product.productUid)">
+          <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
+          <mat-card-content>
+            <mat-chip-list>
+
+              <!--<p class="product-name">{{product.productName | slice:0:8}} ...</p>-->
+              <mat-chip>
+                <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div *ngIf="pageEmpty" class="w-100 text-center"><b>You reached end of the world !</b></div>
+    <button *ngIf="!pageEmpty" mat-raised-button class="w-100" color="primary" (click)="search('next')"><b
+      class="text-white">Load More</b></button>
+  </div>
+
+</div>
+
+
+<!--<cx-infinite-loading-spiner></cx-infinite-loading-spiner>-->
+<div style="width: 100vw">
+  <img src="../../assets/search-by-algolia-light-background-99ac347c.png" height="20px" class="float-right m-4">
+</div>

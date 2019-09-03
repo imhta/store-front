@@ -1,0 +1,101 @@
+<cx-navbar></cx-navbar>
+<br>
+<div class="container">
+  <div class="row" *ngIf="product">
+    <div class="col-md " *ngIf="product.picturesUrl[0]">
+      <img class="selectedImg" [src]="selectedImg" [alt]="product.productName">
+      <hr>
+      <img class="not-selected-img" *ngFor="let productPic of product.cloudinaryUrls" [src]=" productPic['secure_url']"
+           [alt]="product.productName" (click)="selectedImg = productPic['secure_url']">
+      <br>
+      <br>
+      <share-buttons [theme]="'modern-light'"
+                     [include]="['facebook','twitter','linkedin','google','pinterest','reddit','tumblr','mix','vk','telegram','messenger','whatsapp','sms','email','print','copy']"
+                     [show]="4"
+      ></share-buttons>
+      <br>
+    </div>
+    <div class="col-md">
+      <p class="text-muted">{{product.prn}}</p>
+      <h3><b>{{product.productName}}</b></h3>
+      <p class="text-muted">{{product.categories.colorCategory}}</p>
+      <div class="row" *ngIf="!product.isVariantsWithSamePrice">
+        <mat-card class="col m-2" *ngFor="let variant of product.variants">
+          <p style="text-transform: uppercase" *ngIf="variant.stock > 0"> {{variant.size}}</p>
+          <h3 *ngIf="variant.stock > 0"><b>&#x20B9;{{variant.sellingPrice}}</b></h3>
+        </mat-card>
+      </div>
+      <div class="row m-2" *ngIf="product.isVariantsWithSamePrice">
+        <mat-card class="col" style=" max-width: 125px">
+          <mat-chip-list>
+            <span *ngFor="let variant of product.variants">
+            <mat-chip style="text-transform: uppercase" *ngIf="variant.stock > 0">
+              {{variant.size}}
+            </mat-chip>
+              </span>
+          </mat-chip-list>
+          <br>
+          <h3><b>&#x20B9;{{product.variants[0].sellingPrice}}</b></h3>
+        </mat-card>
+      </div>
+      <p>{{product.description}}</p>
+      <mat-card class="bg-dark text-white">
+        <h4><b>{{product.storeDetails.name}}</b></h4>
+        <p>{{product.storeDetails.address.street}}, {{product.storeDetails.address.city}}.</p>
+      </mat-card>
+      <a
+        href="https://www.google.com/maps/search/?api=1&query={{product.storeDetails.location['latitude']}},{{product.storeDetails.location['longitude']}}"
+        target="_blank">
+        <img class="map"
+             src="https://maps.googleapis.com/maps/api/staticmap?center={{product.storeDetails.location['latitude']}},{{product.storeDetails.location['longitude']}}&zoom=15&size=600x600&maptype=roadmap
+&markers=color:red%%7C{{product.storeDetails.location['latitude']}},{{product.storeDetails.location['longitude']}}
+&key=AIzaSyDrNiX9Hz2aFxbIlH81bC9mp5oPnM9Gs04" alt="{{product.productName}} location">
+      </a>
+
+
+    </div>
+
+  </div>
+
+
+  <div *ngIf="recommendedProducts.length > 0">
+    <div class="divide m-4">
+      <h3 class="text-center font-weight-bold"><span class="text-danger">Recommended</span> Products
+        From {{product?.storeDetails.name}}</h3>
+    </div>
+    <div class="row">
+      <div class="col-sm-0">
+        <button mat-fab (click)="scrollRight()" class="left-scroll-arrow">
+          <mat-icon aria-label="keyboard-left-arrow">keyboard_arrow_left</mat-icon>
+        </button>
+      </div>
+      <div class="scrolling-wrapper col" id="scrolling-wrapper" *ngIf="recommendedProducts">
+        <mat-card *ngFor="let product of  recommendedProducts" class="product-card"
+                  (click)="navigateToProduct(product.productUid)">
+          <img mat-card-image [src]="getImageOpUrl(product.cloudinaryUrls[0]['secure_url'])" alt="product-photo">
+          <mat-card-content>
+
+            <mat-chip-list>
+
+              <p class="product-name">{{product.productName | slice:0:12}} ...</p>
+              <mat-chip>
+                <span>&#x20B9;{{product.variants[0].sellingPrice}}</span>
+              </mat-chip>
+            </mat-chip-list>
+
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div class="col-sm-0">
+        <button mat-fab (click)="scrollLeft()" class="right-scroll-arrow">
+          <mat-icon aria-label="keyboard-right-arrow">keyboard_arrow_right</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<cx-footer></cx-footer>

@@ -1,0 +1,35 @@
+<cx-navbar></cx-navbar>
+<ngb-carousel>
+  <ng-template ngbSlide>
+    <img class="slide" src="https://res.cloudinary.com/spoteasy/image/upload/q_60/v1545899608/gen_img/main-back.jpg"
+         alt="first slide">
+    <div class="carousel-caption">
+      <div class="wrapper">
+        <div class="brand-title"><h4>YOUR NEIGHBOURHOOD FASHION DESTINATIONS</h4></div>
+
+      </div>
+    </div>
+  </ng-template>
+
+</ngb-carousel>
+<div class="container">
+
+  <mat-card class="row m-2 bg-dark text-white" *ngFor="let storeDetail of storesWithUsn">
+    <mat-card-header>
+      <mat-card-title><b>{{storeDetail?.storeName}}</b></mat-card-title>
+      <mat-card-subtitle>
+        <small class="text-white">{{storeDetail.address.street}}, {{storeDetail.address.city}}</small>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-button class="float-right" (click)="browseStore(storeDetail?.usn)">BROWSE</button>
+      <a class="text-white"
+         href="https://www.google.com/maps/search/?api=1&query={{storeDetail.location['latitude']}},{{storeDetail.location['longitude']}}"
+         target="_blank">
+        <button mat-button class="float-right">GET DIRECTION</button>
+      </a>
+
+    </mat-card-actions>
+
+  </mat-card>
+</div>

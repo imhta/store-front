@@ -1,0 +1,57 @@
+ngb-carousel {
+  .slide {
+    display: block;
+    width: 100vw;
+    height: 50vh;
+    object-fit: cover;
+  }
+
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.50);
+    overflow-y: hidden;
+    z-index: 10;
+    width: 100%;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    small {
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1.0px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .wrapper {
+      position: absolute;
+      top: 25%;
+      bottom: 25%;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  .brand-title {
+    font-family: 'Audiowide', cursive;
+    color: white;
+    font-size: 45px;
+    padding: 40px 40px 5px;
+
+
+    span {
+      color: #09bda9;
+    }
+  }
+}
+
+.container {
+  max-width: 700px;
+  margin-top: 20px;
+
+  .row {
+    height: 150px;
+  }
+}
+

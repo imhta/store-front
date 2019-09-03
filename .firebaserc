@@ -1,0 +1,22 @@
+{
+  "projects": {
+    "default": "clothxnet",
+    "dev": "clothxtest"
+  },
+  "targets": {
+    "clothxnet": {
+      "hosting": {
+        "spoteasy": [
+          "spoteasy"
+        ]
+      }
+    },
+    "clothxtest": {
+      "hosting" :{
+        "spoteasytest": [
+          "spoteasytest"
+        ]
+      }
+    }
+  }
+}

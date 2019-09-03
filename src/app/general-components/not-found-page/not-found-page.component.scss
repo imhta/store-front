@@ -1,0 +1,65 @@
+
+.grid-wrapper {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: white;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.grid-wrapper .card {
+  grid-row: 2/6;
+  grid-column: 2/6;
+  z-index: 1;
+  border: none;
+}
+
+.grid-wrapper .card {
+  z-index: 1;
+  border: none;
+  width: 100%;
+}
+
+.grid-wrapper .grey-icon {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  width: 120px;
+  margin: 0 auto;
+}
+
+.grid-wrapper .content {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  color: grey;
+}
+
+.grid-wrapper .setup-link {
+  border-radius: 30px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 15px 20px;
+  border: solid 4px aquamarine;
+  color: #214c3f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.grid-wrapper .setup-link:hover {
+  border: solid 5px aquamarine;
+}
+
+.grid-wrapper .setup-link:active {
+  border: solid 3px aquamarine;
+}

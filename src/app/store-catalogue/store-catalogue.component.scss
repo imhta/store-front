@@ -1,0 +1,270 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.product-card {
+  margin-top: 15px;
+  display: flex;
+  flex: 1 1 200px;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  width: 150px;
+  height: 300px;
+
+
+  mat-chip {
+    background-color: #09bda9;
+    color: white;
+    cursor: pointer;
+  }
+  mat-card-actions {
+    height: 40px;
+    border-radius: 40px;
+    padding: 0;
+  }
+  mat-card-actions > * {
+    margin: 0;
+  }
+  .favorite-icon-red {
+    color: red;
+  }
+  .favorite-icon-grey {
+    color: grey;
+  }
+  .add-shopping-icon {
+    color: #09bda9;
+  }
+  .remove-shopping-icon {
+    color: red;
+  }
+  mat-card-content {
+    position: absolute;
+    bottom: 10px;
+  }
+  img {
+    height: 250px;
+    width: 150px;
+    display: block;
+    object-fit: cover;
+
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 25px 20px;
+  display: grid;
+  grid-gap: 10px;
+}
+
+/* no grid support? */
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container {
+  display: grid;
+  margin: 20px auto;
+  column-gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
+  grid-auto-rows: auto;
+}
+
+.container > * {
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+/* We need to set the margin used on flex items to 0 as we have gaps in grid.  */
+
+@supports (display: grid) {
+  .container > * {
+    margin: 0;
+  }
+}
+
+ngb-carousel {
+  .slide {
+    display: block;
+    width: 100vw;
+    height: 50vh;
+    object-fit: cover;
+  }
+}
+
+.grey-logo {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  width: 120px;
+  margin: 0 auto;
+}
+
+.content {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  color: grey;
+}
+
+.setup-link {
+  max-width: 300px;
+  border-radius: 30px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 15px 20px;
+  border: solid 4px aquamarine;
+  color: #214c3f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.setup-link:hover {
+  border: solid 5px aquamarine;
+}
+
+.setup-link:active {
+  border: solid 3px aquamarine;
+}
+
+.input-group {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+.form-control {
+  border-radius: 50px;
+}
+
+.form-control, small {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-control:focus {
+  border-color: #06bca9;
+  box-shadow: 0 1px 1px #06bca9 inset, 0 0 8px #06bca9;
+  outline: 0 none;
+}
+
+.input-group .btn {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-color: #06bca9;
+  background-color: #06bca9;
+}
+
+.input-group .btn:hover {
+  background-color: #06bca9;
+  color: white;
+}
+
+.input-group .btn:focus {
+  border-color: #06bca9;
+  box-shadow: 0 1px 1px #06bca9 inset, 0 0 8px #06bca9;
+  outline: 0 none;
+}
+
+.mobile-tab {
+  .row {
+    text-align: center;
+    margin: 10px;
+    mat-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+  }
+}
+
+.row {
+  max-width: 99vw;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    display: grid;
+    padding: 0;
+    margin: 0;
+    grid-gap: 0;
+    column-gap: 0;
+    width: 100vw;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 50vw));
+    grid-auto-rows: auto;
+  }
+  img {
+    min-width: 50vw;
+  }
+  .product-card {
+    margin-top: 15px;
+    display: flex;
+    flex: 1 1 200px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    width: 50vw;
+    height: 300px;
+
+    mat-chip {
+      background-color: #09bda9;
+      color: white;
+      cursor: pointer;
+    }
+
+    mat-card-actions {
+      height: 40px;
+      border-radius: 40px;
+      padding: 0;
+    }
+
+    mat-card-actions > * {
+      margin: 0;
+    }
+
+    .favorite-icon-red {
+      color: red;
+    }
+
+    .favorite-icon-grey {
+      color: grey;
+    }
+
+    .add-shopping-icon {
+      color: #09bda9;
+    }
+
+    .remove-shopping-icon {
+      color: red;
+    }
+
+    mat-card-content {
+      position: absolute;
+      bottom: 10px;
+    }
+
+    img {
+      height: 250px;
+      width: 50vw;
+      display: block;
+      object-fit: cover;
+
+    }
+
+  }
+}
