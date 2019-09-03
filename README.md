@@ -2,7 +2,12 @@
 
 store front for store management site repo, this store front integrated with algolia search. 
 ## screenshots
-![alt text](https://drive.google.com/file/d/1GHndSDdeDfCB022C3naJ9E3NzQOtdWH0/view?usp=sharing)
+Home                       |  Page 1                   | Page 2
+:-------------------------:|:-------------------------:|:-------------------------------:
+<img src="vlcsnap-2019-04-08-19h19m42s348.png" width="200" height="400" />  | <img src="vlcsnap-2019-04-08-19h19m56s768.png" width="200" height="400" /> | <img src="vlcsnap-2019-04-08-19h20m11s866.png" width="200" height="400" />
+
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
